@@ -12,7 +12,7 @@ Browse and download code samples from VMware as well as code samples contributed
 
 All code samples are stored in the ![](https://github.com/euc-oss/euc-samples) repository and are organised according to Platform.
 
-[Workspace ONE samples](https://github.com/euc-oss/euc-samples/tree/main/UEM-Samples)
+[Workspace ONE samples](https://euc-dev.github.io/euc-samples/UEM-Samples)
 
 [Workspace ONE Access samples](https://github.com/euc-oss/euc-samples/tree/main/Access-Samples)
 

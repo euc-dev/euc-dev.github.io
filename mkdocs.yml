@@ -1,6 +1,6 @@
 # Project Information
 site_name: omnissa Developer Portal
-site_url: https://github.com/euc-dev/developer.omnissa.github.io
+site_url: https://euc-dev.github.io
 site_author: Richard Croft
 site_description: POC for developer.omnissa.com
 docs_dir: docs
@@ -8,7 +8,7 @@ site_dir: .site
 use_directory_urls: true
 
 # Repository
-repo_url: https://github.com/euc-dev/ws1-sdk-uem-ios
+repo_url: https://github.com/euc-dev/developer.omnissa.github.io
 edit_uri: edit/docs/
 
 # Copyright
@@ -148,16 +148,18 @@ markdown_extensions:
 # Navigation
 nav:
   - Home:
-    - ../index.md
+    - /index.md
   - Dev Centre:
-    - ../dev-centre/index.md
+    - /dev-centre/index.md
   - Product Docs:
-    - ../docs/index.md
+    - /docs/index.md
   - APIs:
-    - ../apis/index.md
+    - /apis/index.md
   - Code Samples: 
-    - ../samples/index.md
+    - /samples/index.md
   - PowerCLI:
-    - ../powercli/index.md
+    - /powercli/index.md
   - SDKs: 
-    - ../sdk/index.md
+    - /sdk/index.md
+  - Support:
+    - /support/index.md

@@ -1,26 +1,53 @@
-# ws1-sdk-uem-ios
+# omnissa Developer Portal
 
-The Workspace ONE SDK (formerly known as AirWatch SDK) code library for Apple iOS devices can be used to enable additional app config and security capabilities that may not yet be available natively as part of the AppConfig Community. Certain use cases such as granular analytics can be provided through a deeper integration with the SDK. The Workspace ONE SDK for iOS is also a good choice in deployment scenarios where a MDM profile installation on the device is not possible.
+Welcome to the End User Computing developer portal proof-of-concept repository.
 
-This repo is provides the content for the [omnissa Developer Portal](http://developer.omnissa.com) using MkDocs published by GitHub Pages. All documentation should be created in MarkDown format with the capabilities of MkDocs and the Material theme in mind under the /docs folder. Content should be structured within the following folder structures to allow for integration of other documentation repos:
-- /dev-centre
-- /apis
-- powerCLI
-- samples
-- sdks
+This repo stores the developer.omnissa.com POC site in markdown format using MkDocs with the Material theme. 
 
-Each product or technology would be stored within a subfolder of the above and integrated into this site at build time.
+This site is using MkDocs as the site renderer, and GitHub Pages as the hoster. As such, this repo will create a publically available site at https://euc-dev.github.io. A custom domain name will be setup to point to developer.lab.net for the POC. If the POC is successful this will be changed to https://developer.omnissa.com in conjunction with decommissioning of the existing site.
 
-Each documentation repo should utilise the same site name in order to ensure successful integration. Additionally, a centralised branding, theme, and image assets will be integrated via the [](https://github.com/euc-dev/branding.omnissa.github.io) repo.
+Multiple repos are linked into this site by utilising a common folder structure and site_url.
 
-At present, the following repos integrate:
+## docs Folder Structure
+A common folder structure has been created to allow for other repos containing product specific documentation and resources to be merged into this site. This allows for those other repos to be maintained by the teams that own the products.
 
-| Repository URL | Description or Purpose | docs Folder Target |
-| ----- | ----- | ----- |
-| https://github.com/euc-dev/branding.omnissa.github.io | Centralised Branding including CSS, theme and image assets | /docs/assets |
-| https://github.com/euc-dev/ws1-sdk-uem-ios | Workspace ONE SDK for iOS | /docs/sdks/ws1-sdk-uem-ios |
-| https://github.com/euc-dev/ws1-sdk-uem-android | Workspace ONE SDK for Android | /docs/sdks/ws1-sdk-uem-android |
-| https://github.com/euc-dev/ws1-sdk-intelligence | Workspace ONE Intelligence SDK | /docs/sdks/ws1-sdk-intelligence |
-| https://github.com/euc-dev/rdpvcbridge |  | /docs/sdks/rdpvcbridge |
-| https://github.com/euc-dev/view-session-management |  | /docs/sdks/view-session-management |
-| https://github.com/euc-dev/app-volumes-apis | App Volumes REST API Documentation | /docs/apis/app-volumes-apis |
+### Folder Structure and Included Content
+```
+./docs
+    /apis
+      /index.md
+    /assets
+      /image
+      /logo
+      /stylesheets
+    /dev-centre
+      /index.md
+      ...
+    /powercli
+      /index.md
+    /samples
+      /index.md
+    /sdks
+      /index.md
+    /support
+      /index.md
+```
+
+The following folders have content provided by other repos
+| Folder Path | Repository URL |
+| --- | ---:|
+| /docs/apis | https://github.com/euc-dev/horizon-apis/docs/apis/
+|  | https://github.com/euc-dev/app-volumes-apis/docs/apis/ |
+|  | https://github.com/euc-dev/ws1-sdk-intelligence/docs/apis/ |
+| /docs/powercli | https://github.com/euc-dev/horizon-powercli/docs/powercli/ |
+| /docs/samples | https://github.com/euc-dev/euc-samples/docs/samples/ |
+| /docs/sdks | https://github.com/euc-dev/horizon-sdk/docs/sdks/ |
+|  | https://github.com/euc-dev/ws1-sdk-uem-android/docs/sdks/ |
+|  | https://github.com/euc-dev/ws1-sdk-intelligence/docs/sdks/ |
+|  | https://github.com/euc-dev/ws1-sdk-uem-ios/docs/sdks/ |
+
+!!! Note
+    Because of the linkage between other repos, this site must be built after changes to the other sites.
+
+
+
