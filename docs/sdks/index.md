@@ -8,13 +8,14 @@ Developers, Automation Engineers, and System Administrators can build world clas
 
 ### Desktop and App Virtualization
 
-[Horizon View Session Enhancement SDK](sdks/view-session-management/index.md)
+[Horizon View Session Enhancement SDK](view-session-management.md)
 
-[Horizon RDP VC Bridge SDK](sdks/rdpvcbridge/index.md)
+[Horizon RDP VC Bridge SDK](rdpvcbridge.md)
 
 ### Digital Workspace
-[Workspace ONE Intelligence SDK](sdks/ws1-sdk-intelligence/index.md)
 
-[Workspace ONE SDK for Android](sdks/ws1-sdk-uem-android/index.md)
+[Workspace ONE Intelligence SDK](ws1-intelligence.md)
 
-[Workspace ONE SDK for iOS](sdks/ws1-sdk-uem-ios/index.md)
+[Workspace ONE SDK for Android](ws1-android.md)
+
+[Workspace ONE SDK for iOS](ws1-ios.md)

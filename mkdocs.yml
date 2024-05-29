@@ -148,18 +148,25 @@ markdown_extensions:
 # Navigation
 nav:
   - Home:
-    - /index.md
+    - index.md
   - Dev Centre:
-    - /dev-centre/index.md
+    - dev-centre/index.md
   - Product Docs:
-    - /docs/index.md
+    - product-docs/index.md
   - APIs:
-    - /apis/index.md
+    - apis/index.md
   - Code Samples: 
-    - /samples/index.md
+    - samples/index.md
   - PowerCLI:
-    - /powercli/index.md
+    - powercli/index.md
   - SDKs: 
-    - /sdk/index.md
+    - sdks/index.md
+    - View Session Management SDK: sdks/view-session-management.md
+    - RDP VC Bridge: sdks/rdpvcbridge.md
+    - WS1 Android SDK: sdks/ws1-android.md
+    - WS1 Intelligence SDK: sdks/ws1-intelligence.md
+    - WS1 iOS SDK: sdks/ws1-ios.md
   - Support:
-    - /support/index.md
+    - support/index.md
+  - About:
+    - about.md
