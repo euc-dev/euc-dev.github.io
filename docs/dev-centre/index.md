@@ -14,19 +14,19 @@ Find Developer and DevOps Resources for omnissa Technology Platforms. APIs, SDKs
 - <figure markdown="span">
     ![](../assets/logos/ws1-logo.png){ width="64" }
     <caption>**[Workspace ONE](ws1/index.md)**</caption>
-    </figure> 
-    
+    </figure>
+  
     Securely Integrate Your Mobile Apps with VMware Workspace ONE
 
 - <figure markdown="span">
     ![](../assets/logos/ws1-intel-logo.png){ width="64" }
     <caption>**[Workspace ONE Intelligence](ws1-intel/index.md)**</caption>
-    </figure> 
-    
+    </figure>
+  
     Capture real-time event data from key user flows in your app
 
-
 ## Product Documentation
+
 Links to Official Product Documentation Getting Started Guides are below. The main documentation site can be found at [https://docs.omnissa.com/](https://docs.omnissa.com/).
 
 <div class="grid cards" markdown>
@@ -38,9 +38,8 @@ Links to Official Product Documentation Getting Started Guides are below. The ma
     Multi-platform endpoint and app management
 
     [:octicons-arrow-right-24: Reference](https://docs.omnissa.com/category/workspaceone_uem_getting_started)
-    
 - ![](../assets/logos/ws1-access-logo-16.png)
-    
+
     ---
 
     Focus on your content and generate a responsive and searchable static site
@@ -56,7 +55,7 @@ Links to Official Product Documentation Getting Started Guides are below. The ma
     [:octicons-arrow-right-24: Reference](https://docs.omnissa.com/bundle/WS1Intelligence/page/IntelMainIntro.html)
 
 - ![](../assets/logos/ws1-logo.png)
-    
+
     ---
 
     Securely discover, access, and connect to your company’s resources, teams, and workflows
@@ -72,7 +71,7 @@ Links to Official Product Documentation Getting Started Guides are below. The ma
     [:octicons-arrow-right-24: Reference](https://docs.omnissa.com/bundle/Workspace-ONE-AssistV24.03/page/WorkspaceONEAssist.html)
 
 - ![](../assets/logos/uag-logo-16.png)
-    
+
     ---
 
     Securely provide either Per-App or Full Device VPN capabilities across all your employees’ devices and delivered with a modern Zero Trust architecture
@@ -80,7 +79,7 @@ Links to Official Product Documentation Getting Started Guides are below. The ma
     [:octicons-arrow-right-24: Reference](https://docs.omnissa.com/bundle/Workspace_ONE_TunnelVSaas/page/TunnelOverview.html)
 
 - ![](../assets/logos/uag-logo-16.png)
-    
+
     ---
 
     Secure external access to your applications and desktops.

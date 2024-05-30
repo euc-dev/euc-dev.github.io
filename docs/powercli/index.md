@@ -3,7 +3,7 @@ layout: default
 title: PowerCLI
 permalink: /powercli/
 hide:
-  #- navigation
+  - navigation
   - toc
 ---
 

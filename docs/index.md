@@ -3,8 +3,8 @@ layout: home
 title: omnissa Developer Portal
 permalink: /
 hide:
-  #- navigation
-  #- toc
+  - navigation
+  - toc
 ---
 
 <div style="display: block; margin-left: auto; margin-right: auto; width: 10%">

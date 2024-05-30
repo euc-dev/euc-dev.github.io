@@ -3,7 +3,7 @@ layout: page
 title: APIs
 permalink: /apis/
 hide:
-  #- navigation
+  - navigation
   - toc
 ---
 
