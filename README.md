@@ -39,6 +39,8 @@ The following folders have content provided by other repos
 | /docs/apis | https://github.com/euc-dev/horizon-apis/docs/apis/
 |  | https://github.com/euc-dev/app-volumes-apis/docs/apis/ |
 |  | https://github.com/euc-dev/ws1-sdk-intelligence/docs/apis/ |
+| docs/assets | https://github.com/euc-dev/branding/docs/assets/ |
+| /docs/dev-centre/integration-samples | ws1-sdk-integration-samples |
 | /docs/powercli | https://github.com/euc-dev/horizon-powercli/docs/powercli/ |
 | /docs/samples | https://github.com/euc-dev/euc-samples/docs/samples/ |
 | /docs/sdks | https://github.com/euc-dev/horizon-sdk/docs/sdks/ |

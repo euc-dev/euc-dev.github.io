@@ -8,7 +8,7 @@ site_dir: .site
 use_directory_urls: true
 
 # Repository
-repo_url: https://github.com/euc-dev/developer.omnissa.github.io
+repo_url: https://github.com/euc-dev/euc-dev.github.io
 edit_uri: edit/docs/
 
 # Copyright
@@ -160,12 +160,7 @@ nav:
   - PowerCLI:
     - powercli/index.md
   - SDKs: 
-    - sdks/index.md
-    - View Session Management SDK: sdks/view-session-management.md
-    - RDP VC Bridge: sdks/rdpvcbridge.md
-    - WS1 Android SDK: sdks/ws1-android.md
-    - WS1 Intelligence SDK: sdks/ws1-intelligence.md
-    - WS1 iOS SDK: sdks/ws1-ios.md
+    - /sdks/index.md
   - Support:
     - support/index.md
   - About:

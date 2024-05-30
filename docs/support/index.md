@@ -2,6 +2,9 @@
 layout: page
 title: API, SDK, and PowerCLI Support Options
 permalink: /support/
+hide:
+  #- navigation
+  #- toc
 ---
 
 If you need assistance with using one of our APIs, SDKs, or PowerCLI commandlets, VMware offers a number of free and paid support options.

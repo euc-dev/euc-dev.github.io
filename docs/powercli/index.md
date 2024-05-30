@@ -2,16 +2,18 @@
 layout: default
 title: PowerCLI
 permalink: /powercli/
+hide:
+  #- navigation
+  - toc
 ---
 
+Powershell provides a powerful way to script omnissa product operations. This is a collection of official Powershell modules.
 
-Provides cmdlets for automating VMware Horizon features.
+<div class="grid cards" markdown>
 
-## Step 1: Connect to Environment 
-
-To setup a connection you should use the `Connect-HVServer` command. Run the code sample below to connect.
-```
-# Connects to the Horizon API service that runs on an instance of a Horizon Connection server by using the User, Password, and Domain parameters.
-Connect-HVServer -Server server -User username -Password pass -Domain domain
-```
-blah
+- <figure markdown="span">
+    ![](../assets/logos/horizon-logo.png){ width="64" }
+    <caption>**[Horizon PowerCLI](powercli/horizon/index.md)**</caption>
+    </figure> 
+    
+    Provides cmdlets for automating VMware Horizon features.
