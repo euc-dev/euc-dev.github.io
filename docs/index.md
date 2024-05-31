@@ -13,7 +13,7 @@ hide:
 
 The omnissa Developer Portal is a collection of resources and samples that developers, customers and partners can use to integrate and extend their omnissa products.
 
-Developer \{code\} Portal is a free developer program that provides access to a growing community of developers and experts. 
+Developer \{code\} Portal is a free developer program that provides access to a growing community of developers and experts.  
 <!-- Follow @omnissacode on Twitter to keep up with omnissa developer topics. -->
 
 <!-- Resources are provided using the links below. -->
@@ -25,35 +25,35 @@ Developer \{code\} Portal is a free developer program that provides access to a 
 - <figure markdown="span">
     ![](assets/logos/api.png){ width="64" }
     <caption>**[APIs](apis/index.md)**</caption>
-    </figure> 
-    
+    </figure>  
+
     Build on omnissa products, manage & automate using APIs
 
 - <figure markdown="span">
     ![](assets/logos/developer-training.png){ width="64" }
     <caption>**[Developer Centre](dev-centre/index.md)**</caption>
-    </figure> 
+    </figure>  
 
     Learn, Code and Connect using the Developer Centre as a Base
 
 - <figure markdown="span">
     ![](assets/logos/powercli-logo.png){ width="64" }
     <caption>**[PowerCLI](powerCLI/index.md)**</caption>
-    </figure> 
+    </figure>  
 
     Use PowerShell to manage & automate Horizon
 
 - <figure markdown="span">
     ![](assets/logos/samples.png){ width="64" }
     <caption>**[Code Samples](samples/index.md)**</caption>
-    </figure> 
-    
+    </figure>  
+
     Find and share code samples for Workspace ONE and Horizon management, including SDKs, tools and utilities, applications, scripts and sensors
 
 - <figure markdown="span">
     ![](assets/logos/developer-training.png){ width="64" }
     <caption>**[SDKs](sdks/index.md)**</caption>
-    </figure> 
+    </figure>  
 
     Link to the freely available SDKs available for omnissa products
 
