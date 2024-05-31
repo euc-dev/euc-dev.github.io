@@ -1,7 +1,7 @@
 ---
 layout: default
 title: PowerCLI
-permalink: /powercli/
+#permalink: /powercli/
 hide:
   - navigation
   - toc

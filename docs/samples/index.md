@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Code Samples
-permalink: /samples/
+#permalink: /samples/
 hide:
   - navigation
   - toc

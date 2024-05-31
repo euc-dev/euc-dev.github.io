@@ -1,7 +1,7 @@
 ---
 layout: page
 title: APIs
-permalink: /apis/
+#permalink: /apis/
 hide:
   - navigation
   - toc
@@ -12,21 +12,21 @@ Manage the omnissa portfolio of products and automate configuration using the AP
 <div class="grid cards" markdown>
 
 - <figure markdown="span">
-    ![](/assets/logos/horizon-logo.png){ width="64" }
+    ![](../assets/logos/horizon-logo.png){ width="64" }
     <caption>**[Horizon APIs](horizon/index.md)**</caption>
     </figure> 
     
     manage & automate Horizon using APIs
 
 - <figure markdown="span">
-    ![](/assets/logos/app-volumes-logo-16.png){ width="64" }
+    ![](../assets/logos/app-volumes-logo-16.png){ width="64" }
     <caption>**[App Volumes APIs](app-volumes-apis/index.md)**</caption>
     </figure> 
 
     manage and configure App Volumes via REST API
 
 - <figure markdown="span">
-    ![](/assets/logos/ws1-intel-logo.png){ width="64" }
+    ![](../assets/logos/ws1-intel-logo.png){ width="64" }
     <caption>**[Workspace ONE Intelligence APIs](ws1/ws1-api-intelligence/index.md)**</caption>
     </figure> 
 

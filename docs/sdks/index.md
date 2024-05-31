@@ -1,7 +1,7 @@
 ---
 layout: page
 title: SDKs
-permalink: /sdks/
+#permalink: /sdks/
 hide:
   - navigation
   - toc

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About
-permalink: /about/
+#permalink: /about/
 ---
 
 omnissa Developer `{code}` Portal is a free developer program that provides access to a growing community of developers and experts. 

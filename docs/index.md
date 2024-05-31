@@ -1,7 +1,7 @@
 ---
 layout: home
 title: omnissa Developer Portal
-permalink: /
+#permalink: /
 hide:
   - navigation
   - toc
