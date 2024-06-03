@@ -13,7 +13,7 @@ Powershell provides a powerful way to script omnissa product operations. This is
 
 - <figure markdown="span">
     ![](../assets/logos/horizon-logo.png){ width="64" }
-    <caption>**[Horizon PowerCLI](powercli/horizon/index.md)**</caption>
+    <caption>**[Horizon PowerCLI](/horizon-powercli/index.md)**</caption>
     </figure> 
     
     Provides cmdlets for automating VMware Horizon features.
