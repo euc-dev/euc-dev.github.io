@@ -25,7 +25,7 @@ Find Developer and DevOps Resources for omnissa Technology Platforms. APIs, SDKs
   
     Capture real-time event data from key user flows in your app
 
-
+</div>
 
 ## Product Documentation
 
