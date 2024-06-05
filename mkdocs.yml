@@ -21,6 +21,19 @@ theme:
   name: material
   favicon: favicon.ico
   logo: assets/images/icon-white.svg
+  admonition:
+      note: fontawesome/solid/note-sticky
+      abstract: fontawesome/solid/book
+      info: fontawesome/solid/circle-info
+      tip: fontawesome/solid/bullhorn
+      success: fontawesome/solid/check
+      question: fontawesome/solid/circle-question
+      warning: fontawesome/solid/triangle-exclamation
+      failure: fontawesome/solid/bomb
+      danger: fontawesome/solid/skull
+      bug: fontawesome/solid/robot
+      example: fontawesome/solid/flask
+      quote: fontawesome/solid/quote-left
   icon:
     repo: fontawesome/brands/github
     annotation: material/plus-circle
@@ -128,6 +141,8 @@ extra_css:
 # Extensions
 markdown_extensions:
   - admonition
+  - pymdownx.details
+  - pymdownx.superfences
   - attr_list
   - footnotes
   - md_in_html
@@ -147,14 +162,13 @@ markdown_extensions:
   - pymdownx.snippets:
       #check_paths: true
       #base_path: !relative $docs_dir  # Path of the docs_dir
-  - pymdownx.superfences:
-      custom_fences:
-      - name: mermaid
-        class: mermaid
-        format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.superfences
+      #custom_fences:
+      #- name: mermaid
+      #  class: mermaid
+      #  format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
-  - pymdownx.details
   - tables
   - toc:
       permalink: true

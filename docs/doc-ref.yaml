@@ -1,0 +1,24 @@
+- title: APIs
+  content: Build on omnissa products, manage & automate using APIs
+  url: apis/
+  image: assets/logos/api.png
+
+- title: Developer Centre
+  content: Learn, Code and Connect using the Developer Centre as a Base
+  url: dev-centre/
+  image: assets/logos/developer-training.png
+
+- title: PowerCLI
+  content: Use PowerShell to manage & automate Horizon
+  url: powercli/
+  image: assets/logos/powercli-logo.png
+
+- title: Code Samples
+  content: Find and share code samples for Workspace ONE and Horizon management, including SDKs, tools and utilities, applications, scripts and sensors
+  url: samples/index.md
+  image: assets/logos/samples.png
+
+- title: SDKs
+  content: Link to the freely available SDKs available for omnissa products
+  url: sdks/index.md
+  image: assets/logos/developer-training.png

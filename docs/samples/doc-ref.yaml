@@ -1,0 +1,34 @@
+- title: Workspace ONE Access Samples
+  content: Workspace ONE Access example REST API sample scripts
+  url: /euc-samples/Access-Samples/
+  image: ../assets/logos/ws1-access-logo-16.png
+
+- title: Workspace ONE UEM Samples for Android
+  content: Workspace ONE UEM example sample scripts and apps for Android devices
+  url: /euc-samples/Android-Samples/
+  image: ../assets/logos/android_logo_circle.png
+
+- title: App Volumes Samples
+  content: App Volumes Samples scripts and REST API calls
+  url: /euc-samples/App-Volumes-Samples/
+  image: ../assets/logos/app-volumes.png
+
+- title: Horizon Samples
+  content: Horizon Enterprise and Cloud scripts and API samples to manage day 2 operations
+  url: /euc-samples/Horizon-Samples/
+  image: ../assets/logos/horizon-logo.png
+
+- title: Workspace ONE Intelligence Samples
+  content: Workspace ONE Intelligence Custom Connectors and Sample Apps with the Workspace ONE Intelligence SDK
+  url: /euc-samples/Intelligence-Samples/
+  image: ../assets/logos/ws1-intel-logo.png
+
+- title: Unified Access Gateway Samples
+  content: Sample scripts to deploy and manage UAG
+  url: /euc-samples/UAG-Samples/
+  image: ../assets/logos/uag-logo-16.png
+
+- title: Workspace ONE UEM Samples
+  content: Workspace ONE UEM Apps, Guides, Profiles, Scripts, Sensors and Utilities
+  url: /euc-samples/UEM-Samples/
+  image: ../assets/logos/ws1-uem-logo-16.png
