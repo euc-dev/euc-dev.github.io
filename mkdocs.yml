@@ -162,11 +162,11 @@ markdown_extensions:
   - pymdownx.snippets:
       #check_paths: true
       #base_path: !relative $docs_dir  # Path of the docs_dir
-  - pymdownx.superfences
-      #custom_fences:
-      #- name: mermaid
-      #  class: mermaid
-      #  format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.superfences:
+      custom_fences:
+      - name: mermaid
+        class: mermaid
+        format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
   - tables
@@ -174,22 +174,22 @@ markdown_extensions:
       permalink: true
 
 # Navigation
-#nav:
-#  - Home:
-#    - ../index.md
-#  - Dev Centre:
-#    - ../dev-centre/index.md
+nav:
+  - Home:
+    - /
+  - Dev Centre:
+    - /dev-centre/
 #  - Product Docs:
 #    - product-docs/index.md
-#  - APIs:
-#    - ../apis/index.md
-#  - Code Samples: 
-#    - ../samples/index.md
-#  - PowerCLI:
-#    - ../powercli/index.md
-#  - SDKs: 
-#    - ../sdks/index.md
-#  - Support:
-#    - ../support/index.md
-#  - About:
-#    - ../about.md
+  - APIs:
+    - /apis/
+  - Code Samples: 
+    - /samples/
+  - PowerCLI:
+    - /powercli/
+  - SDKs: 
+    - /sdks/
+  - Support:
+    - /support/
+  - About:
+    - /about/
