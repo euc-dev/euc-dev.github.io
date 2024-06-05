@@ -6,7 +6,7 @@
 - title: App Volumes APIs
   content: manage and configure App Volumes via REST API
   url: /app-volumes-apis/
-  image: ../assets/logos/app-volumes-logo-16.png
+  image: ../assets/logos/app-volumes-logo.png
 
 - title: Workspace ONE Intelligence APIs
   content: query and extract data for use in other business intelligence tools
