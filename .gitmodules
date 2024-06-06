@@ -1,0 +1,24 @@
+[submodule "apis/app-volumes-apis"]
+	path = apis/app-volumes-apis
+	url = git@github.com:euc-dev/app-volumes-apis.git
+[submodule "apis/horizon-apis"]
+	path = apis/horizon-apis
+	url = git@github.com:euc-dev/horizon-apis.git
+[submodule "apis/ws1-api-intelligence"]
+	path = apis/ws1-api-intelligence
+	url = git@github.com:euc-dev/ws1-api-intelligence.git
+[submodule "sdks/ws1-sdk-intelligence"]
+	path = sdks/ws1-sdk-intelligence
+	url = git@github.com:euc-dev/ws1-sdk-intelligence.git
+[submodule "sdks/ws1-sdk-uem-ios"]
+	path = sdks/ws1-sdk-uem-ios
+	url = git@github.com:euc-dev/ws1-sdk-uem-ios.git
+[submodule "sdks/ws1-sdk-uem-android"]
+	path = sdks/ws1-sdk-uem-android
+	url = git@github.com:euc-dev/ws1-sdk-uem-android.git
+[submodule "sdks/horizon-sdk"]
+	path = sdks/horizon-sdk
+	url = git@github.com:euc-dev/horizon-sdk.git
+[submodule "powercli/horizon-powercli"]
+	path = powercli/horizon-powercli
+	url = git@github.com:euc-dev/horizon-powercli.git
