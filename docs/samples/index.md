@@ -3,7 +3,7 @@ layout: default
 title: Code Samples
 #permalink: /samples/
 hide:
-  - navigation
+  #- navigation
   - toc
 ---
 

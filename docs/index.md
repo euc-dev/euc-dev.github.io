@@ -4,7 +4,7 @@ title: Developer Portal Home
 #permalink: /
 hide:
   - navigation
-  - toc
+  #- toc
 ---
 
 <!-- ![](assets/logos/omnissa-logo-light.png) -->

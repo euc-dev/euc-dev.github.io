@@ -9,7 +9,7 @@ use_directory_urls: true
 
 # Repository
 repo_url: https://github.com/euc-dev/euc-dev.github.io
-edit_uri: edit/docs/
+edit_uri: edit/main/docs/
 
 # Copyright
 copyright: |
@@ -89,7 +89,7 @@ theme:
 plugins:
   - search:
       separator: '[\s\u200b\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
-      indexing: 'full'
+      #indexing: 'full'
   - open-in-new-tab
   - markdownextradata:
       jinja_options:
@@ -105,6 +105,7 @@ plugins:
   - swagger-ui-tag
   #- neoteroi.mkdocsoad:
   #    use_pymdownx: true
+  - monorepo
 
 # Customization
 extra:
@@ -131,12 +132,8 @@ extra:
 
 extra_css:
   - assets/stylesheets/extra.css
-  # - assets/stylesheets/spanable.css
-  # - assets/stylesheets/neoteroi-cards.css
+
   - assets/stylesheets/neoteroi-mkdocs.css
-  # - assets/stylesheets/neoteroi-mkdocs.min.css
-  # - assets/stylesheets/neoteroi-mkdocsoad.css
-  # - assets/stylesheets/neoteroi-spantable.css
 
 # Extensions
 markdown_extensions:
@@ -176,20 +173,16 @@ markdown_extensions:
 # Navigation
 nav:
   - Home:
-    - /
+    - ./index.md
   - Dev Centre:
-    - /dev-centre/
+    - ./dev-centre/index.md
 #  - Product Docs:
 #    - product-docs/index.md
-  - APIs:
-    - /apis/
-  - Code Samples: 
-    - /samples/
-  - PowerCLI:
-    - /powercli/
-  - SDKs: 
-    - /sdks/
+  - APIs: '*include ./apis/*/mkdocs.yml'
+  - Code Samples: '*include ./samples/*/mkdocs.yml'
+  - PowerCLI: '*include ./powercli/*/mkdocs.yml'
+  - SDKs: '*include ./sdks/*/mkdocs.yml'
   - Support:
-    - /support/
+    - ./support/index.md
   - About:
-    - /about/
+    - ./about/index.md

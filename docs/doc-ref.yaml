@@ -1,16 +1,16 @@
 - title: APIs
   content: Build on omnissa products, manage & automate using APIs
-  url: apis/
+  url: apis/index.md
   image: assets/logos/api.png
 
 - title: Developer Centre
   content: Learn, Code and Connect using the Developer Centre as a Base
-  url: dev-centre/
+  url: dev-centre/index.md
   image: assets/logos/developer-training.png
 
 - title: PowerCLI
   content: Use PowerShell to manage & automate Horizon
-  url: powercli/
+  url: powercli/index.md
   image: assets/logos/powercli-logo.png
 
 - title: Code Samples
