@@ -6,7 +6,7 @@
 - title: Workspace ONE Access
   content: blah
   url: https://docs.omnissa.com/category/Workspace_ONE_Access_Cloud
-  image: ../assets/logos/ws1-access-logo-16.png
+  image: ../assets/logos/ws1-access-logo.png
 
 - title: Workspace ONE Intelligence
   content: Capture real-time event data from key user flows in your app
@@ -21,17 +21,17 @@
 - title: Workspace ONE Assist
   content: Remote support for digital employees
   url: https://docs.omnissa.com/bundle/Workspace-ONE-AssistV24.03/page/WorkspaceONEAssist.html
-  image: ../assets/logos/ws1-assist-logo-16.png
+  image: ../assets/logos/ws1-assist-logo.png
 
 - title: Workspace ONE Tunnel
   content: Securely provide either Per-App or Full Device VPN capabilities across all your employees’ devices and delivered with a modern Zero Trust architecture
   url: https://docs.omnissa.com/bundle/Workspace_ONE_TunnelVSaas/page/TunnelOverview.html
-  image: ../assets/logos/uag-logo-16.png
+  image: ../assets/logos/uag-logo.png
 
 - title: Unified Access Gateway
   content: Secure external access to your applications and desktops.
   url: https://docs.omnissa.com/bundle/UnifiedAccessGatewayDeployandConfigureV2312/page/Deployingandconfiguring.html
-  image: ../assets/logos/uag-logo-16.png
+  image: ../assets/logos/uag-logo.png
 
 - title: Horizon 8
   content: Secure virtual desktop (VDI) and app platform delivery
@@ -41,9 +41,9 @@
 - title: App Volumes
   content: Real-time application delivery system that enterprises can use to dynamically deliver and manage applications.
   url: https://docs.omnissa.com/bundle/AppVolumesInstallGuideV2312/page/AboutThisBook.html
-  image: ../assets/logos/app-volumes-logo-16.png
+  image: ../assets/logos/app-volumes-logo.png
 
 - title: Dynamic Environment Manager
   content: Windows profile management through dynamic policy configuration
   url: https://docs.omnissa.com/bundle/DEMInstallConfigGuideV2312/page/AboutInstallingandConfiguringDynamicEnvironmentManager.html
-  image: ../assets/logos/dem-logo-16.png
+  image: ../assets/logos/dem-logo.png
