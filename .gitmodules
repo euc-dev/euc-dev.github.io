@@ -22,3 +22,6 @@
 [submodule "powercli/horizon-powercli"]
 	path = powercli/horizon-powercli
 	url = git@github.com:euc-dev/horizon-powercli.git
+[submodule "samples/euc-samples"]
+	path = samples/euc-samples
+	url = git@github.com:euc-dev/euc-samples.git
