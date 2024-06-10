@@ -1,11 +1,11 @@
 - title: Workspace ONE Access Samples
   content: Workspace ONE Access example REST API sample scripts
-  url: euc-samples/Access-Samples/index.md
+  url: euc-samples/Access-Samples/
   image: ../assets/logos/ws1-access-logo.png
 
 - title: Workspace ONE UEM Samples for Android
   content: Workspace ONE UEM example sample scripts and apps for Android devices
-  url: euc-samples/Android-Samples/index.md
+  url: euc-samples/Android-Samples/
   image: ../assets/logos/android_logo_circle.png
 
 - title: App Volumes Samples
