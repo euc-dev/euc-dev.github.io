@@ -1,9 +1,9 @@
 - title: Workspace ONE
   content: Securely Integrate Your Mobile Apps with VMware Workspace ONE
-  url: ws1/
+  url: ws1/index.md
   image: ../assets/logos/ws1-logo.png
 
 - title: Workspace ONE Intelligence
   content: Capture real-time event data from key user flows in your app
-  url: ws1-intel/
+  url: ws1-intel/index.md
   image: ../assets/logos/ws1-intel-logo.png

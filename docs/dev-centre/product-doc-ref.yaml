@@ -4,7 +4,7 @@
   image: ../assets/logos/ws1-logo.png
 
 - title: Workspace ONE Access
-  content: blah
+  content: centralized management console with which you can manage users and groups, set up and manage authentication and access policies, and add resources to the catalog and manage entitlements to those resources. 
   url: https://docs.omnissa.com/category/Workspace_ONE_Access_Cloud
   image: ../assets/logos/ws1-access-logo.png
 

@@ -106,6 +106,7 @@ plugins:
   #- neoteroi.mkdocsoad:
   #    use_pymdownx: true
   - monorepo
+  - macros
 
 # Customization
 extra:
@@ -132,7 +133,7 @@ extra:
 
 extra_css:
   - assets/stylesheets/extra.css
-
+  - assets/stylesheets/neoteroi-mkdocsoad.css
   - assets/stylesheets/neoteroi-mkdocs.css
 
 # Extensions

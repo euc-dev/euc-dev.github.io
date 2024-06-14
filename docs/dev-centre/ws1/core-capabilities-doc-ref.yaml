@@ -1,0 +1,19 @@
+- title: App Passcode
+  content: For security reasons, enterprises may want to prevent continuous access to an app without periodic authentication. An app passcode can ensure the app is only accessible to the entitled user and that the user identity is maintained over...
+  url: #app-passcode.md
+  image: ../../assets/logos/passkey-fill.svg
+
+- title: App Tunneling
+  content: An application may require access to web services residing behind a corporate firewall. A traditional full device VPN solution is not adequate due to manual steps required to enable the VPN on the device, and the security exposure by...
+  url: app-tunneling.md
+  image: ../../assets/logos/uag-logo.png
+
+- title: Prevent Copy and Paste
+  content: For apps used in more regulated industries, it may be important for IT to prevent applications from openly sharing data with each other. Copy / Paste restrictions can prevent data in a corporate app from being easily transferred to...
+  url: prevent-copy-and-paste.md
+  image: ../../assets/logos/paste-regular.svg
+
+- title: Single Sign On Certificate Authentication
+  content: For security reasons, enterprises may require authentication for their API endpoints and websites, SSO via Certificates allows a developer to leverage enrollment credentials to handle the authentication without prompting the end user of the...
+  url: sso-cert-auth.md
+  image: ../../assets/logos/certificate-diploma-svgrepo-com.svg

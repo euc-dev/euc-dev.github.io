@@ -1,4 +1,4 @@
 - title: Horizon PowerCLI
   content: Provides cmdlets for automating VMware Horizon features.
-  url: /powercli/horizon-powercli/
+  url: horizon-powercli/index.md
   image: ../assets/logos/horizon-logo.png
