@@ -1,5 +1,5 @@
 - title: APIs
-  content: Build on omnissa products, manage & automate using APIs
+  content: Build on Omnissa products, manage & automate using APIs
   url: apis/index.md
   image: assets/logos/api.png
 
@@ -19,6 +19,6 @@
   image: assets/logos/samples.png
 
 - title: SDKs
-  content: Link to the freely available SDKs available for omnissa products
+  content: Link to the freely available SDKs available for Omnissa products
   url: sdks/index.md
   image: assets/logos/developer-training.png

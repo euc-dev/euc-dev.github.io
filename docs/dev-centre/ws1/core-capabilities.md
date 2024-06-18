@@ -1,7 +1,6 @@
 ---
 layout: page
 title: Core Capabilities
-#permalink: /dev-centre/
 hide:
   - navigation
   - toc

@@ -1,7 +1,6 @@
 ---
 layout: page
 title: API, SDK, and PowerCLI Support Options
-#permalink: /support/
 hide:
   - navigation
   - toc

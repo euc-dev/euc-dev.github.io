@@ -1,7 +1,6 @@
 ---
 layout: page
 title: App Tunneling
-#permalink: /dev-centre/
 hide:
   #- navigation
   - toc

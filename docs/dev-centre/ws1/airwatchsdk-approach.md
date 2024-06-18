@@ -1,7 +1,6 @@
 ---
 layout: page
 title: Airwatch SDK Approach
-#permalink: /dev-centre/
 hide:
   #- navigation
   - toc

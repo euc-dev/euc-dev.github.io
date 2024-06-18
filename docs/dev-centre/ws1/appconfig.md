@@ -1,7 +1,6 @@
 ---
 layout: page
 title: AppConfig.org Implementation Summary
-#permalink: /dev-centre/
 hide:
   - navigation
   - toc

@@ -1,4 +1,4 @@
-# omnissa Developer Portal
+# Omnissa Developer Portal
 
 Welcome to the End User Computing developer portal proof-of-concept repository.
 
@@ -9,28 +9,30 @@ This site is using MkDocs as the site renderer, and GitHub Pages as the hoster. 
 Multiple repos are linked into this site by utilising a common folder structure and site_url.
 
 ## docs Folder Structure
+
 A common folder structure has been created to allow for other repos containing product specific documentation and resources to be merged into this site. This allows for those other repos to be maintained by the teams that own the products.
 
 ### Folder Structure and Included Content
+
 ```
-./docs
-    /apis
-      /index.md
-    /assets
-      /image
-      /logo
-      /stylesheets
-    /dev-centre
-      /index.md
-      ...
-    /powercli
-      /index.md
-    /samples
-      /index.md
-    /sdks
-      /index.md
-    /support
-      /index.md
+    ./docs
+        /apis
+          /index.md
+        /assets
+          /image
+          /logo
+          /stylesheets
+        /dev-centre
+          /index.md
+          ...
+        /powercli
+          /index.md
+        /samples
+          /index.md
+        /sdks
+          /index.md
+        /support
+          /index.md
 ```
 
 The following folders have content provided by other repos
@@ -50,6 +52,3 @@ The following folders have content provided by other repos
 
 !!! Note
     Because of the linkage between other repos, this site must be built after changes to the other sites.
-
-
-
