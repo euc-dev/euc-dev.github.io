@@ -14,4 +14,43 @@ Browse and download code samples from Omnissa as well as code samples contribute
 
 > Disclaimer: All sample content and code in Sample Exchange is licensed to you by the sample's author. VMware does not guarantee the samples; they are provided "AS IS". Use of this site is subject to the VMware Community Terms of Use.
 
-[cards cols=3 (docs/samples/doc-ref.yaml)]
+<!-- [cards cols=3 (docs/samples/doc-ref.yaml)] -->
+
+::cards::
+
+- title: Workspace ONE Access Samples
+  content: Workspace ONE Access example REST API sample scripts
+  url: ../euc-samples/Access-Samples/index.md
+  image: ../assets/logos/ws1-access-logo.png
+
+- title: Workspace ONE UEM Samples for Android
+  content: Workspace ONE UEM example sample scripts and apps for Android devices
+  url: ../euc-samples/Android-Samples/index.md
+  image: ../assets/logos/android_logo_circle.png
+
+- title: App Volumes Samples
+  content: App Volumes Samples scripts and REST API calls
+  url: ../euc-samples/App-Volumes-Samples/index.md
+  image: ../assets/logos/app-volumes-logo.png
+
+- title: Horizon Samples
+  content: Horizon Enterprise and Cloud scripts and API samples to manage day 2 operations
+  url: ../euc-samples/Horizon-Samples/index.md
+  image: ../assets/logos/horizon-logo.png
+
+- title: Workspace ONE Intelligence Samples
+  content: Workspace ONE Intelligence Custom Connectors and Sample Apps with the Workspace ONE Intelligence SDK
+  url: ../euc-samples/Intelligence-Samples/index.md
+  image: ../assets/logos/ws1-intel-logo.png
+
+- title: Unified Access Gateway Samples
+  content: Sample scripts to deploy and manage UAG
+  url: ../euc-samples/UAG-Samples/index.md
+  image: ../assets/logos/uag-logo.png
+
+- title: Workspace ONE UEM Samples
+  content: Workspace ONE UEM Apps, Guides, Profiles, Scripts, Sensors and Utilities
+  url: ../euc-samples/UEM-Samples/index.md
+  image: ../assets/logos/ws1-uem-logo.png
+
+::/cards::
