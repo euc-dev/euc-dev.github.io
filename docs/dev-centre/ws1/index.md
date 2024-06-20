@@ -106,7 +106,7 @@ Browse all [Core Capabilities](core-capabilities.md)
 
 ## Technical Capabilities
 
-**Find the Right Technical Approach for Integrating Your App With Workspace ONE**
+### Find the Right Technical Approach for Integrating Your App With Workspace ONE
 
 There are multiple technical approaches you can use to securely integrate apps with Workspace ONE. Most commonly, developers use a combination of technical approaches to meet the desired outcome based on whether they are creating Android, iOS, or web-native apps.
 
