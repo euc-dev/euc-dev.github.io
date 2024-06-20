@@ -25,3 +25,6 @@
 [submodule "samples/euc-samples"]
 	path = samples/euc-samples
 	url = git@github.com:euc-dev/euc-samples.git
+[submodule "apis/ws1-access-apis"]
+	path = apis/ws1-access-apis
+	url = git@github.com:euc-dev/ws1-access-apis.git
