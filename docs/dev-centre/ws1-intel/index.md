@@ -7,19 +7,20 @@ hide:
 ---
 
 ## Monitor, Prioritize, Troubleshoot, and Trend Mobile App Performance in Real Time!
+
 Workspace ONE Intelligence SDK enables developers to capture real-time event data from key user flows in your app: screen load time, network events, crash reports, and more. Track key metrics, improve your app release-over-release, and focus on issues that matter to your users.
 
 ## Core Capabilities
 
 <div class="grid cards" markdown>
 
-- **[Crash Reporting](https://developer.omnissa.com/ws1-dev-centre/core-capabilities/App-Passcode)**
+- **[Crash Reporting](#)**
 
     ---
 
     A crash is a run-time exception that occurs due to some unexpected event that terminates the user session. Crashes are events that are not handled within a try/catch block in the app. The Crash Reporting page of the portal shows the event,...
 
-- **[Network Insights](https://developer.omnissa.com/ws1-dev-centre/core-capabilities/App-Tunneling)**
+- **[Network Insights](#)**
 
     ---
 
@@ -27,13 +28,13 @@ Workspace ONE Intelligence SDK enables developers to capture real-time event dat
 
     For HTTP calls such as REST...
 
-- **[Symbolication](https://developer.omnissa.com/ws1-dev-centre/core-capabilities/Prevent-Copy-and-Paste)**
+- **[Symbolication](#)**
 
     ---
 
     Symbolication is the process of translating stack traces into a human-readable form by mapping hexadecimal addresses to function names using symbol file(s). Workspace ONE Intelligence automatically symbolicates crashes once you have...
 
-- **[Usage Tracking](https://developer.omnissa.com/ws1-dev-centre/core-capabilities/Single-Sign-On-Certificate-Authentication)**
+- **[Usage Tracking](#)**
 
     ---
 
@@ -44,6 +45,7 @@ Workspace ONE Intelligence SDK enables developers to capture real-time event dat
 Browse all [core capabilities](core-capabilities.md)
 
 ## Key Use Cases
+
 <div class="grid cards" markdown>
 
 - App Usage and Engagement
@@ -72,6 +74,5 @@ Many Code Samples are available within the [https://github.com/euc-oss/euc-sampl
 
 ## Community Resources
 
-![](/assets/logos/ws1-family.png)
 Omnissa Customer Community Forum, is an online experience for Omnissa customers that is the go-to for learning, connecting, and receiving real-time enablement support from our team. Visit the [Workspace ONE Forum](https://community.omnissa.com/forums/forum/9-workspace-one/) to get started.
 
