@@ -8,6 +8,19 @@ This site is using MkDocs as the site renderer, and GitHub Pages as the hoster. 
 
 Multiple repos are linked into this site by utilising a common folder structure and site_url.
 
+## Getting Started
+
+```bash
+git checkout . . .
+cd euc-dev.github.io/
+git submodule init
+git submodule update
+code .
+# click the "reopen in container" in VSCode pop-up dialogue
+./scripts/03-serve.sh
+# click on the "Open in browser" in VSCode pop-up dialogue 
+```
+
 ## docs Folder Structure
 
 A common folder structure has been created to allow for other repos containing product specific documentation and resources to be merged into this site. This allows for those other repos to be maintained by the teams that own the products.
