@@ -8,9 +8,9 @@ hide:
 
 Manage the Omnissa portfolio of products and automate configuration using APIs.
 
-<!-- [cards cols=3 (docs/apis/doc-ref.yaml)] -->
+[cards (docs/apis/doc-ref.yaml)]
 
-::cards::
+<!-- ::cards::
 
 - title: Horizon APIs
   content: manage & automate Horizon using APIs
@@ -32,4 +32,4 @@ Manage the Omnissa portfolio of products and automate configuration using APIs.
   url: ../ws1-access-apis/index.md
   image: ../assets/logos/ws1-access-logo.png
 
-::/cards::
+::/cards:: -->
