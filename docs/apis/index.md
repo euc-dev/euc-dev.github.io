@@ -8,9 +8,7 @@ hide:
 
 Manage the Omnissa portfolio of products and automate configuration using APIs.
 
-<!-- [cards (docs/apis/doc-ref.yaml)] -->
-
-::cards::
+::cards:: cols=5
 
 - title: Horizon APIs
   content: manage & automate Horizon using APIs
@@ -26,6 +24,11 @@ Manage the Omnissa portfolio of products and automate configuration using APIs.
   content: query and extract data for use in other business intelligence tools
   url: ../ws1-intelligence-apis/index.md
   image: ../assets/logos/ws1-intel-logo.png
+
+- title: Workspace ONE UEM APIs
+  content: manage and configure Access via REST API
+  url: ../ws1-uem-apis/index.md
+  image: ../assets/logos/ws1-uem-logo.png
 
 - title: Workspace ONE Access APIs
   content: manage and configure Access via REST API
