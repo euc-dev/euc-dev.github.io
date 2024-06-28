@@ -2,7 +2,7 @@
 layout: page
 title: PowerCLI
 hide:
-  #- navigation
+  - navigation
   - toc
 ---
 

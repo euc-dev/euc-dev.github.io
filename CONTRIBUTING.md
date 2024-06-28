@@ -8,7 +8,8 @@ Please read through this document before submitting any issues or pull requests 
 
 We welcome you to use the GitHub issue tracker to report bugs or suggest features and enhancements.
 
-When filing an issue, please check existing open, or recently closed, issues to make sure someone else hasn't already reported the issue.
+When filing an issue, please check existing open, or recently closed, issues to make sure someone else hasn't already
+reported the issue.
 
 Please try to include as much information as you can. Details like these are incredibly useful:
 
@@ -21,31 +22,30 @@ Please try to include as much information as you can. Details like these are inc
 Contributions via pull requests are appreciated. Before sending us a pull request, please ensure that:
 
 1. You open an issue and link your pull request to the issue for context.
-2. You are working against the latest source on the `main` branch.
-3. You check existing open, and recently merged, pull requests to make sure someone else hasn't already addressed the problem.
+1. You are working against the latest source on the `main` branch.
+1. You check existing open, and recently merged, pull requests to make sure someone else hasn't already addressed the problem.
 
 To send us a pull request, please:
 
 1. Fork the repository.
-2. Modify the source; please focus on the **specific** change you are contributing.
-3. Ensure local tests pass.
-4. Update the documentation, if required.
-5. Commit to your fork [using a clear commit messages](http://chris.beams.io/posts/git-commit/).
-6. Send us a pull request, answering any default questions in the pull request.
-7. Pay attention to any automated failures reported in the pull request, and stay involved in the conversation.
+1. Modify the source; please focus on the **specific** change you are contributing.
+1. Ensure local tests pass.
+1. Updated the documentation, if required.
+1. Commit to your fork [using a clear commit messages](http://chris.beams.io/posts/git-commit/).
+1. Send us a pull request, answering any default questions in the pull request.
+1. Pay attention to any automated failures reported in the pull request, and stay involved in the conversation.
 
-GitHub provides additional document on [forking a repository](https://help.github.com/articles/fork-a-repo/) and
-[creating a pull request](https://help.github.com/articles/creating-a-pull-request/).
+GitHub provides additional document on [forking a repository](https://help.github.com/articles/fork-a-repo/) and [creating a pull request](https://help.github.com/articles/creating-a-pull-request/).
 
 ### Contributor Flow
 
 This is a rough outline of what a contributor's workflow looks like:
 
-- Create a topic branch from where you want to base your work.
-- Make commits of logical units.
-- Make sure your commit messages are [in the proper format](http://chris.beams.io/posts/git-commit/).
-- Push your changes to a topic branch in your fork of the repository.
-- Submit a pull request.
+* Create a topic branch from where you want to base your work.
+* Make commits of logical units.
+* Make sure your commit messages are [in the proper format](http://chris.beams.io/posts/git-commit/).
+* Push your changes to a topic branch in your fork of the repository.
+* Submit a pull request.
 
 Example:
 
@@ -58,7 +58,7 @@ git push origin my-new-feature
 
 ### Staying In Sync With Upstream
 
-When your branch gets out of sync with the tenthirtyam/main branch, use the following to update:
+When your branch gets out of sync with the remote main branch, use the following to update:
 
 ``` shell
 git checkout my-new-feature

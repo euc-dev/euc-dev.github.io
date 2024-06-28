@@ -12,8 +12,6 @@ Developer `{code}` Portal is a free developer program that provides access to a 
 
 ## Featured Resources for Developers
 
-<!-- [cards cols=2 (docs/doc-ref.yaml)] -->
-
 ::cards:: cols=5
 
 - title: APIs

@@ -12,65 +12,58 @@ Workspace ONE Intelligence SDK enables developers to capture real-time event dat
 
 ## Core Capabilities
 
-<div class="grid cards" markdown>
+::cards:: cols=4
 
-- **[Crash Reporting](#)**
+- title: Crash Reporting
+  content: A crash is a run-time exception that occurs due to some unexpected event that terminates the user session. Crashes are events that are not handled within a try/catch block in the app. The Crash Reporting page of the portal shows the event,...
+  url: ./core-capabilities.md#crash-reporting-overview
+  image: ../../assets/images/alert.svg
 
-    ---
+- title: Network Insights
+  content: Whenever an app makes a network call, Workspace ONE Intelligence SDK monitors and captures certain information, such as the service name, device type, device OS and OS version, app version and endpoint URI...
+  url: ./core-capabilities.md#network-insights-overview
+  image: ../../assets/images/speedometer.svg
 
-    A crash is a run-time exception that occurs due to some unexpected event that terminates the user session. Crashes are events that are not handled within a try/catch block in the app. The Crash Reporting page of the portal shows the event,...
+- title: Symbolication
+  content: Symbolication is the process of translating stack traces into a human-readable form by mapping hexadecimal addresses to function names using symbol file(s). Workspace ONE Intelligence automatically symbolicates crashes once you have...
+  url: ./core-capabilities.md#symbolication-overview
+  image: ../../assets/images/symbol.svg
 
-- **[Network Insights](#)**
+- title: Usage Tracking
+  content: An app load occurs whenever a user launches the app on their device. When the user begins using an instrumented application, the library automatically records an app load event. Workspace ONE Intelligence then aggregates app loads into rolling...
+  url: ./core-capabilities.md#usage-tracking-overview
+  image: ../../assets/images/monitor-eye.svg
 
-    ---
-
-    Whenever an app makes a network call, Workspace ONE Intelligence SDK monitors and captures certain information, such as the service name, device type, device OS and OS version, app version and endpoint URI.
-
-    For HTTP calls such as REST...
-
-- **[Symbolication](#)**
-
-    ---
-
-    Symbolication is the process of translating stack traces into a human-readable form by mapping hexadecimal addresses to function names using symbol file(s). Workspace ONE Intelligence automatically symbolicates crashes once you have...
-
-- **[Usage Tracking](#)**
-
-    ---
-
-    An app load occurs whenever a user launches the app on their device. When the user begins using an instrumented application, the library automatically records an app load event. Workspace ONE Intelligence then aggregates app loads into rolling...
-
-</div>
+::/cards::
 
 Browse all [core capabilities](core-capabilities.md)
 
 ## Key Use Cases
 
-<div class="grid cards" markdown>
+::cards:: cols=3
 
-- App Usage and Engagement
+- title: App Usage and Engagement
+  content: Keep an eye on your app adoption and engagement with the help of metrics such as app loads, Daily Active Users and Monthly Active Users reported by Workspace ONE Intelligence SDK.
+  url: #
+  image: ../../assets/images/cog-outline.svg
 
-    ---
+- title: Application Performance Management
+  content: Workspace ONE Intelligence empowers you to manage performance and user experience in the face of millions of potential configurations.
+  url: #
+  image: ../../assets/images/speedometer.svg
 
-    Keep an eye on your app adoption and engagement with the help of metrics such as app loads, Daily Active Users and Monthly Active Users reported by Workspace ONE Intelligence SDK.
+- title: User Behavior
+  content: Identify the most important flows in your app and understand your app’s adoption with precise data.
+  url: #
+  image: ../../assets/images/devices.svg
 
-- Application Performance Management
-
-    ---
-
-    Workspace ONE Intelligence empowers you to manage performance and user experience in the face of millions of potential configurations.
-
-- User Behavior
-
-    ---
-
-    Identify the most important flows in your app and understand your app’s adoption with precise data.
-
-</div>
+::/cards::
 
 ## Developer Resources
 
 Many Code Samples are available within the [https://github.com/euc-oss/euc-samples](https://github.com/euc-oss/euc-samples) GitHub repository. An Index of all samples is provided under [Code Samples](../samples/index.md) menu above.
+
+Additionally, documentation on SDKs are provided at [SDKs](../../sdks/index.md) in the menu bar above.
 
 ## Community Resources
 

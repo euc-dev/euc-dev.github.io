@@ -2,13 +2,11 @@
 layout: page
 title: Developer Centre
 hide:
-  #- navigation
+  - navigation
   - toc
 ---
 
 Find Developer and DevOps Resources for omnissa Technology Platforms. APIs, SDKs, docs, code samples, tools, workshops, and other resources to help developers and DevOps teams design, develop, and certify solutions for omnissa products and platforms.
-
-<!-- [cards cols=3 (docs/dev-centre/doc-ref.yaml)] -->
 
 ::cards::
 

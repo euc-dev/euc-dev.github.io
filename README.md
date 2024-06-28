@@ -14,7 +14,7 @@ Multiple repos are linked into this site by utilising a common folder structure 
 git checkout . . .
 cd euc-dev.github.io/
 git submodule init
-git submodule update
+git submodule update --recursive
 code .
 # click the "reopen in container" in VSCode pop-up dialogue
 ./scripts/03-serve.sh
@@ -23,45 +23,63 @@ code .
 
 ## docs Folder Structure
 
-A common folder structure has been created to allow for other repos containing product specific documentation and resources to be merged into this site. This allows for those other repos to be maintained by the teams that own the products.
+A common folder structure has been created to allow for other repos containing product specific documentation and resources to be merged into this site using [git-submodules](https://github.blog/2016-02-01-working-with-submodules/) and [monorepo](https://backstage.github.io/mkdocs-monorepo-plugin/). This allows for those other repos to be maintained by the teams that own them.
 
 ### Folder Structure and Included Content
 
-```
-    ./docs
-        /apis
-          /index.md
-        /assets
-          /image
-          /logo
-          /stylesheets
-        /dev-centre
-          /index.md
-          ...
-        /powercli
-          /index.md
-        /samples
-          /index.md
-        /sdks
-          /index.md
-        /support
-          /index.md
+```bash
+
+├── .docs
+    ├── apis
+    │    └── index.md
+    ├── assets
+    │    ├── images
+    │    ├── javascripts
+    │    ├── logos
+    │    └── stylesheets
+    ├── dev-centre
+    │    ├── ws1
+    │    │    └── index.md
+    │    └── ws1-intel
+    │    │    └── index.md
+    ├── powercli
+    │    └── index.md
+    ├── samples
+    │    └── index.md
+    ├── sdks
+    │    └── index.md
+    └── support
+         └── index.md
+
 ```
 
-The following folders have content provided by other repos
-| Folder Path | Repository URL |
-| --- | ---:|
-| /docs/apis | https://github.com/euc-dev/horizon-apis/docs/apis/
-|  | https://github.com/euc-dev/app-volumes-apis/docs/apis/ |
-|  | https://github.com/euc-dev/ws1-sdk-intelligence/docs/apis/ |
-| docs/assets | https://github.com/euc-dev/branding/docs/assets/ |
-| /docs/dev-centre/integration-samples | ws1-sdk-integration-samples |
-| /docs/powercli | https://github.com/euc-dev/horizon-powercli/docs/powercli/ |
-| /docs/samples | https://github.com/euc-dev/euc-samples/docs/samples/ |
-| /docs/sdks | https://github.com/euc-dev/horizon-sdk/docs/sdks/ |
-|  | https://github.com/euc-dev/ws1-sdk-uem-android/docs/sdks/ |
-|  | https://github.com/euc-dev/ws1-sdk-intelligence/docs/sdks/ |
-|  | https://github.com/euc-dev/ws1-sdk-uem-ios/docs/sdks/ |
+### Git-Submodule Content
+
+The following folders have content provided by other repos using git-submodule. Do not edit the contents of these folders, simply run `git submodule update --recursive` to update from the source repo.
+
+```bash
+
+├── .docs
+    ├── apis
+    │       <- [/apis/app-volumes-apis](/apis/app-volumes-apis/)
+    │       <- [/apis/horizon-apis](/apis/horizon-apis/)
+    │       <- [/apis/ws1-access-apis](/apis/ws1-access-apis/)
+    │       <- [/apis/ws1-uem-intelligence](/apis/ws1-uem-intelligence/)
+    │       <- [/apis/ws1-api-intelligence](/apis/ws1-api-intelligence/)
+    ├── assets
+    │       <- [/apis/branding](/apis/branding/) (future)
+    ├── powercli
+    │       <- [/apis/horizon-powercli](/apis/horizon-powercli/)
+    ├── samples
+    │       <- [/apis/euc-samples](/apis/euc-samples/)
+    │       <- [/apis/ws1-sdk-integration-samples](/apis/ws1-sdk-integration-samples/)
+    ├── sdks
+    │       <- [/apis/horizon-sdks](/apis/horizon-sdks/)
+    │       <- [/apis/ws1-sdk-uem-android](/apis/ws1-sdk-uem-android/)
+    │       <- [/apis/ws1-sdk-intelligence](/apis/ws1-sdk-intelligence/)
+    │       <- [/apis/ws1-sdk-uem-ios](/apis/ws1-sdk-uem-ios/)
+
+```
 
 !!! Note
     Because of the linkage between other repos, this site must be built after changes to the other sites.
