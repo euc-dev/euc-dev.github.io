@@ -119,8 +119,6 @@ plugins:
       fallback_to_build_date: true
       type: timeago
   - swagger-ui-tag
-  #- neoteroi.mkdocsoad:
-  #    use_pymdownx: true
   - monorepo
   - macros
 
@@ -130,40 +128,23 @@ extra:
   # version:
   #   default: latest
   #   provider: mike
-  # social:
-  #   - icon: fontawesome/brands/github
-  #     link: https://github.com/euc-oss/euc-samples
-  #   - icon: fontawesome/brands/x-twitter
-  #     link: https://twitter.com/WorkspaceONE
-  #   - icon: fontawesome/brands/youtube
-  #     link: https://www.youtube.com/channel/UCYgGfqfb9c3AOGJqxqdjNYw
-  #   - icon: fontawesome/brands/linkedin
-  #     link: https://www.linkedin.com/company/vmware-workspaceone/
-  #   - icon: fontawesome/brands/facebook
-  #     link: https://www.facebook.com/vmwareworkspaceone/
-  #   - icon: fontawesome/brands/instagram
-  #     link: https://www.instagram.com/vmware/
-  #   - icon: fontawesome/brands/slack
-  #     link: https://slack.com/vmware
-  #   - icon: fontawesome/brands/discord
-  #     link: https://discord.com/vmware
-  analytics: 
-    provider: custom
-    property: foobar
-    feedback:
-      title: Was this page helpful?
-      ratings:
-        - icon: material/thumb-up-outline
-          name: This page was helpful
-          data: 1
-          note: >-
-            Thanks for your feedback!
-        - icon: material/thumb-down-outline
-          name: This page could be improved
-          data: 0
-          note: >- 
-            Thanks for your feedback! Please provide some specifics by providing additional info in a new Issue:
-            https://github.com/euc-dev/euc-dev.github.io/issues/new/?title=[Feedback]+{title}+-+{url}
+analytics: 
+  provider: custom
+  property: foobar
+  feedback:
+    title: Was this page helpful?
+    ratings:
+      - icon: material/thumb-up-outline
+        name: This page was helpful
+        data: 1
+        note: >-
+          Thanks for your feedback!
+      - icon: material/thumb-down-outline
+        name: This page could be improved
+        data: 0
+        note: >- 
+          Thanks for your feedback! Please provide some specifics by providing additional info in a new Issue:
+          https://github.com/euc-dev/euc-dev.github.io/issues/new/?title=[Feedback]+{title}+-+{url}
 extra_css:
   - assets/stylesheets/extra.css
   - assets/stylesheets/footer.Cx6ysBfj.css
@@ -181,7 +162,6 @@ markdown_extensions:
   - footnotes
   - md_in_html
   - neoteroi.spantable
-  #- neoteroi.mkdocsoad
   - neoteroi.cards
   - pymdownx.details
   - pymdownx.critic
@@ -224,7 +204,7 @@ nav:
   - APIs: '*include ./apis/*/mkdocs.yml'
   - Code Samples: '*include ./samples/*/mkdocs.yml'
   - PowerCLI: '*include ./powercli/*/mkdocs.yml'
-#  - Terraform: '*include ./terraform/*/mkdocs.yml'  
+#  - Terraform: '*include ./terraform/*/mkdocs.yml'
   - SDKs: '*include ./sdks/*/mkdocs.yml'
   - Support:
     - ./support/index.md
