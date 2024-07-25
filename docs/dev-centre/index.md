@@ -6,12 +6,12 @@ hide:
   - toc
 ---
 
-Find Developer and DevOps Resources for omnissa Technology Platforms. APIs, SDKs, docs, code samples, tools, workshops, and other resources to help developers and DevOps teams design, develop, and certify solutions for omnissa products and platforms.
+Find Developer and DevOps Resources for omnissa Technology Platforms. APIs, SDKs, docs, code samples, tools, workshops, and other resources to help developers and DevOps teams design, develop, and certify solutions for Omnissa products and platforms.
 
 ::cards::
 
 - title: Workspace ONE
-  content: Securely Integrate Your Mobile Apps with VMware Workspace ONE
+  content: Securely Integrate Your Mobile Apps with Omnissa Workspace ONE
   url: ws1/index.md
   image: ../assets/logos/ws1-logo.png
 

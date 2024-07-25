@@ -65,6 +65,38 @@ Many Code Samples are available within the [https://github.com/euc-oss/euc-sampl
 
 Additionally, documentation on SDKs are provided at [SDKs](../../sdks/index.md) in the menu bar above.
 
+ Apple SDK
+Apple Guide
+
+Apple Release Notes
+
+SDK Data Sheet
+
+Download/Install WS1 Intelligence SDK via Swift Package Manager (see: Installation Guide: Installing Workspace ONE Intelligence SDK for iOS )
+
+Download WS1IntelligenceSDKDSYMUpload.zip (see: guide for setting up automatic dSYM uploads)
+
+ Android SDK
+Android Guide
+
+Android Release Notes
+
+SDK Data Sheet
+
+ Cordova (iOS and Android)
+Cordova Guide
+
+Cordova Release Notes
+
+Note
+
+The Workspace ONE Intelligence Cordova plugin can be installed via the Cordova plugin manager.
+
+cordova plugin add cordova-plugin-ws1intelligence
+
+https://www.npmjs.com/package/cordova-plugin-ws1intelligence
+
+
 ## Community Resources
 
 Omnissa Customer Community Forum, is an online experience for Omnissa customers that is the go-to for learning, connecting, and receiving real-time enablement support from our team. Visit the [Workspace ONE Forum](https://community.omnissa.com/forums/forum/9-workspace-one/) to get started.

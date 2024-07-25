@@ -11,7 +11,7 @@ Powershell provides a powerful way to script Omnissa product operations. This is
 ::cards::
 
 - title: Horizon PowerCLI
-  content: Provides cmdlets for automating VMware Horizon features.
+  content: Provides cmdlets for automating Omnissa Horizon features.
   url: ../horizon-powercli/index.md
   image: ../assets/logos/horizon-logo.png
 
