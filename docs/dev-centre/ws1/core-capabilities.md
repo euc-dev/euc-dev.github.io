@@ -2,8 +2,8 @@
 layout: page
 title: Workspace ONE UEM Core Capabilities
 hide:
-  #- navigation
-  - toc
+  - navigation
+  #- toc
 ---
 
 ## App Configuration

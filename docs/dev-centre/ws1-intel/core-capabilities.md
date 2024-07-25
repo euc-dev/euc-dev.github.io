@@ -2,8 +2,8 @@
 layout: page
 title: Workspace ONE Intelligence Core Capabilities
 hide:
-  - navigation
-  #- toc
+  #- navigation
+  - toc
 ---
 
 ## Crash Reporting Overview

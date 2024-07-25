@@ -22,7 +22,7 @@ Find Developer and DevOps Resources for omnissa Technology Platforms. APIs, SDKs
 
 ::/cards::
 
-## Product Documentation
+<!-- ## Product Documentation
 
 Links to Official Product Documentation Getting Started Guides are below. The main documentation site can be found at **[https://docs.omnissa.com/](https://docs.omnissa.com/)**.
 
@@ -78,4 +78,4 @@ Links to Official Product Documentation Getting Started Guides are below. The ma
   url: https://docs.omnissa.com/bundle/DEMInstallConfigGuideV2312/page/AboutInstallingandConfiguringDynamicEnvironmentManager.html
   image: ../assets/logos/dem-logo.png
 
-::/cards::
+::/cards:: -->
