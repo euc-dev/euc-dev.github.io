@@ -19,8 +19,9 @@ copyright: |
 # Configuration
 theme:
   name: material
-  favicon: favicon.ico
-  logo: assets/images/icon-white.svg
+  custom_dir: overrides
+  favicon: assets/logos/favicon-light.svg
+  logo: assets/logos/favicon-dark.svg
   admonition:
       note: fontawesome/solid/note-sticky
       abstract: fontawesome/solid/book
@@ -45,23 +46,38 @@ theme:
     annotation: material/star-four-points-circle
     annotation: material/plus-circle-outline
   palette:
-  - media: "(prefers-color-scheme: light)"
-    scheme: default
-    primary: indigo
-    accent: indigo
-    toggle:
-      icon: material/toggle-switch
-      name: Dark Theme
-  - media: "(prefers-color-scheme: dark)"
-    scheme: slate
-    primary: indigo
-    accent: indigo
-    toggle:
-      icon: material/toggle-switch-off-outline
-      name: Light Theme
+    scheme: omnissa
+    primary: dark-shade-blue
+    accent: neon
+
+
+  # Palette toggle for automatic mode
+  # - media: "(prefers-color-scheme)"
+  #   scheme: omnissa
+  #   toggle:
+  #     icon: material/lightbulb-auto-outline
+  #     name: Switch to light mode
+  # Palette toggle for light mode
+  # - media: "(prefers-color-scheme: light)"
+  #   scheme: slate
+  #   primary: dark-shade-blue
+  #   accent: neon
+  #   toggle:
+  #     icon: material/toggle-switch
+  #     name: Dark Theme
+  # Palette toggle for dark mode
+  # - media: "(prefers-color-scheme: dark)"
+  #   scheme: omnissa
+  #   primary: dark-shade-blue
+  #   accent: neon
+  #   toggle:
+  #     icon: material/toggle-switch-off-outline
+  #     name: Light Theme
   font:
-    text: Roboto
-    code: Roboto Mono
+    text: Outfit
+    code: Poppins
+    # text: Roboto
+    # code: Roboto Mono
   features:
   - content.action.edit
   - content.action.view
@@ -69,7 +85,7 @@ theme:
   - content.code.copy
   - content.tabs.link
   #- navigation.expand
-  - navigation.footer
+  #- navigation.footer
   - navigation.header
   - navigation.indexes
   - navigation.instant
@@ -83,7 +99,7 @@ theme:
   - search.share
   - search.suggest
   - toc.follow
-  - toc.integrate
+  #- toc.integrate
 
 # Plugins
 plugins:
@@ -111,35 +127,52 @@ plugins:
 # Customization
 extra:
   homepage: https://omnissa.com
-  version:
-    default: latest
-    provider: mike
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/euc-oss/euc-samples
-    - icon: fontawesome/brands/x-twitter
-      link: https://twitter.com/WorkspaceONE
-    - icon: fontawesome/brands/youtube
-      link: https://www.youtube.com/channel/UCYgGfqfb9c3AOGJqxqdjNYw
-    - icon: fontawesome/brands/linkedin
-      link: https://www.linkedin.com/company/vmware-workspaceone/
-    - icon: fontawesome/brands/facebook
-      link: https://www.facebook.com/vmwareworkspaceone/
-    - icon: fontawesome/brands/instagram
-      link: https://www.instagram.com/vmware/
-    - icon: fontawesome/brands/slack
-      link: https://slack.com/vmware
-    - icon: fontawesome/brands/discord
-      link: https://discord.com/vmware
-
+  # version:
+  #   default: latest
+  #   provider: mike
+  # social:
+  #   - icon: fontawesome/brands/github
+  #     link: https://github.com/euc-oss/euc-samples
+  #   - icon: fontawesome/brands/x-twitter
+  #     link: https://twitter.com/WorkspaceONE
+  #   - icon: fontawesome/brands/youtube
+  #     link: https://www.youtube.com/channel/UCYgGfqfb9c3AOGJqxqdjNYw
+  #   - icon: fontawesome/brands/linkedin
+  #     link: https://www.linkedin.com/company/vmware-workspaceone/
+  #   - icon: fontawesome/brands/facebook
+  #     link: https://www.facebook.com/vmwareworkspaceone/
+  #   - icon: fontawesome/brands/instagram
+  #     link: https://www.instagram.com/vmware/
+  #   - icon: fontawesome/brands/slack
+  #     link: https://slack.com/vmware
+  #   - icon: fontawesome/brands/discord
+  #     link: https://discord.com/vmware
+  analytics: 
+    provider: custom
+    property: foobar
+    feedback:
+      title: Was this page helpful?
+      ratings:
+        - icon: material/thumb-up-outline
+          name: This page was helpful
+          data: 1
+          note: >-
+            Thanks for your feedback!
+        - icon: material/thumb-down-outline
+          name: This page could be improved
+          data: 0
+          note: >- 
+            Thanks for your feedback! Please provide some specifics by providing additional info in a new Issue:
+            https://github.com/euc-dev/euc-dev.github.io/issues/new/?title=[Feedback]+{title}+-+{url}
 extra_css:
   - assets/stylesheets/extra.css
+  - assets/stylesheets/footer.Cx6ysBfj.css
   - assets/stylesheets/neoteroi-mkdocsoad.css
   - assets/stylesheets/neoteroi-mkdocs.css
 
 extra_javascript:
-  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
-  - javascripts/tablesort.js
+  - assets/javascripts/tablesort.min.js #https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+  - assets/javascripts/tablesort.js
 
 # Extensions
 markdown_extensions:
@@ -191,6 +224,7 @@ nav:
   - APIs: '*include ./apis/*/mkdocs.yml'
   - Code Samples: '*include ./samples/*/mkdocs.yml'
   - PowerCLI: '*include ./powercli/*/mkdocs.yml'
+#  - Terraform: '*include ./terraform/*/mkdocs.yml'  
   - SDKs: '*include ./sdks/*/mkdocs.yml'
   - Support:
     - ./support/index.md

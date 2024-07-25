@@ -6,7 +6,7 @@ hide:
   - toc
 ---
 
-## Securely Integrate Your Mobile Apps with VMware Workspace ONE
+## Securely Integrate Your Mobile Apps with Omnissa Workspace ONE
 
 <div class="grid cards" markdown>
 
@@ -33,7 +33,7 @@ hide:
     <caption>CONNECT</caption>
     </figure>
   
-    <p style="text-align: center;"> Connect with VMware experts the Workspace ONE developer community. </p>
+    <p style="text-align: center;"> Connect with Omnissa experts the Workspace ONE developer community. </p>
 
     <p style="text-align: center;"> [Community Resources][community] </p>
 
@@ -97,7 +97,14 @@ There are multiple technical approaches you can use to securely integrate apps w
 
 ## Developer Resources
 
-::cards:: cols=3
+| APIs & SDKs | SDK Guides |
+| --- | --- |
+| [Workspace ONE Access APIs](../../../apis/ws1-access-apis/index.md) | [Android Tutorials](./core-capabilities.md#) |
+| [Workspace ONE UEM SDK for Android](../../../ws1-sdk-uem-android/index.md) | [Xamarin (Android) Tutorials](./core-capabilities.md#) |
+| [Workspace ONE UEM SDK for iOS](../../../ws1-skd-uem-ios/index.md) | [iOS Tutorials](./core-capabilities.md#) |
+|   | [Xamarin iOS Tutorials](./core-capabilities.md#) |
+
+<!-- ::cards:: cols=3
 
 - title: Workspace ONE Access APIs
 
@@ -106,17 +113,17 @@ There are multiple technical approaches you can use to securely integrate apps w
 
 - title: Workspace ONE UEM SDK for Android
 
-  url: ../../../apis/ws1-sdk-uem-android/index.md
+  url: ../../../ws1-sdk-uem-android/index.md
   image: ../../assets/logos/ws1-uem-logo.png
 
 - title: Workspace ONE UEM SDK for iOS
 
-  url: ../../../apis/ws1-skd-uem-ios/index.md
+  url: ../../../ws1-skd-uem-ios/index.md
   image: ../../assets/logos/ws1-uem-logo.png
 
 - title: Android Tutorials
 
-  url: sso-cert-auth.md
+  url: ./core-capabilities.md#
   image: ../../assets/logos/android_logo_circle.png
 
 - title: Xamarin (Android) Tutorials
@@ -134,7 +141,7 @@ There are multiple technical approaches you can use to securely integrate apps w
   url: sso-cert-auth.md
   image: ../../assets/logos/apple_logo_circle.png
 
-::/cards::
+::/cards:: -->
 
 Many Code Samples are available within the [https://github.com/euc-oss/euc-samples](https://github.com/euc-oss/euc-samples) GitHub repository. An Index of all samples is provided under [Code Samples](../../samples/index.md) menu above.
 

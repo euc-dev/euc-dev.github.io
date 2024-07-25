@@ -31,7 +31,7 @@ To send us a pull request, please:
 1. Modify the source; please focus on the **specific** change you are contributing.
 1. Ensure local tests pass.
 1. Updated the documentation, if required.
-1. Commit to your fork [using a clear commit messages](http://chris.beams.io/posts/git-commit/).
+1. Commit to your fork [using a clear commit messages](#formatting-commit-messages).
 1. Send us a pull request, answering any default questions in the pull request.
 1. Pay attention to any automated failures reported in the pull request, and stay involved in the conversation.
 

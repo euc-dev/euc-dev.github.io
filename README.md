@@ -83,3 +83,4 @@ The following folders have content provided by other repos using git-submodule. 
 
 !!! Note
     Because of the linkage between other repos, this site must be built after changes to the other sites.
+    This means, you must run `git submodule update --recursive` before committing any code and pulling.
