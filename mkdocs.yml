@@ -204,7 +204,7 @@ nav:
   - APIs: '*include ./apis/*/mkdocs.yml'
   - Code Samples: '*include ./samples/*/mkdocs.yml'
   - PowerCLI: '*include ./powercli/*/mkdocs.yml'
-#  - Terraform: '*include ./terraform/*/mkdocs.yml'
+  - Terraform: '*include ./terraform/*/mkdocs.yml'
   - SDKs: '*include ./sdks/*/mkdocs.yml'
   - Support:
     - ./support/index.md
