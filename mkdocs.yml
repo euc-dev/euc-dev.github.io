@@ -50,7 +50,6 @@ theme:
     primary: dark-shade-blue
     accent: neon
 
-
   # Palette toggle for automatic mode
   # - media: "(prefers-color-scheme)"
   #   scheme: omnissa
@@ -76,16 +75,12 @@ theme:
   font:
     text: Outfit
     code: Poppins
-    # text: Roboto
-    # code: Roboto Mono
   features:
   - content.action.edit
   - content.action.view
   - content.code.annotate
   - content.code.copy
   - content.tabs.link
-  #- navigation.expand
-  #- navigation.footer
   - navigation.header
   - navigation.indexes
   - navigation.instant
@@ -99,13 +94,11 @@ theme:
   - search.share
   - search.suggest
   - toc.follow
-  #- toc.integrate
 
 # Plugins
 plugins:
   - search:
       separator: '[\s\u200b\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
-      #indexing: 'full'
   - open-in-new-tab
   - markdownextradata:
       jinja_options:
@@ -125,9 +118,7 @@ plugins:
 # Customization
 extra:
   homepage: https://omnissa.com
-  # version:
-  #   default: latest
-  #   provider: mike
+
 analytics: 
   provider: custom
   property: foobar
@@ -145,6 +136,7 @@ analytics:
         note: >- 
           Thanks for your feedback! Please provide some specifics by providing additional info in a new Issue:
           https://github.com/euc-dev/euc-dev.github.io/issues/new/?title=[Feedback]+{title}+-+{url}
+
 extra_css:
   - assets/stylesheets/extra.css
   - assets/stylesheets/footer.Cx6ysBfj.css
@@ -175,8 +167,6 @@ markdown_extensions:
   - pymdownx.highlight:
       use_pygments: true
   - pymdownx.snippets:
-      #check_paths: true
-      #base_path: !relative $docs_dir  # Path of the docs_dir
   - pymdownx.superfences:
       custom_fences:
       - name: mermaid
