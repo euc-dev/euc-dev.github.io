@@ -97,49 +97,34 @@ There are multiple technical approaches you can use to securely integrate apps w
 
 ## Developer Resources
 
-- [Workspace ONE Access APIs](../../../apis/ws1-access-apis/index.md)
+<!-- - [Workspace ONE Access APIs](../../../apis/ws1-access-apis/index.md)
 - [Workspace ONE UEM APIs](../../../apis/ws1-uem-apis/index.md)
 - [Workspace ONE UEM SDK for Android](../../../ws1-sdk-uem-android/index.md)
-- [Workspace ONE UEM SDK for iOS](../../../ws1-skd-uem-ios/index.md)
+- [Workspace ONE UEM SDK for iOS](../../../ws1-skd-uem-ios/index.md) -->
 
-<!-- ::cards:: cols=3
+::cards:: cols=4
 
 - title: Workspace ONE Access APIs
 
-  url: ../../../apis/ws1-access-apis/index.md
+  url: /ws1-access-apis/
   image: ../../assets/logos/ws1-access-logo.png
+
+- title: Workspace ONE UEM APIs
+
+  url: /workspace-one-uem-apis/
+  image: ../../assets/logos/ws1-uem-logo.png
 
 - title: Workspace ONE UEM SDK for Android
 
-  url: ../../../ws1-sdk-uem-android/index.md
-  image: ../../assets/logos/ws1-uem-logo.png
+  url: /ws1-uem-sdk-for-android/
+  image: ../../assets/logos/android_logo_circle.png
 
 - title: Workspace ONE UEM SDK for iOS
 
-  url: ../../../ws1-skd-uem-ios/index.md
-  image: ../../assets/logos/ws1-uem-logo.png
-
-- title: Android Tutorials
-
-  url: ./core-capabilities.md#
-  image: ../../assets/logos/android_logo_circle.png
-
-- title: Xamarin (Android) Tutorials
-
-  url: sso-cert-auth.md
-  image: ../../assets/logos/android_logo_circle.png
-
-- title: iOS Tutorials
-
-  url: sso-cert-auth.md
+  url: /ws1-uem-sdk-for-ios/
   image: ../../assets/logos/apple_logo_circle.png
 
-- title: Xamarin (iOS) Tutorials
-
-  url: sso-cert-auth.md
-  image: ../../assets/logos/apple_logo_circle.png
-
-::/cards:: -->
+::/cards::
 
 Many Code Samples are available within the [https://github.com/euc-oss/euc-samples](https://github.com/euc-oss/euc-samples) GitHub repository. An Index of all samples is provided under [Code Samples](../../samples/index.md) menu above.
 
