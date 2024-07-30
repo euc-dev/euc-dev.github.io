@@ -19,6 +19,18 @@ This site is built on Material for MkDocs theme which provides the ability to se
 
 * Run the VSCode command `Dev Container: Open Folder in Container`
 * From a new terminal window, run ./scripts/03-serve.sh to run
+
+```bash
+git checkout . . .
+cd euc-dev.github.io/
+git submodule init
+git submodule update --recursive
+code .
+# click the "reopen in container" in VSCode pop-up dialogue
+./scripts/03-serve.sh
+# click on the "Open in browser" in VSCode pop-up dialogue 
+```
+
 * From the `Panel` window, click on **PORTS**
 * Hover over the port 80 forwarded address and click the globe icon, this will open a browser window to the site
 

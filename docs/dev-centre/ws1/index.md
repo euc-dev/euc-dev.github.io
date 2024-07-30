@@ -97,12 +97,10 @@ There are multiple technical approaches you can use to securely integrate apps w
 
 ## Developer Resources
 
-| APIs & SDKs | SDK Guides |
-| --- | --- |
-| [Workspace ONE Access APIs](../../../apis/ws1-access-apis/index.md) | [Android Tutorials](./core-capabilities.md#) |
-| [Workspace ONE UEM SDK for Android](../../../ws1-sdk-uem-android/index.md) | [Xamarin (Android) Tutorials](./core-capabilities.md#) |
-| [Workspace ONE UEM SDK for iOS](../../../ws1-skd-uem-ios/index.md) | [iOS Tutorials](./core-capabilities.md#) |
-|   | [Xamarin iOS Tutorials](./core-capabilities.md#) |
+- [Workspace ONE Access APIs](../../../apis/ws1-access-apis/index.md)
+- [Workspace ONE UEM APIs](../../../apis/ws1-uem-apis/index.md)
+- [Workspace ONE UEM SDK for Android](../../../ws1-sdk-uem-android/index.md)
+- [Workspace ONE UEM SDK for iOS](../../../ws1-skd-uem-ios/index.md)
 
 <!-- ::cards:: cols=3
 
@@ -147,8 +145,7 @@ Many Code Samples are available within the [https://github.com/euc-oss/euc-sampl
 
 ## Community Resources
 
-The AppConfig Community is an open and native approach, ideal for most common use cases.
-[Visit AppConfig.org](https://appconfig.org/)  
+The AppConfig Community is an open and native approach, ideal for most common use cases. [Visit AppConfig.org](https://appconfig.org/) for more information.
 
 Omnissa Customer Community Forum, is an online experience for Omnissa customers that is the go-to for learning, connecting, and receiving real-time enablement support from our team. Visit the [Workspace ONE Forum](https://community.omnissa.com/forums/forum/9-workspace-one/) to get started.
 

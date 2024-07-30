@@ -190,7 +190,7 @@ nav:
   - Dev Centre:
     - ./dev-centre/index.md
   - Product Docs:
-    - product-docs/index.md
+    - ./product-docs/index.md
   - APIs: '*include ./apis/*/mkdocs.yml'
   - Code Samples: '*include ./samples/*/mkdocs.yml'
   - PowerCLI: '*include ./powercli/*/mkdocs.yml'
