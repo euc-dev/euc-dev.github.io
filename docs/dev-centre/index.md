@@ -2,7 +2,7 @@
 layout: page
 title: Developer Centre
 hide:
-  - navigation
+  #- navigation
   - toc
 ---
 

@@ -3,7 +3,7 @@ layout: page
 title: Workspace ONE Intelligence Core Capabilities
 hide:
   #- navigation
-  - toc
+  #- toc
 ---
 
 Developers can integrate Workspace ONE Intelligence SDK for apps that run on the following platforms:

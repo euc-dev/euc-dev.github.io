@@ -2,7 +2,7 @@
 layout: page
 title: Workspace ONE Intelligence Dev Centre
 hide:
-  - navigation
+  #- navigation
   - toc
 ---
 

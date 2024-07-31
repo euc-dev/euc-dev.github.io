@@ -2,7 +2,7 @@
 layout: page
 title: Workspace ONE UEM Core Capabilities
 hide:
-  - navigation
+  #- navigation
   #- toc
 ---
 

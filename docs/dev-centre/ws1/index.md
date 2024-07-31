@@ -2,7 +2,7 @@
 layout: page
 title: Workspace ONE Developer Centre
 hide:
-  - navigation
+  #- navigation
   - toc
 ---
 
