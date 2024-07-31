@@ -97,14 +97,33 @@ There are multiple technical approaches you can use to securely integrate apps w
 
 ## Developer Resources
 
-<!-- - [Workspace ONE Access APIs](../../../apis/ws1-access-apis/index.md)
-- [Workspace ONE UEM APIs](../../../apis/ws1-uem-apis/index.md)
-- [Workspace ONE UEM SDK for Android](../../../ws1-sdk-uem-android/index.md)
-- [Workspace ONE UEM SDK for iOS](../../../ws1-skd-uem-ios/index.md) -->
+Many Code Samples are available within the [https://github.com/euc-oss/euc-samples](https://github.com/euc-oss/euc-samples) GitHub repository. An Index of all samples is provided under [Code Samples](../../samples/index.md) menu above.
+
+Additionally, documentation and guides are provided for the relevant Workspace ONE UEM APIs and SDKs below.
 
 ::cards:: cols=4
 
+- title: App Volumes APIs
+
+  url: /app-volumes-apis/
+  image: ../../assets/logos/app-volumes-logo.png
+
+- title: Horizon APIs
+
+  url: /horizon-apis/
+  image: ../../assets/logos/horizon-logo.png
+
+- title: Horizon SDK
+
+  url: /horizon-sdks/
+  image: ../../assets/logos/horizon-logo.png
+
 - title: Workspace ONE Access APIs
+
+  url: /ws1-access-apis/
+  image: ../../assets/logos/ws1-access-logo.png
+
+- title: Workspace ONE Identity Services APIs
 
   url: /ws1-access-apis/
   image: ../../assets/logos/ws1-access-logo.png
@@ -125,8 +144,6 @@ There are multiple technical approaches you can use to securely integrate apps w
   image: ../../assets/logos/apple_logo_circle.png
 
 ::/cards::
-
-Many Code Samples are available within the [https://github.com/euc-oss/euc-samples](https://github.com/euc-oss/euc-samples) GitHub repository. An Index of all samples is provided under [Code Samples](../../samples/index.md) menu above.
 
 ## Community Resources
 

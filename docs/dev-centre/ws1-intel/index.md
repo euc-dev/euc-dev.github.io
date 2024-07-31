@@ -63,7 +63,36 @@ Browse all [core capabilities](core-capabilities.md)
 
 Many Code Samples are available within the [https://github.com/euc-oss/euc-samples](https://github.com/euc-oss/euc-samples) GitHub repository. An Index of all samples is provided under [Code Samples](../samples/index.md) menu above.
 
-Additionally, documentation on SDKs are provided at [SDKs](../../sdks/index.md) in the menu bar above.
+Additionally, documentation and guides are provided for the relevant Workspace ONE Intelligence APIs and SDKs below.
+
+::cards:: cols=5
+
+- title: Workspace ONE Intelligence APIs
+
+  url: /ws1-api-intelligence/
+  image: ../../assets/logos/ws1-intel-logo.png
+
+- title: Workspace ONE Intelligence SDKs
+
+  url: /ws1-sdk-intelligence/
+  image: ../../assets/logos/ws1-intel-logo.png
+
+- title: Workspace ONE Notification Services APIs
+
+  url: /workspace-one-uem-apis/
+  image: ../../assets/logos/ws1-uem-logo.png
+
+- title: Workspace ONE UEM SDK for Android
+
+  url: /ws1-uem-sdk-for-android/
+  image: ../../assets/logos/android_logo_circle.png
+
+- title: Workspace ONE UEM SDK for iOS
+
+  url: /ws1-uem-sdk-for-ios/
+  image: ../../assets/logos/apple_logo_circle.png
+
+::/cards::
 
 ## Community Resources
 

@@ -140,7 +140,7 @@ analytics:
 extra_css:
   - assets/stylesheets/extra.css
   - assets/stylesheets/footer.Cx6ysBfj.css
-  - assets/stylesheets/neoteroi-mkdocsoad.css
+  - assets/stylesheets/mkdocsoad.css
   - assets/stylesheets/neoteroi-mkdocs.css
 
 extra_javascript:

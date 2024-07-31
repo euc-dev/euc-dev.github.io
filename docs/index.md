@@ -3,7 +3,7 @@ layout: home
 title: Developer Portal Home
 hide:
   - navigation
-  #- toc
+  - toc
 ---
 
 The Omnissa Developer Portal is a collection of resources and samples that developers, customers and partners can use to integrate and extend their Omnissa products.
@@ -42,6 +42,6 @@ Developer `{code}` Portal is a free developer program that provides access to a 
 - title: Terraform
   content: Infrastructure as code for Omnissa Products
   url: terraform/index.md
-  image: assets/logos/terraform.jpg
+  image: assets/logos/HashiCorpTerraform-logo.png
 
 ::/cards::
