@@ -34,39 +34,48 @@ code .
 
 A common folder structure has been created to allow for other repos containing product specific documentation and resources to be merged into this site using [git-submodules](https://github.blog/2016-02-01-working-with-submodules/) and [monorepo](https://backstage.github.io/mkdocs-monorepo-plugin/). This allows for those other repos to be maintained by the teams that own them.
 
+The structure adheres to MkDocs standards, and and utilises overrides and additional assets to create a taylored site.
+
 ### Folder Structure and Included Content
 
 ```bash
-
-├── .docs
+├── docs
     ├── about
-    │    └── index.md
+    │   └── index.md
     ├── apis
-    │    └── index.md
+    │   └── index.md
     ├── assets
-    │    ├── fonts
-    │    ├── images
-    │    ├── javascripts
-    │    ├── logos
-    │    └── stylesheets
+    │   ├── fonts
+    │   │   └── ...
+    │   ├── images
+    │   │   └── ...
+    │   ├── javascripts
+    │   │   └── ...
+    │   ├── logos
+    │   │   └── ...
+    │   └── stylesheets
+    │   │   └── ...
     ├── dev-centre
-    │    ├── ws1
-    │    │    └── index.md
-    │    └── ws1-intel
-    │    │    └── index.md
+    │   ├── index.md
+    │   ├── ws1
+    │   │   ├── core-capabilities.md
+    │   │   └── index.md
+    │   └── ws1-intel
+    │       ├── core-capabilities.md
+    │       └── index.md
+    ├── index.md
     ├── powercli
-    │    └── index.md
+    │   └── index.md
     ├── product-docs
-    │    └── index.md
+    │   └── index.md
     ├── samples
-    │    └── index.md
+    │   └── index.md
     ├── sdks
-    │    └── index.md
+    │   └── index.md
     ├── support
-    │    └── index.md
+    │   └── index.md
     └── terraform
-         └── index.md
-
+        └── index.md
 ```
 
 ### Git-Submodule Content
@@ -77,28 +86,29 @@ The following folders have content provided by other repos using git-submodule. 
 
 ├── .docs
     ├── apis
-    │       <- [/app-volumes-apis](/apis/app-volumes-apis/)
-    │       <- [/horizon-apis](/apis/horizon-apis/)
-    │       <- [/ws1-access-apis](/apis/ws1-access-apis/)
-    │       <- [/ws1-identity-services-api](/apis/ws1-identity-services-api/)
-    │       <- [/ws1-uem-apis](/apis/ws1-uem-apis/)
-    │       <- [/ws1-api-intelligence](/apis/ws1-api-intelligence/)
+    │   ├── app-volumes-apis <- [https://github.com/euc-dev/app-volumes-apis](app-volumes-apis)
+    │   ├── horizon-apis <- [https://github.com/euc-dev/horizon-apis](horizon-apis)
+    │   ├── ws1-access-apis <- [https://github.com/euc-dev/ws1-access-apis](ws1-access-apis)
+    │   ├── ws1-api-intelligence <- [https://github.com/euc-dev/ws1-api-intelligence](ws1-api-intelligence)
+    │   ├── ws1-identity-services-api <- [https://github.com/euc-dev/ws1-identity-services-api](ws1-identity-services-api)
+    │   ├── ws1-notification-services-api <- [https://github.com/euc-dev/ws1-notification-services-api](ws1-notification-services-api)
+    │   └── ws1-uem-apis <- [https://github.com/euc-dev/ws1-uem-apis](ws1-uem-apis)
     ├── powercli
-    │       <- [/horizon-powercli](/powercli/horizon-powercli/)
+    │   └── horizon-powercli <- [https://github.com/euc-dev/horizon-powercli](horizon-powercli)
     ├── samples
-    │       <- [/euc-samples](/samples/euc-samples/)
+    │   └── euc-samples <- [https://github.com/euc-dev/euc-samples](euc-samples)
     ├── sdks
-    │       <- [/horizon-sdks](/sdks/horizon-sdks/)
-    │       <- [/ws1-sdk-uem-android](/sdks/ws1-sdk-uem-android/)
-    │       <- [/ws1-sdk-intelligence](/sdks/ws1-sdk-intelligence/)
-    │       <- [/ws1-sdk-uem-ios](/sdks/ws1-sdk-uem-ios/)
-    ├── terraform
-    │       <- [/horizon-terraform](/terraform/horizon-terraform/)
+    │   ├── horizon-sdk <- [https://github.com/euc-dev/horizon-sdks](horizon-sdks)
+    │   ├── ws1-sdk-intelligence <- [https://github.com/euc-dev/ws1-sdk-intelligence](ws1-sdk-intelligence)
+    │   ├── ws1-sdk-uem-android <- [https://github.com/euc-dev/ws1-sdk-uem-android](ws1-sdk-uem-android)
+    │   └── ws1-sdk-uem-ios <- [https://github.com/euc-dev/ws1-sdk-uem-ios](ws1-sdk-uem-ios)
+    └── terraform
+        └── horizon-terraform <- [https://github.com/euc-dev/horizon-terraform](horizon-terraform)
 ```
 
 ***Note***
     Because of the linkage between other repos, this site must be built after changes to the other sites have been pushed.
-    This means, you must run `git submodule update --recursive` before committing any code and pulling.
+    This means, you must run `git submodule update --recursive --force` before committing any code and pulling.
 
 ## License
 
