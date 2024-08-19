@@ -2,7 +2,7 @@
 
 Welcome to the Omnissa developer portal repository.
 
-This repo stores the developer.omnissa.com site in markdown format using MkDocs with the Material theme.
+This repo stores the https://developer.omnissa.com site in markdown format using MkDocs with the Material theme.
 
 This site is using MkDocs as the site renderer, and GitHub Pages as the hoster. As such, this repo will create a publicly available site at [https://euc-dev.github.io](https://euc-dev.github.io). A CNAME record points [https://developer.omnissa.com](https://developer.omnissa.com) to this site.
 
@@ -29,6 +29,10 @@ code .
 ```
 
 - Lastly, edit the content pages under the `/docs` folder
+
+## Testing
+
+Please refer to [TESTING.md](./TESTING.md) for information on the requirements and process to test the site locally.
 
 ## /docs Folder Structure
 
@@ -112,6 +116,6 @@ The following folders have content provided by other repos using git-submodule. 
 
 ## License
 
-This project is Licensed under the BSD 2-Clause License (Mozilla Public License Version 2.0) ; you may not use this file except in compliance with the License. 
+This project is Licensed under the Creative Commons Attribution 4.0 International as described in [LICENSE](./LICENSE); you may not use this file except in compliance with the License. 
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.

@@ -26,17 +26,8 @@ WORKDIR /usr/local/apache2/htdocs/
 # add metadata via labels
 LABEL com.omnissa.developer.version="0.0.1"
 LABEL com.omnissa.developer.git.repo="https://github.com/euc-dev/euc-dev.github.io"
-#LABEL com.vmware.eocto.version="0.0.1"
-#LABEL com.vmware.eocto.git.repo="https://github.com/EUCDigitalWorkspace/EUCDigitalWorkspace.github.io"
-#LABEL com.vmware.eocto.git.commit="DEADBEEF"
-#LABEL com.vmware.eocto.maintainer.name="Richard Croft"
-#LABEL com.vmware.eocto.maintainer.email="rcroft@vmware.com"
-#LABEL com.vmware.eocto.released="9999-99-99"
-#LABEL com.vmware.eocto.based-on="httpd:2.4-alpine"
-#LABEL com.vmware.eocto.project="EUCDigitalWorkspace.github.io"
 
 # copy the html to wwwroot
-#COPY --chmod=nobody:nogroup --from=builder /app/html ./
 COPY --from=builder /workspace/.site ./
 
 #############################################################################
