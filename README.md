@@ -14,7 +14,9 @@ Only pages within the `/docs` folder should be modified within this repo. All ot
 
 To get started:
 
-- first fork the repo as per instructions in [CONTRIBUTING.md](CONTRIBUTING.md)
+- Also please familiarize yourself with the [Code of Conduct](https://github.com/euc-dev/.github/blob/main/CODE_OF_CONDUCT.md) and [Developer Certificate of Origin](https://github.com/euc-dev/.github/blob/main/Developer%20Certificate%20of%20Origin.md) before contributing.
+- Read the [LICENSE](https://github.com/euc-dev/.github/blob/main/LICENSE)
+- Fork the repo as per instructions in [CONTRIBUTING.md](https://github.com/euc-dev/.github/blob/main/CONTRIBUTING.md)
 - Next initialize the submodules within the repo:
 
 ```bash
@@ -29,6 +31,7 @@ code .
 ```
 
 - Lastly, edit the content pages under the `/docs` folder
+- Commit the changes back including your signature as per the [Developer Certificate of Origin](https://github.com/euc-dev/.github/blob/main/Developer%20Certificate%20of%20Origin.md)
 
 ## Testing
 
@@ -116,6 +119,6 @@ The following folders have content provided by other repos using git-submodule. 
 
 ## License
 
-This project is Licensed under the Creative Commons Attribution 4.0 International as described in [LICENSE](./LICENSE); you may not use this file except in compliance with the License. 
+This project is Licensed under the Creative Commons Attribution 4.0 International as described in [LICENSE](https://github.com/euc-dev/.github/blob/main/LICENSE); you may not use this file except in compliance with the License.
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
