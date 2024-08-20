@@ -111,7 +111,10 @@ plugins:
         - index.md
       fallback_to_build_date: true
       type: timeago
-  - swagger-ui-tag
+  - swagger-ui-tag:
+        docExpansion: none
+        filter: ""
+        syntaxHighlightTheme: monokai
   - monorepo
   - macros
 
