@@ -7,14 +7,12 @@ This site is built on Material for MkDocs theme which provides the ability to se
 * Ensure the following files / folders exist:
 
 ```bash
-
 ├── .devcontainer
 │   └── devcontainer.json
 ├── Dockerfile
 ├── requirements.txt
 └── scripts
     ├── 03-serve.sh
-
 ```
 
 * Install the `Dev Containers` VSCode extension
