@@ -2,7 +2,7 @@
 site_name: Omnissa Developer Portal
 site_url: https://euc-dev.github.io
 site_author: Phil Helmling
-site_description: POC for developer.omnissa.com
+site_description: developer.omnissa.com built on Material Theme for mkdocs
 docs_dir: docs
 site_dir: .site
 use_directory_urls: true
@@ -13,8 +13,7 @@ edit_uri: edit/main/docs/
 
 # Copyright
 copyright: |
-  Copyright &copy; 2005-2024 Broadcom. All rights reserved.<br/>
-  The term “Broadcom” refers to Broadcom Inc. and/or its subsidiaries.<br/><br/>
+  Copyright &copy; 2005-2024 Omnissa, LLC. All rights reserved.<br/>
 
 # Configuration
 theme:
@@ -50,28 +49,6 @@ theme:
     primary: dark-shade-blue
     accent: neon
 
-  # Palette toggle for automatic mode
-  # - media: "(prefers-color-scheme)"
-  #   scheme: omnissa
-  #   toggle:
-  #     icon: material/lightbulb-auto-outline
-  #     name: Switch to light mode
-  # Palette toggle for light mode
-  # - media: "(prefers-color-scheme: light)"
-  #   scheme: slate
-  #   primary: dark-shade-blue
-  #   accent: neon
-  #   toggle:
-  #     icon: material/toggle-switch
-  #     name: Dark Theme
-  # Palette toggle for dark mode
-  # - media: "(prefers-color-scheme: dark)"
-  #   scheme: omnissa
-  #   primary: dark-shade-blue
-  #   accent: neon
-  #   toggle:
-  #     icon: material/toggle-switch-off-outline
-  #     name: Light Theme
   font:
     text: Outfit
     code: Poppins
