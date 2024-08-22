@@ -14,7 +14,7 @@ Only pages within the `/docs` folder should be modified within this repo. All ot
 
 To get started:
 
-- Also please familiarize yourself with the [Code of Conduct](https://github.com/euc-dev/.github/blob/main/CODE_OF_CONDUCT.md) and [Developer Certificate of Origin](https://github.com/euc-dev/.github/blob/main/Developer%20Certificate%20of%20Origin.md) before contributing.
+- Please familiarize yourself with the [Code of Conduct](https://github.com/euc-dev/.github/blob/main/CODE_OF_CONDUCT.md) and [Developer Certificate of Origin](https://github.com/euc-dev/.github/blob/main/Developer%20Certificate%20of%20Origin.md) before contributing.
 - Read the [LICENSE](https://github.com/euc-dev/.github/blob/main/LICENSE)
 - Fork the repo as per instructions in [CONTRIBUTING.md](https://github.com/euc-dev/.github/blob/main/CONTRIBUTING.md)
 - Next initialize the submodules within the repo:
