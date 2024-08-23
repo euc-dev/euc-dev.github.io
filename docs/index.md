@@ -12,7 +12,7 @@ Developer `{code}` Portal is a free developer program that provides access to a 
 
 ## Featured Resources for Developers
 
-::cards:: cols=6
+::cards:: cols=5
 
 - title: APIs
   content: Build on Omnissa products, manage & automate using APIs
@@ -39,9 +39,9 @@ Developer `{code}` Portal is a free developer program that provides access to a 
   url: sdks/index.md
   image: assets/logos/developer-training.png
 
-- title: Terraform
+::/cards::
+
+<!-- - title: Terraform
   content: Infrastructure as code for Omnissa Products
   url: terraform/index.md
-  image: assets/logos/HashiCorpTerraform-logo.png
-
-::/cards::
+  image: assets/logos/HashiCorpTerraform-logo.png -->
