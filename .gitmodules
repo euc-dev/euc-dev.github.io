@@ -24,7 +24,7 @@
 	url = git@github.com:euc-dev/horizon-powercli.git
 [submodule "samples/euc-samples"]
 	path = samples/euc-samples
-	url = git@github.com:euc-dev/euc-samples.git
+	url = git@github.com:euc-oss/euc-samples.git
 [submodule "apis/ws1-uem-apis"]
 	path = apis/ws1-uem-apis
 	url = git@github.com:euc-dev/ws1-uem-apis.git
