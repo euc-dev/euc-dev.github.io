@@ -40,3 +40,6 @@
 	url = git@github.com:euc-dev/ws1-notification-services-api.git
 [submodule "terraform/horizon-terraform"]
 	branch = main
+[submodule "apis/ws1-access-apis"]
+	path = apis/ws1-access-apis
+	url = git@github.com:euc-dev/ws1-access-apis.git
