@@ -172,9 +172,30 @@ Symbolication is the process of translating stack traces into a human-readable f
 - For Apple applications, stack traces are reported in hexidecimal characters. Symbolication allows developers to convert these hex strings into human-readable text.
 - For Android applications that use the ProGuard tool to obfuscate their function names, developers can use a Proguard mapping file to replace the obfuscated name with a human-readable name. For more information, see [Configuring Proguard Symbolication]().
 
-## Opt out Overview
+## Opt In or Out of Workspace ONE Intelligence
 
-Certain app users might want to opt out of Workspace ONE Intelligence logging and tracking. Workspace ONE Intelligence provides a static opt-out status setting that disables all app reporting to Workspace ONE Intelligence SDK. This feature is optional. If used, developers must implement the code that prompts the app user to select whether or not to opt out. If a user has opted out, their instance of the app will not report any activity back to Workspace ONE Intelligence.
+Certain app users might want to opt in to DEX telemetry or opt out of 
+Workspace ONE Intelligence logging and tracking. 
+
+Admins may want to set different configuration default settings 
+than the defaults provided by Workspace ONE Intelligence SDK. 
+
+Workspace ONE Intelligence SDK provides an API that can enable 
+or disable reporting for the Workspace ONE Intelligence features and 
+can enable or disable reporting for the DEX feature. 
+Each feature can be controlled individually. 
+
+If user choice is desired, developers must implement the code that prompts 
+the app user to select whether to opt in or opt out. 
+
+If admin choice is desired, developers must implement the code that reads the desired 
+configuration and selects the appropriate opt in or opt out settings. 
+
+(Your app may choose to allow end users to override the admin's default settings or not.)
+
+If a user has opted out, or an app configuration has opted out, 
+their instance of the app will not report any activity back 
+to Workspace ONE Intelligence or DEX. 
 
 ## Related Resources
 
