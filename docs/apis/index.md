@@ -27,7 +27,7 @@ Manage the Omnissa portfolio of products and automate configuration using APIs.
 
 - title: Workspace ONE UEM APIs
   content: manage and configure UEM via REST API
-  url: /ws1-uem-apis/
+  url: /workspace-one-uem-apis/
   image: ../assets/logos/ws1-uem-logo.png
 
 - title: Workspace ONE Access APIs
@@ -35,9 +35,14 @@ Manage the Omnissa portfolio of products and automate configuration using APIs.
   url: /ws1-access-apis/
   image: ../assets/logos/ws1-access-logo.png
 
-- title: Workspace ONE Identity Services APIs
-  content: manage and configure Access via REST API
+- title: VMware Identity Services APIs
+  content: manage and configure VMware Identity Services via REST API
   url: /ws1-identity-services-api/
+  image: ../../assets/logos/ws1-access-logo.png
+
+- title: Workspace ONE Notification Services APIs
+  content: manage and configure Notification Services via REST API
+  url: /ws1-notification-services-apis/
   image: ../../assets/logos/ws1-access-logo.png
 
 ::/cards::
