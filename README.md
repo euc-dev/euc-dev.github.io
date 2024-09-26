@@ -1,10 +1,10 @@
 # Omnissa Developer Portal
 
-Welcome to the Omnissa developer portal repository.
+Welcome to the Omnissa Developer Portal repository.
 
 This repo stores the https://developer.omnissa.com site in markdown format using MkDocs with the Material theme.
 
-This site is using MkDocs as the site renderer, and GitHub Pages as the hoster. As such, this repo will create a publicly available site at [https://euc-dev.github.io](https://euc-dev.github.io). A CNAME record points [https://developer.omnissa.com](https://developer.omnissa.com) to this site.
+This site is using MkDocs as the site renderer, and GitHub Pages as the hoster. As such, this repo will create a publicly available site at [https://euc-dev.github.io](https://euc-dev.github.io). A CNAME record and GitHub Pages configuration points [https://developer.omnissa.com](https://developer.omnissa.com) to this site.
 
 This site uses submodules and the MkDocs [monorepo](https://backstage.github.io/mkdocs-monorepo-plugin/) plugin to merge content from other repos to be rendered as a single site, within this site. All documentation should be created in MarkDown format with the capabilities of MkDocs and the Material theme in mind under the `/docs` folder.
 
@@ -14,24 +14,13 @@ Only pages within the `/docs` folder should be modified within this repo. All ot
 
 To get started:
 
-- Please familiarize yourself with the [Code of Conduct](https://github.com/euc-dev/.github/blob/main/CODE_OF_CONDUCT.md) and [Developer Certificate of Origin](https://github.com/euc-dev/.github/blob/main/Developer%20Certificate%20of%20Origin.md) before contributing.
-- Read the [LICENSE](https://github.com/euc-dev/.github/blob/main/LICENSE)
-- Fork the repo as per instructions in [CONTRIBUTING.md](https://github.com/euc-dev/.github/blob/main/CONTRIBUTING.md)
-- Next initialize the submodules within the repo:
-
-```bash
-git checkout . . .
-cd euc-dev.github.io/
-git submodule init
-git submodule update --recursive
-code .
-# click the "reopen in container" in VSCode pop-up dialogue
-./scripts/03-serve.sh
-# click on the "Open in browser" in VSCode pop-up dialogue 
-```
-
-- Lastly, edit the content pages under the `/docs` folder
-- Commit the changes back including your signature as per the [Developer Certificate of Origin](https://github.com/euc-dev/.github/blob/main/Developer%20Certificate%20of%20Origin.md)
+1. Please familiarize yourself with the [Code of Conduct](https://github.com/euc-dev/.github/blob/main/CODE_OF_CONDUCT.md) and [Developer Certificate of Origin](https://github.com/euc-dev/.github/blob/main/Developer%20Certificate%20of%20Origin.md) before contributing.
+2. Read the [LICENSE](./LICENSE)
+3. Fork the repo as per instructions in [CONTRIBUTING.md](https://github.com/euc-dev/.github/blob/main/CONTRIBUTING.md)
+4. Next initialize the submodules within the repo to include the content from those submodules. See [Initialize Submodules](#initializing-submodules)
+5. Edit the content pages under the `/docs` folder
+6. Commit the changes back including your signature as per the [Developer Certificate of Origin](https://github.com/euc-dev/.github/blob/main/Developer%20Certificate%20of%20Origin.md)
+7. Create a PR to merge your fork changes back into main branch
 
 ## Testing
 
@@ -41,7 +30,7 @@ Please refer to [TESTING.md](./TESTING.md) for information on the requirements a
 
 A common folder structure has been created to allow for other repos containing product specific documentation and resources to be merged into this site using [git-submodules](https://github.blog/2016-02-01-working-with-submodules/) and [monorepo](https://backstage.github.io/mkdocs-monorepo-plugin/). This allows for those other repos to be maintained by the teams that own them.
 
-The structure adheres to MkDocs standards, and and utilises overrides and additional assets to create a taylored site.
+The structure adheres to MkDocs standards, and and utilises overrides and additional assets to create a tailored site.
 
 ### Folder Structure and Included Content
 
@@ -85,9 +74,27 @@ The structure adheres to MkDocs standards, and and utilises overrides and additi
         └── index.md
 ```
 
-### Git-Submodule Content
+### Git-Submodule
 
-The following folders have content provided by other repos using git-submodule. Do not edit the contents of these folders, simply run `git submodule update --recursive` to update from the source repo.
+Apart from Dev-Centre and some static index type pages, all documentation for this site is hosted within other repositories. These repositories are mounted as GitHub Submodules and an MkDocs plugin called [monorepo](https://backstage.github.io/mkdocs-monorepo-plugin/) is used to bring all of the docs together into this repo and served as a single site. See the [Git Submodule Mounts](#git-submodule-mounts) for information on the structure and repository mounts.
+
+This means that apart from the Dev-Centre pages, most other pages come from other repos and will need to be edited within those other repos. This therefore means that the majority of changes must be committed and pulled into the other repos, then pushed to this repo using the IDE Source Control tool or by running initializing the submodule.
+
+### Initializing submodules
+
+If you have forked this repo, or have content changes from other repos included as Submodules, you will need to initialize the GitHub Submodules:
+
+```shell
+git checkout . . .
+cd euc-dev.github.io/
+git submodule init
+git submodule update --recursive
+code .
+```
+
+### Git-Submodule Mounts
+
+The diagram below describes the folders within the repo that are submodules and where their respective remote origins are mounted:
 
 ```bash
 
@@ -115,7 +122,7 @@ The following folders have content provided by other repos using git-submodule. 
 
 ***Note***
     Because of the linkage between other repos, this site must be built after changes to the other sites have been pushed.
-    This means, you must run `git submodule update --recursive --force` before committing any code and pulling.
+    This means, you must run `git submodule update --recursive` before committing any code and pulling.
 
 ## License
 

@@ -1,6 +1,6 @@
 # Project Information
 site_name: Omnissa Developer Portal
-site_url: https://euc-dev.github.io
+//site_url: https://developer.omnissa.com
 site_author: Phil Helmling
 site_description: developer.omnissa.com built on Material Theme for mkdocs
 docs_dir: docs
