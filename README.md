@@ -78,7 +78,13 @@ The structure adheres to MkDocs standards, and and utilises overrides and additi
 
 Apart from Dev-Centre and some static index type pages, all documentation for this site is hosted within other repositories. These repositories are mounted as GitHub Submodules and an MkDocs plugin called [monorepo](https://backstage.github.io/mkdocs-monorepo-plugin/) is used to bring all of the docs together into this repo and served as a single site. See the [Git Submodule Mounts](#git-submodule-mounts) for information on the structure and repository mounts.
 
-This means that apart from the Dev-Centre pages, most other pages come from other repos and will need to be edited within those other repos. This therefore means that the majority of changes must be committed and pulled into the other repos, then pushed to this repo using the IDE Source Control tool or by running initializing the submodule.
+This means that apart from the Dev-Centre pages, most other pages come from other repos and will need to be edited within those other repos. This therefore means that the majority of changes must be committed and pulled into the other repos, then pushed to this repo. For example:
+
+```shell
+git submodule update --recursive --init
+```
+
+It is also important to note that each submodule is configured with branch set to **main** using the `git submodule set-branch --branch main "submodule-path"`.
 
 ### Initializing submodules
 
