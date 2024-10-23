@@ -9,8 +9,8 @@ hide:
 Browse and download code samples from Omnissa as well as code samples contributed by the Omnissa community.
 
 !!! Important
-    The EUC related samples stored in the VMware EUC Samples Exchange have been migrated to the [Omnissa euc-samples GitHub repository](https://github.com/euc-dev/euc-samples) and are organised according to Platform. Some samples may no longer be present or be located in a different location. Please be patient as we work to provide you with a new format. Alternatively, feel free to contribute your samples to [euc-samples](https://github.com/euc-dev/euc-samples) directly.
-    Any samples residing within [euc-samples](https://github.com/euc-dev/euc-samples) will be indexed on a 24 hour basis and displayed in the corresponding section linked below.
+    The EUC related samples stored in the [VMware EUC Samples Exchange](https://code.vmware.com/vmware-samples) have been migrated to the [Omnissa euc-samples GitHub repository](https://github.com/euc-oss/euc-samples) and are organised according to Platform. Some samples may no longer be present or be located in a different location. Please be patient as we work to provide you with a new format. Alternatively, feel free to contribute your samples to [euc-samples](https://github.com/euc-oss/euc-samples) directly.
+    Any samples residing within [euc-samples](https://github.com/euc-oss/euc-samples) will be indexed on a 24 hour basis and displayed in the corresponding section linked below.
 
 > Disclaimer: All sample content and code in Sample Exchange is licensed to you by the sample's author. Omnissa does not guarantee the samples; they are provided "AS IS". Use of this site is subject to the Omnissa Community Terms of Use.
 

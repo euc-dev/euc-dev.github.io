@@ -6,17 +6,17 @@ hide:
   - toc
 ---
 
-Developers, Automation Engineers, and System Administrators can build world class solutions on the VMware platform. Select a VMware SDK to find more information, downloads, documentation, and resources. Some SDKs are made available only through certain offerings and programs.
+Developers, Automation Engineers, and System Administrators can build world class solutions on Omnissa Horizon and Workspace ONE platforms. Select an Omnissa SDK to find more information, downloads, documentation, and resources. Some SDKs are made available only through certain offerings and programs.
 
 ::cards::
 
 - title: Horizon View Session Enhancement SDK
-  content: use the VMware View Session Enhancement Software Development Kit (SDK) to write host-side and client-side applications and allow communications between a clients and remote desktop
+  content: use the Horizon View Session Enhancement Software Development Kit (SDK) to write host-side and client-side applications and allow communications between a clients and remote desktop
   url: ../horizon-sdks/view-session-management/index.md
   image: ../assets/logos/horizon-logo.png
 
 - title: Horizon RDP VC Bridge SDK
-  content: use the VMware RDP VC Bridge SDK to write Windows applications that can load plugins on the Horizon Client
+  content: use the Horizon RDP VC Bridge SDK to write Windows applications that can load plugins on the Horizon Client
   url: ../horizon-sdks/rdpvcbridge/index.md
   image: ../assets/logos/horizon-logo.png
 

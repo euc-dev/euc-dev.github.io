@@ -13,10 +13,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Set git submodule update recursive init
+        run: |
+          git submodule update --recursive --init
       - uses: actions/checkout@v4
         with:
-          submodules: recursive
-          clean: true
+          submodules: false
       - name: Configure Git Credentials
         run: |
           git config user.name github-actions[bot]

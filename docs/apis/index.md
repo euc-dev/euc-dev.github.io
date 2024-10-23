@@ -35,8 +35,8 @@ Manage the Omnissa portfolio of products and automate configuration using APIs.
   url: /ws1-access-apis/
   image: ../assets/logos/ws1-access-logo.png
 
-- title: VMware Identity Services APIs
-  content: manage and configure VMware Identity Services via REST API
+- title: Identity Services APIs
+  content: manage and configure Identity Services via REST API
   url: /ws1-identity-services-api/
   image: ../../assets/logos/ws1-access-logo.png
 
