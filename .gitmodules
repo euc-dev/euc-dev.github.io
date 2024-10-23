@@ -1,45 +1,56 @@
 [submodule "apis/app-volumes-apis"]
 	path = apis/app-volumes-apis
 	url = git@github.com:euc-dev/app-volumes-apis.git
+	branch = main
 [submodule "apis/horizon-apis"]
 	path = apis/horizon-apis
 	url = git@github.com:euc-dev/horizon-apis.git
+	branch = main
 [submodule "apis/ws1-api-intelligence"]
 	path = apis/ws1-api-intelligence
 	url = git@github.com:euc-dev/ws1-api-intelligence.git
+	branch = main
 [submodule "sdks/ws1-sdk-intelligence"]
 	path = sdks/ws1-sdk-intelligence
 	url = git@github.com:euc-dev/ws1-sdk-intelligence.git
+	branch = main
 [submodule "sdks/ws1-sdk-uem-ios"]
 	path = sdks/ws1-sdk-uem-ios
 	url = git@github.com:euc-dev/ws1-sdk-uem-ios.git
+	branch = main
 [submodule "sdks/ws1-sdk-uem-android"]
 	path = sdks/ws1-sdk-uem-android
 	url = git@github.com:euc-dev/ws1-sdk-uem-android.git
+	branch = main
 [submodule "sdks/horizon-sdk"]
 	path = sdks/horizon-sdk
 	url = git@github.com:euc-dev/horizon-sdk.git
+	branch = main
 [submodule "powercli/horizon-powercli"]
 	path = powercli/horizon-powercli
 	url = git@github.com:euc-dev/horizon-powercli.git
+	branch = main
 [submodule "samples/euc-samples"]
 	path = samples/euc-samples
 	url = git@github.com:euc-oss/euc-samples.git
+	branch = main
 [submodule "apis/ws1-uem-apis"]
 	path = apis/ws1-uem-apis
 	url = git@github.com:euc-dev/ws1-uem-apis.git
+	branch = main
 [submodule "apis/ws1-identity-services-api"]
 	path = apis/ws1-identity-services-api
 	url = git@github.com:euc-dev/ws1-identity-services-api.git
-[submodule "terraform/horozon-terraform"]
+	branch = main
+[submodule "terraform/horizon-terraform"]
 	path = terraform/horizon-terraform
 	url = git@github.com:euc-dev/horizon-terraform.git
 	branch = main
 [submodule "apis/ws1-notification-services-api"]
 	path = apis/ws1-notification-services-api
 	url = git@github.com:euc-dev/ws1-notification-services-api.git
-[submodule "terraform/horizon-terraform"]
 	branch = main
 [submodule "apis/ws1-access-apis"]
 	path = apis/ws1-access-apis
 	url = git@github.com:euc-dev/ws1-access-apis.git
+	branch = main

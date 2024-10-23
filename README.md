@@ -122,7 +122,7 @@ The diagram below describes the folders within the repo that are submodules and 
 
 ***Note***
     Because of the linkage between other repos, this site must be built after changes to the other sites have been pushed.
-    This means, you must run `git submodule update --recursive` before committing any code and pulling.
+    This means, you must run `git submodule update --init --recursive` before committing any code and pulling.
 
 ## License
 
