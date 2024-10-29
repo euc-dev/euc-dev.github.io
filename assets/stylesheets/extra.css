@@ -1,0 +1,64 @@
+
+.green {
+  color: green;
+}
+.red {
+  color: red;
+}
+
+.md-typeset__table {
+  width: 100%;
+}
+
+.md-typeset__table table:not([class]) {
+  display: table
+}
+
+[data-md-color-scheme="omnissa"] {
+  /* Primary colours */
+  --md-primary-fg-color:        #333958;
+  --md-primary-fg-color--light: #333958;
+  --md-primary-fg-color--dark:  #333958;
+  --md-primary-bg-color:               hsla(0, 0%, 100%, 1);
+  --md-primary-bg-color--light:        hsla(0, 0%, 100%, 0.7);
+
+  /* Accent color shades */
+  --md-accent-fg-color:                hsla(#{hex2hsl($clr-indigo-a200)}, 1);
+  --md-accent-fg-color--transparent:   hsla(#{hex2hsl($clr-indigo-a200)}, 0.1);
+  --md-accent-bg-color:                hsla(0, 0%, 100%, 1);
+  --md-accent-bg-color--light:         hsla(0, 0%, 100%, 0.7);
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:        #333958;
+  --md-primary-fg-color--light: #333958;
+  --md-primary-fg-color--dark:  #333958;
+  --md-primary-bg-color:               rgb(254, 254, 254);
+  --md-primary-bg-color--light:        hsla(255, 0%, 100%, 0.7);
+  --md-hue: 210; 
+}
+
+:root {
+  --new-navy: #001e60;
+  --cool-grey: #c8c7e2;
+  --light-cool-grey: #f6f5fb;
+  --white: #ffffff;
+  --indigo: #4a12f0;
+  --magenta: #d00aff;
+  --neon: #c9ff27;
+  --indigo-blue: #311eaa;
+  --midnight: #28334a;
+  --black: #000000;
+  --magic-carpet: #9587c1;
+  --vista-white: #dfdced;
+  --royal-blue: #4a12f0;
+  --purple-light: #9587c1;
+  --lively-lilac: #8f96ba;
+  --dark-byzantine-blue: #242a48;
+  --dark-shade-blue: #333958;
+  --east-bay: #4a5174;
+  --eyebrow: #616899;
+  --web-wraning: #d9005c;
+  --electric-purple: #b704e2;
+  --alice-blue: #e6eeff
+}
