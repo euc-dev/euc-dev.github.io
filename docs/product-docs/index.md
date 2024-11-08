@@ -10,54 +10,54 @@ Links to Official Product Documentation Getting Started Guides are below. The ma
 
 ::cards:: cols=4
 
-- title: Workspace ONE
-  content: Multi-platform endpoint and app management
+- title: Multi-platform endpoint and app management with Workspace ONE
+  #content: 
   url: https://docs.omnissa.com/category/workspaceone_uem_getting_started
-  image: ../assets/logos/ws1-logo.png
+  image: ../assets/logos/Unified-Endpoint-Management-v-lm.png
 
-- title: Workspace ONE Access
-  content: centralized management console with which you can manage users and groups, set up and manage authentication and access policies, and add resources to the catalog and manage entitlements to those resources. 
+- title: Centralized management console with which you can manage users and groups, set up and manage authentication and access policies, and add resources to the catalog and manage entitlements to those resources.
+  #content: 
   url: https://docs.omnissa.com/category/Workspace_ONE_Access_Cloud
-  image: ../assets/logos/ws1-access-logo.png
+  image: ../assets/logos/Access-v-lm.png
 
-- title: Workspace ONE Intelligence
-  content: Capture real-time event data from key user flows in your app
+- title: Gain insights, analytics and automation across the anywhere workspace.
+  #content: 
   url: https://docs.omnissa.com/bundle/WS1Intelligence/page/IntelMainIntro.html
-  image: ../assets/logos/ws1-intel-logo.png
+  image: ../assets/logos/Intelligence-v-lm.png
 
-- title: Workspace ONE Hub Services
-  content: Securely discover, access, and connect to your company’s resources, teams, and workflows
+- title: Securely discover, access, and connect to your company’s resources, teams, and workflows
+  #content: 
   url: https://docs.omnissa.com/bundle/workspace-one-hub-services/page/SettingUpHubServicestoSupportWorkspaceONEIntelligentHub.html
-  image: ../assets/logos/ws1-intel-logo.png
+  image: ../assets/logos/Hub-Services-v-lm.png
 
-- title: Workspace ONE Assist
-  content: Remote support for digital employees
+- title: Remote support for digital employees
+  #content: 
   url: https://docs.omnissa.com/bundle/Workspace-ONE-AssistV24.03/page/WorkspaceONEAssist.html
-  image: ../assets/logos/ws1-assist-logo.png
+  image: ../assets/logos/Assist-h-lm.png
 
-- title: Workspace ONE Tunnel
-  content: Securely provide either Per-App or Full Device VPN capabilities across all your employees’ devices and delivered with a modern Zero Trust architecture
+- title: Securely provide either Per-App or Full Device VPN capabilities across all your employees’ devices and delivered with a modern Zero Trust architecture
+  #content: 
   url: https://docs.omnissa.com/bundle/Workspace_ONE_TunnelVSaas/page/TunnelOverview.html
-  image: ../assets/logos/uag-logo.png
+  image: ../assets/logos/Tunnel-v-lm.png
 
-- title: Unified Access Gateway
-  content: Secure external access to your applications and desktops.
+- title: Secure external access to your applications and desktops.
+  #content: 
   url: https://docs.omnissa.com/bundle/UnifiedAccessGatewayDeployandConfigureV2312/page/Deployingandconfiguring.html
-  image: ../assets/logos/uag-logo.png
+  image: ../assets/logos/UAG-v-lm.png
 
-- title: Horizon 8
-  content: Secure virtual desktop (VDI) and app platform delivery
+- title: Secure virtual desktop (VDI) and app platform delivery
+  #content: 
   url: https://docs.omnissa.com/category/Horizon_8
-  image: ../assets/logos/horizon-logo.png
+  image: ../assets/logos/Horizon-v-lm.png
 
-- title: App Volumes
-  content: Real-time application delivery system that enterprises can use to dynamically deliver and manage applications.
+- title: Real-time application delivery system that enterprises can use to dynamically deliver and manage applications.
+  #content: 
   url: https://docs.omnissa.com/bundle/AppVolumesInstallGuideV2312/page/AboutThisBook.html
-  image: ../assets/logos/app-volumes-logo.png
+  image: ../assets/logos/App-Volumes-h-lm.png
 
-- title: Dynamic Environment Manager
-  content: Windows profile management through dynamic policy configuration
+- title: Windows profile management through dynamic policy configuration
+  #content: 
   url: https://docs.omnissa.com/bundle/DEMInstallConfigGuideV2312/page/AboutInstallingandConfiguringDynamicEnvironmentManager.html
-  image: ../assets/logos/dem-logo.png
+  image: ../assets/logos/Dynamic-Environment-Manager-h-lm.png
 
 ::/cards::

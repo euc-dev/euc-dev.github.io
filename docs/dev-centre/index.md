@@ -10,14 +10,14 @@ Find Developer and DevOps Resources for omnissa Technology Platforms. APIs, SDKs
 
 ::cards::
 
-- title: Workspace ONE
-  content: Securely Integrate Your Mobile Apps with Omnissa Workspace ONE
+- title: Securely Integrate Your Mobile Apps with Omnissa Workspace ONE
+  #content: Securely Integrate Your Mobile Apps with Omnissa Workspace ONE
   url: ws1/index.md
-  image: ../assets/logos/ws1-logo.png
+  image: ../assets/logos/UEM-h-lm.png
 
-- title: Workspace ONE Intelligence
-  content: Capture real-time event data from key user flows in your app
+- title: Capture real-time event data from key user flows in your app
+  #content: Capture real-time event data from key user flows in your app
   url: ws1-intel/index.md
-  image: ../assets/logos/ws1-intel-logo.png
+  image: ../assets/logos/Intelligence-h-lm.png
 
 ::/cards::

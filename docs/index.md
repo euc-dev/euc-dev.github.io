@@ -8,8 +8,6 @@ hide:
 
 The Omnissa Developer Portal is a collection of resources and samples that developers, customers and partners can use to integrate and extend their Omnissa products.
 
-The Omnissa Developer Portal is a free developer program that provides access to a growing community of developers and experts.
-
 ## Featured Resources for Developers
 
 ::cards:: cols=5
@@ -17,27 +15,27 @@ The Omnissa Developer Portal is a free developer program that provides access to
 - title: APIs
   content: Build on Omnissa products, manage & automate using APIs
   url: apis/index.md
-  image: assets/logos/api.png
+  image: assets/logos/icn_om_api-indigo.png
 
 - title: Developer Centre
   content: Learn, Code and Connect using the Developer Centre as a Base
   url: dev-centre/index.md
-  image: assets/logos/developer-training.png
+  image: assets/logos/icn_om_coding-indigo.png
 
 - title: PowerCLI
   content: Use PowerShell to manage & automate Horizon
   url: powercli/index.md
-  image: assets/logos/powercli-logo.png
+  image: assets/logos/icn_om_indigo_software_data_5.png
 
 - title: Code Samples
   content: Find and share code samples for Workspace ONE and Horizon management, including SDKs, tools and utilities, applications, scripts and sensors
   url: samples/index.md
-  image: assets/logos/samples.png
+  image: assets/logos/icn_om_indigo_software_data_1.png
 
 - title: SDKs
   content: Link to the freely available SDKs available for Omnissa products
   url: sdks/index.md
-  image: assets/logos/developer-training.png
+  image: assets/logos/icn_om_indigo_software_data_10.png
 
 ::/cards::
 
@@ -48,15 +46,16 @@ The Omnissa Developer Portal is a free developer program that provides access to
 
 ## Contributing
 
-We welcome contributions from any member of our community. To get started:
+Omnissa welcomes contributions from any member of our community, in the form of documentation updates, code samples or sample apps. Each documentation set, SDK and code samples are hosted within a dedicated GitHub repository. Determine the repository you want to contribute to by clicking on the :material-file-edit-outline: button in the top right of the page, then you can fork that repository before making your change and committing back.
+
+To get started contributing:
 
 1. Please familiarize yourself with the [Code of Conduct](https://github.com/euc-dev/.github/blob/main/CODE_OF_CONDUCT.md) and [Developer Certificate of Origin](https://github.com/euc-dev/.github/blob/main/Developer%20Certificate%20of%20Origin.md) before contributing.
-2. Read the [LICENSE](https://github.com/euc-dev/euc-dev/blob/main/LICENSE)
-3. Fork the repo as per instructions in [CONTRIBUTING.md](https://github.com/euc-dev/.github/blob/main/CONTRIBUTING.md)
-4. Next initialize the submodules within the repo as per [Initialize Submodules](https://github.com/euc-dev/euc-dev.github.io/blob/main/README.md#initializing-submodules)
-5. Edit the content pages under the `/docs` folder
-6. Commit the changes back including your signature as per the [Developer Certificate of Origin](https://github.com/euc-dev/.github/blob/main/Developer%20Certificate%20of%20Origin.md)
-7. Create a PR to merge your fork changes back into main branch
+2. Read the [LICENSE](https://github.com/euc-dev/euc-dev/blob/main/LICENSE) file in the root of the respective repository
+3. Fork the repo as per instructions in [CONTRIBUTING.md](https://github.com/euc-dev/.github/blob/main/CONTRIBUTING.md) by clicking on the :material-file-edit-outline: button in the top right of the page
+4. Edit the content pages under the `/docs` folder for documentation, or add / modify code to other repository types
+5. Commit the changes back including your signature as per the [Developer Certificate of Origin](https://github.com/euc-dev/.github/blob/main/Developer%20Certificate%20of%20Origin.md)
+6. If required, create a PR to merge your forked changes back into main branch of the respective repository
 
 ## Testing
 

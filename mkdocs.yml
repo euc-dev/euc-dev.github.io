@@ -119,7 +119,8 @@ analytics:
 
 extra_css:
   - assets/stylesheets/extra.css
-  - assets/stylesheets/footer.Cx6ysBfj.css
+  # - assets/stylesheets/footer.Cx6ysBfj.css
+  - assets/stylesheets/style.dqahRzu8.css
   - assets/stylesheets/mkdocsoad.css
   - assets/stylesheets/neoteroi-mkdocs.css
 
@@ -170,17 +171,19 @@ nav:
   - Dev Centre:
     - ./dev-centre/index.md
     - Workspace ONE UEM: 
-      - dev-centre/ws1/index.md
-      - dev-centre/ws1/core-capabilities.md
+      - ./dev-centre/ws1/index.md
+      - ./dev-centre/ws1/core-capabilities.md
     - Workspace ONE Intelligence: 
-      - dev-centre/ws1-intel/index.md
-      - dev-centre/ws1-intel/core-capabilities.md
+      - ./dev-centre/ws1-intel/index.md
+      - ./dev-centre/ws1-intel/core-capabilities.md
   - Product Docs:
     - ./product-docs/index.md
   - APIs: '*include ./apis/*/mkdocs.yml'
   - Code Samples: '*include ./samples/*/mkdocs.yml'
   - PowerCLI: '*include ./powercli/*/mkdocs.yml'
- # - Terraform: '*include ./terraform/*/mkdocs.yml'
+  # - Terraform: '*include ./terraform/*/mkdocs.yml'
+  - Terraform:
+    - ./terraform/index.md
   - SDKs: '*include ./sdks/*/mkdocs.yml'
   - Support:
     - ./support/index.md

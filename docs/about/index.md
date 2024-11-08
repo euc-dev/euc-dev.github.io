@@ -6,6 +6,6 @@ hide:
   - toc
 ---
 
-Omnissa Developer `{code}` Portal is a free developer program that provides access to a growing community of developers and experts.
+Omnissa Developer `{code}` Portal is a free resource that provides SDK documentation, getting started guides, code samples, and REST API documentation.
 
-Follow [@WorkspaceONE](https://x.com/WorkspaceONE) on :fontawesome-brands-x-twitter: to keep up with Omnissa developer topics.
+Also head over to [https://community.omnissa.com/](https://community.omnissa.com/) to connect into the Omnissa Community forums.

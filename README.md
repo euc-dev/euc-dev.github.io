@@ -81,7 +81,7 @@ Apart from Dev-Centre and some static index type pages, all documentation for th
 This means that apart from the Dev-Centre pages, most other pages come from other repos and will need to be edited within those other repos. This therefore means that the majority of changes must be committed and pulled into the other repos, then pushed to this repo. For example:
 
 ```shell
-git submodule update --recursive --init
+git submodule update --init --recursive
 ```
 
 It is also important to note that each submodule is configured with branch set to **main** using the `git submodule set-branch --branch main "submodule-path"`.
@@ -93,8 +93,8 @@ If you have forked this repo, or have content changes from other repos included 
 ```shell
 git checkout . . .
 cd euc-dev.github.io/
-git submodule init
-git submodule update --recursive
+git submodule update --init --recursive
+git submodule update --recursive --remote
 code .
 ```
 

@@ -17,22 +17,22 @@ Workspace ONE Intelligence SDK enables developers to capture real-time event dat
 - title: Crash Reporting
   content: A crash is a run-time exception that occurs due to some unexpected event that terminates the user session. Crashes are events that are not handled within a try/catch block in the app. The Crash Reporting page of the portal shows the event,...
   url: ./core-capabilities.md#crash-reporting-overview
-  image: ../../assets/images/alert.svg
+  image: ../../assets/logos/icn_om_indigo_management_3.png
 
 - title: Network Insights
   content: Whenever an app makes a network call, Workspace ONE Intelligence SDK monitors and captures certain information, such as the service name, device type, device OS and OS version, app version and endpoint URI...
   url: ./core-capabilities.md#network-insights-overview
-  image: ../../assets/images/speedometer.svg
+  image: ../../assets/logos/icn_om_indigo_management_10.png
 
 - title: Symbolication
   content: Symbolication is the process of translating stack traces into a human-readable form by mapping hexadecimal addresses to function names using symbol file(s). Workspace ONE Intelligence automatically symbolicates crashes once you have...
   url: ./core-capabilities.md#symbolication-overview
-  image: ../../assets/images/symbol.svg
+  image: ../../assets/logos/icn_om_indigo_software_data_1.png
 
 - title: Usage Tracking
   content: An app load occurs whenever a user launches the app on their device. When the user begins using an instrumented application, the library automatically records an app load event. Workspace ONE Intelligence then aggregates app loads into rolling...
   url: ./core-capabilities.md#usage-tracking-overview
-  image: ../../assets/images/monitor-eye.svg
+  image: ../../assets/logos/icn_om_indigo_platform_6.png
 
 ::/cards::
 
@@ -45,52 +45,42 @@ Browse all [core capabilities](core-capabilities.md)
 - title: App Usage and Engagement
   content: Keep an eye on your app adoption and engagement with the help of metrics such as app loads, Daily Active Users and Monthly Active Users reported by Workspace ONE Intelligence SDK.
   url: #
-  image: ../../assets/images/cog-outline.svg
+  image: ../../assets/logos/icn_om_indigo_management_5.png
 
 - title: Application Performance Management
   content: Workspace ONE Intelligence empowers you to manage performance and user experience in the face of millions of potential configurations.
   url: #
-  image: ../../assets/images/speedometer.svg
+  image: ../../assets/logos/icn_om_indigo_management_10.png
 
 - title: User Behavior
   content: Identify the most important flows in your app and understand your app’s adoption with precise data.
   url: #
-  image: ../../assets/images/devices.svg
+  image: ../../assets/logos/icn_om_mobile_engineer-indigo.png
 
 ::/cards::
 
 ## Developer Resources
 
-Many Code Samples are available within the [https://github.com/euc-oss/euc-samples](https://github.com/euc-oss/euc-samples) GitHub repository. An Index of all samples is provided under [Code Samples](../samples/index.md) menu above.
+Many code samples are available within the [https://github.com/euc-oss/euc-samples](https://github.com/euc-oss/euc-samples) GitHub repository. An Samples Index is also auto-generated and available within the [Code Samples](/euc-samples/#sample-indexes) menu above.
 
-Additionally, documentation and guides are provided for the relevant Workspace ONE Intelligence APIs and SDKs below.
+Additionally, documentation and guides are provided for APIs, SDKs and Powershell modules using the menus above, or clicking the relevant card below:
 
-::cards:: cols=5
+::cards:: cols=3
 
-- title: Workspace ONE Intelligence APIs
+- title: Query and extract data for use in other business intelligence tools with Workspace ONE Intelligence APIs
+  
+  url: /ws1-intelligence-apis/
+  image: ../../assets/logos/icn_om_api-indigo.png
 
-  url: /ws1-api-intelligence/
-  image: ../../assets/logos/ws1-intel-logo.png
-
-- title: Workspace ONE Intelligence SDKs
-
-  url: /ws1-sdk-intelligence/
-  image: ../../assets/logos/ws1-intel-logo.png
-
-- title: Workspace ONE Notification Services APIs
-
-  url: /workspace-one-uem-apis/
-  image: ../../assets/logos/ws1-uem-logo.png
-
-- title: Workspace ONE UEM SDK for Android
+- title: Workspace ONE Intelligence SDK for Android
 
   url: /ws1-uem-sdk-for-android/
-  image: ../../assets/logos/android_logo_circle.png
+  image: ../../assets/logos/icn_om_mobile_device-indigo.png
 
-- title: Workspace ONE UEM SDK for iOS
+- title: Workspace ONE Intelligence SDK for iOS
 
   url: /ws1-uem-sdk-for-ios/
-  image: ../../assets/logos/apple_logo_circle.png
+  image: ../../assets/logos/icn_om_indigo_management_7.png
 
 ::/cards::
 

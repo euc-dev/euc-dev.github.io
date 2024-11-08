@@ -76,7 +76,7 @@ With the release of version 24.1.0 of the Intelligence SDK, as part of the new â
 
 If you notice a significant increase in data consumption after updating to version 24.1.0, it could be attributed to these new attributes. Our team is actively working on a solution to optimize data usage, which will be included in the next release.
 
-If you believe that this increase in data consumption is affecting your device fleet, please do not hesitate to reach out to us. For any questions or concerns, please contact [gouthami.boinpally@broadcom.com](mailto:gouthami.boinpally@broadcom.com) or [nick.brouillette@broadcom.com](mailto:nick.brouillette@broadcom.com) for further assistance.
+If you believe that this increase in data consumption is affecting your device fleet, please do not hesitate to reach out to us. For any questions or concerns, please contact [gboinpally@omnissa.com](mailto:gboinpally@omnissa.com) or [nbrouillette@omnissa.com](mailto:nbrouillette@omnissa.com) for further assistance.
 
 We thank you for your understanding.
 
@@ -170,33 +170,24 @@ For HTTP calls (such as REST apps), Workspace ONE Intelligence SDK monitors and 
 Symbolication is the process of translating stack traces into a human-readable form by mapping hexadecimal addresses to function names using symbol file(s). Workspace ONE Intelligence automatically symbolicates crashes once you have uploaded your appâ€™s symbol file(s).
 
 - For Apple applications, stack traces are reported in hexidecimal characters. Symbolication allows developers to convert these hex strings into human-readable text.
-- For Android applications that use the ProGuard tool to obfuscate their function names, developers can use a Proguard mapping file to replace the obfuscated name with a human-readable name. For more information, see [Configuring Proguard Symbolication]().
+- For Android applications that use the ProGuard tool to obfuscate their function names, developers can use a Proguard mapping file to replace the obfuscated name with a human-readable name. For more information, see [Configuring Proguard Symbolication]([Configuring Proguard Symbolication](/ws1-intelligence-sdk/Android/android-install/?h=configuring+proguard+symbolication#configuring-proguard-symbolication)).
 
 ## Opt In or Out of Workspace ONE Intelligence
 
-Certain app users might want to opt in to DEX telemetry or opt out of 
-Workspace ONE Intelligence logging and tracking. 
+Certain app users might want to opt in to DEX telemetry or opt out of Workspace ONE Intelligence logging and tracking.
 
-Admins may want to set different configuration default settings 
-than the defaults provided by Workspace ONE Intelligence SDK. 
+Admins may want to set different configuration default settings than the defaults provided by Workspace ONE Intelligence SDK.
 
-Workspace ONE Intelligence SDK provides an API that can enable 
-or disable reporting for the Workspace ONE Intelligence features and 
-can enable or disable reporting for the DEX feature. 
-Each feature can be controlled individually. 
+Workspace ONE Intelligence SDK provides an API that can enable or disable reporting for the Workspace ONE Intelligence features and can enable or disable reporting for the DEX feature. Each feature can be controlled individually.
 
-If user choice is desired, developers must implement the code that prompts 
-the app user to select whether to opt in or opt out. 
+If user choice is desired, developers must implement the code that prompts the app user to select whether to opt in or opt out.
 
-If admin choice is desired, developers must implement the code that reads the desired 
-configuration and selects the appropriate opt in or opt out settings. 
+If admin choice is desired, developers must implement the code that reads the desired configuration and selects the appropriate opt in or opt out settings.
 
 (Your app may choose to allow end users to override the admin's default settings or not.)
 
-If a user has opted out, or an app configuration has opted out, 
-their instance of the app will not report any activity back 
-to Workspace ONE Intelligence or DEX. 
+If a user has opted out, or an app configuration has opted out, their instance of the app will not report any activity back to Workspace ONE Intelligence or DEX.
 
-## Related Resources
+## Sample Applications
 
-[Download Sample Code](https://storage.googleapis.com/ace-static/appdevsite/iOS/ios-native-sdk-tunneling.zip)
+A Workspace ONE Intelligence SDK sample application is provided within the euc-samples repository for both Android and iOS device platforms [here](https://github.com/euc-oss/euc-samples/tree/main/Intelligence-Samples/IntelligenceSDK). Use these Sample Applications in conjunction with the documentation provided within the [Workspace ONE Intelligence SDK](https://developer.omnissa.com/ws1-intelligence-sdk/) pages.
