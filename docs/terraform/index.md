@@ -2,7 +2,7 @@
 layout: page
 title: Terraform
 hide:
-  #- navigation
+  - navigation
   - toc
 ---
 

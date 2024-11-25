@@ -33,7 +33,7 @@ Links to Official Product Documentation Getting Started Guides are below. The ma
 - title: Remote support for digital employees
   #content: 
   url: https://docs.omnissa.com/bundle/Workspace-ONE-AssistV24.03/page/WorkspaceONEAssist.html
-  image: ../assets/logos/Assist-h-lm.png
+  image: ../assets/logos/Assist-v-lm.png
 
 - title: Securely provide either Per-App or Full Device VPN capabilities across all your employees’ devices and delivered with a modern Zero Trust architecture
   #content: 
@@ -53,11 +53,11 @@ Links to Official Product Documentation Getting Started Guides are below. The ma
 - title: Real-time application delivery system that enterprises can use to dynamically deliver and manage applications.
   #content: 
   url: https://docs.omnissa.com/bundle/AppVolumesInstallGuideV2312/page/AboutThisBook.html
-  image: ../assets/logos/App-Volumes-h-lm.png
+  image: ../assets/logos/App-Volumes-v-lm.png
 
 - title: Windows profile management through dynamic policy configuration
   #content: 
   url: https://docs.omnissa.com/bundle/DEMInstallConfigGuideV2312/page/AboutInstallingandConfiguringDynamicEnvironmentManager.html
-  image: ../assets/logos/Dynamic-Environment-Manager-h-lm.png
+  image: ../assets/logos/Dynamic-Environment-Manager-v-lm.png
 
 ::/cards::

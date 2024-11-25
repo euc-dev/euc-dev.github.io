@@ -28,7 +28,7 @@ Manage the Omnissa portfolio of products and automate configuration using APIs.
 - title: Manage and configure UEM via REST API
   
   url: /workspace-one-uem-apis/
-  image: ../assets/logos/UEM-h-dm.png
+  image: ../assets/logos/UEM-h-lm.png
 
 - title: Manage and configure Access via REST API
   

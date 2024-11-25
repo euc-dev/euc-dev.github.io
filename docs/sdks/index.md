@@ -13,12 +13,12 @@ Developers, Automation Engineers, and System Administrators can build world clas
 - title: Workspace ONE UEM SDK for Android
 
   url: /ws1-uem-sdk-for-android/
-  image: ../../assets/logos/SDK-v-lm.png
+  image: ../assets/logos/SDK-v-lm.png
 
 - title: Workspace ONE UEM SDK for iOS
 
   url: /ws1-uem-sdk-for-ios/
-  image: ../../assets/logos/SDK-v-lm.png
+  image: ../assets/logos/SDK-v-lm.png
 
 - title: Horizon View Session Enhancement SDK
   content: use the Horizon View Session Enhancement Software Development Kit (SDK) to write host-side and client-side applications and allow communications between a clients and remote desktop
@@ -33,7 +33,7 @@ Developers, Automation Engineers, and System Administrators can build world clas
 - title: Workspace ONE Intelligence SDK
   content: enables developers to capture real-time event data from key user flows in an app screen such as load time, network events, crash reports, and more
   url: ../ws1-intelligence-sdk/index.md
-  image: ../assets/logos/ws1-intel-logo.png
+  image: ../assets/logos/Intelligence-v-lm.png
 
 - title: Workspace ONE SDK for Android
   content: enable additional app config and security capabilities that may not yet be available natively as part of the AppConfig Community for Android devices
