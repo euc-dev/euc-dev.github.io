@@ -13,7 +13,7 @@ Manage the Omnissa portfolio of products and automate configuration using APIs.
 - title: Manage & automate Horizon using APIs
   
   url: /horizon-apis/
-  image: ../assets/logos/Horizon-8-h-lm.png
+  image: ../assets/logos/Horizon-h-lm.png
 
 - title: Manage and configure App Volumes via REST API
   
@@ -22,7 +22,7 @@ Manage the Omnissa portfolio of products and automate configuration using APIs.
 
 - title: Query and extract data for use in other business intelligence tools with Workspace ONE Intelligence APIs
   
-  url: /ws1-intelligence-apis/
+  url: /omnissa-intelligence-apis/
   image: ../assets/logos/Intelligence-h-lm.png
 
 - title: Manage and configure UEM via REST API
@@ -32,12 +32,12 @@ Manage the Omnissa portfolio of products and automate configuration using APIs.
 
 - title: Manage and configure Access via REST API
   
-  url: /ws1-access-apis/
+  url: /omnissa-access-apis/
   image: ../assets/logos/Access-h-lm.png
 
 - title: Manage and configure Identity Services via REST API
   
-  url: /ws1-identity-services-api/
+  url: /omnissa-identity-services-api/
   image: ../../assets/logos/Identity-Service-h-lm.png
 
 - title: Manage and configure Notification Services via REST API
