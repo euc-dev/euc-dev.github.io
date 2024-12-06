@@ -1,0 +1,242 @@
+{
+  "title": "Notification card schema for Intelligent Hub notifications (manually extracted from array-response schema at https://developer.omnissa.com/ws1-notification-services-apis/herocard-response-schema.json)",
+
+  "type": "object",
+  "properties":     {
+    "id":           {"type": "string",
+      "description": "Unique ID of the card",
+      "pattern": "^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$"
+    },
+    "importance":    {"type": "integer", "description": "The importance of the card. An importance of 0 is the highest importance and larger numbers indicate lower importance"},
+    "image":         {"$ref": "#/definitions/link", "description": "Link to an image to use for the card's icon"},
+    "creation_date": {"type": "string", "format": "date-time", "description": "When the card was created. In ISO 8601 format"},
+    "expiration_date" :{"type": "string", "format": "date-time", "description": "When the card will expire. In ISO 8601 format"},
+    "due_date":     {"type": "string", "format": "date-time", "description": "When the card is due. In ISO 8601 format"},
+    "template":     {"$ref": "#/definitions/link", "description": "Link to a Handlebars template for rendering the card"},
+    "header":       {"$ref": "#/definitions/cardHeader", "description": "The card's header"},
+    "links":        {"type": "array", "items": {"$ref": "#/definitions/openInLink"}, "description": "An array of links to take user to the associated resources."},
+    "banner":       {"$ref": "#/definitions/cardBanner", "description": "The card's banner"},
+    "body":         {"$ref": "#/definitions/cardBody", "description": "The card's body"},
+    "hash":         {"type": "string", "description": "A hash to help Mobile Flows determine if this card is new or has been seen before"},
+    "backend_id":   {"type": "string", "description": "An optional ID to help correlate card results from one request to the next.  A card with the same backend_id as a previously returned card should represent that each card was built interacting with the same backend data."},
+    "actions":      {"type": "array", "items": {"$ref": "#/definitions/cardAction"}, "description": "Available actions to display on the card, listed in order of importance (most important first)"},
+    "sticky":       {"$ref": "#/definitions/sticky", "description": "The card's sticky properties"},
+    "tags":         {"type": "array", "items": {"type": "string"}, "description": "Arbitrary tags applied to the card"}
+  },
+
+  "definitions": {
+    "link": {
+      "type": "object",
+      "properties": {
+        "href": {"type": "string", "format": "uri"}
+      },
+      "required": ["href"]
+    },
+
+    "openInLink": {
+      "type": "object",
+      "properties": {
+        "href": {"type": "string", "format": "uri"},
+        "text": {"type": "string", "description": "A short description about this link."}
+      },
+      "required": ["href", "text"]
+    },
+
+    "cardHeader": {
+      "type": "object",
+      "properties": {
+        "title":    {"type": "string"},
+        "subtitle": {"type": "array", "items": {"type": "string"}},
+        "links": {"$ref" : "#/definitions/cardHeaderLinks", "description": "An optional property to link card title and sub-title(s) to the backend application"}
+      }
+    },
+
+    "cardBanner": {
+      "type": "object",
+      "properties": {
+        "items": {"type": "array", "items": {"$ref": "#/definitions/bannerItem"}, "description": "List of banner items"}
+      }
+    },
+
+    "bannerItem": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "type of the banner item - image/video",
+          "type": "string",
+          "enum": [
+            "video",
+            "image"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "description": "title for the banner item"
+        },
+        "description": {
+          "type": "string",
+          "description": "description for the banner item"
+        },
+        "href": {
+          "type": "string",
+          "description": "URL for the banner item",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "type",
+        "href"
+      ]
+    },
+
+    "cardHeaderLinks": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "description": "Link to backend application title",
+          "type": "string",
+          "format": "uri"
+        },
+        "subtitle": {
+          "description": "Link(s) to backend application sub-title(s). Number of links corresponds to the number of sub-titles and in the same order. Empty links can be represented with null",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {"type": "string", "format": "uri"},
+              {"type": "null"}
+            ]
+          }
+        }
+      }
+    },
+
+    "cardBody": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Description of the body. This would typically be rendered as plain body text near the top of the card"},
+        "fields":      {
+          "type": "array",
+          "items": {"$ref": "#/definitions/cardBodyField"},
+          "description": "The fields of the body, if any. Fields are rendered differently according to their type attribute"
+        }
+      }
+    },
+
+    "cardBodyField": {
+      "type": "object",
+      "properties": {
+        "type":        {"type": "string"},
+        "title":       {"type": "string"},
+        "subtitle":    {"type": "string"},
+        "description": {"type": "string"},
+        "content":     {
+          "type": "array",
+          "items": {"type": "object"},
+          "description": "The content of this field, which can consist of arbitrary JSON objects. The client will use the field's type attribute to determine how to parse the content."
+        },
+        "items": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/cardBodyFieldItem"},
+          "description": "The fields of the card body field items. Used by the hub client to display different sections"
+        }
+      }
+    },
+
+    "cardBodyFieldItem": {
+      "type": "object",
+      "properties": {
+        "type": {"type": "string", "description": "The type of card body field item"},
+        "title": {"type": "string", "description": "Title of the card body field item"},
+        "description": {"type": "string", "description": "Description of the card body field item"},
+        "attachment_name": {"type": "string", "description": "Name of the attachment"},
+        "vendor_attachment_url": {"type": "string", "description": "Deep link URL of the attachment in the vendor's system"},
+        "attachment_content_type": {"type": "string", "description": "The content type of attachment like application/pdf or application/png"},
+        "attachment_content_length": {"type": "integer", "description": "The content length of the attachment"},
+        "attachment_url": {"type": "string", "description": "URL to stream the attachment through Mobile Flows"},
+        "attachment_method": {"type": "string", "description": "Http method to retrieve attachment_url"},
+        "created_at": {"type": "string", "format": "date-time", "description": "Indicates when the card body field item was created"},
+        "updated_at": {"type": "string", "format": "date-time", "description": "Indicates when the card body field item was updated"}
+      }
+    },
+
+    "cardAction": {
+      "type": "object",
+      "properties": {
+        "id":         {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$",
+          "description": "Unique ID of the action"
+        },
+        "action_key":                 {"type": "string", "description": "An arbitrary string used by the client to distinguish this action from other actions that may be sent"},
+        "label":                      {"type": "string", "description": "A human-readable description of the action to be shown in the card"},
+        "mutually_exclusive_set_id":  {"type": "string", "description": "A string to allow grouping of actions. When an action in this group successfully completes, the other actions will hide."},
+        "completed_label":            {"type": "string", "description": "A human-readable message to display on successful completion of the action"},
+        "primary":                    {"type": "boolean", "description": "Whether or not the action is a primary action and should be colored differently than the non-primary actions"},
+        "mfa_required":               {"type": "boolean", "description": "Indicates whether client application must take additional steps to verify the identity of the user interacting with an action. Client applications MUST decline to submit any action where mfa_required is TRUE and the client is unable to verify the current user's identity."},
+        "url":                        {"$ref": "#/definitions/link", "description": "Link to the action. Optionally prefixed with X-Routing-Prefix. See Request Headers in wiki"},
+        "type":                       {"$ref": "#/definitions/httpMethods", "description": "The HTTP method to use for submitting the action request"},
+        "content_type":               {"type": "string", "description": "The Content-Type for the client to use when submitting the action request (the default is application/x-www-form-urlencoded)"},
+        "request":                    {"type": "object", "description": "Hard-coded fields to be sent with the action request"},
+        "allow_repeated" :            {"type": "boolean", "description": "Whether or not the action can be clicked again after successfully completed"},
+        "remove_card_on_completion" : {"type": "boolean", "description": "Whether or not clients should remove the card upon successful completion of this action"},
+        "confirmation":               {"$ref":  "#/definitions/cardActionConfirmation", "description": "Allows the user to cancel or confirm operations"},
+        "user_input": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/cardActionUserInput"},
+          "description": "Allows the user to enter data to be submitted in this action"
+        }
+      },
+      "required": ["id", "action_key", "label", "completed_label", "url", "type"]
+    },
+
+    "cardActionConfirmation": {
+      "type": "object",
+      "properties": {
+        "title":              {"type":  "string", "description":  "The title of cardActionConfirmation"},
+        "text":               {"type":  "string", "description":  "The text of cardActionConfirmation"},
+        "confirmation_text":  {"type":  "string", "description":  "The text of confirmation_text of cardActionConfirmation"},
+        "cancel_text":        {"type":  "string", "description":  "The text of cancel_text of cardActionConfirmation"}
+      },
+      "required": ["title", "text", "confirmation_text", "cancel_text"]
+    },
+
+    "cardActionUserInput": {
+      "type": "object",
+      "properties": {
+        "id":              {"type": "string", "description": "The field's ID, which will be used as the key when this field is submitted"},
+        "label":           {"type": "string", "description": "The field's label, which will be displayed to the user to describe the expected content of the field"},
+        "format":          {"type": "string", "description": "The type of the user input"},
+        "display_content": {"type": "string", "description": "Content to be displayed with the user input field to further explain or prompt it"},
+        "options":         {"type": "object", "description": "Options to present when format is select."},
+        "ordered_options": {"type": "array", "items": {"$ref": "#/definitions/option"}, "minItems": 1, "description": "Options specially ordered to present more than 1 value"},
+        "selected":        {"type": "string", "description": "This field value allows the client to show which Options entry to start off as selected"},
+        "min_length":      {"type": "integer", "minimum": 0, "description": "The minimum length of the field"},
+        "max_length":      {"type": "integer", "minimum": 0, "description": "The maximum length of the field"},
+        "min_value":       {"type": "integer", "description": "The minimum value of the field (for numeric types). If none provided, default is 1."},
+        "max_value":       {"type": "integer", "description": "The maximum value of the field (for numeric types). If none provided, default is 5."}
+      },
+      "required": ["id", "label"]
+    },
+
+    "option": {
+      "type": "object",
+      "additionalProperties" : {"type": "string"}
+    },
+
+    "httpMethods": {
+      "type": "string",
+      "enum": ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT", "TRACE"]
+    },
+
+    "sticky": {
+      "type": "object",
+      "properties": {
+        "type":  {"type": "string", "description": "Used to specify the type of sticky card"},
+        "until": {"type": "string", "format": "date-time", "description": "Used to determine until when the client should exhibit stickiness behaviour on the card. Its in ISO 8601 format."}
+      },
+      "required": ["until"]
+    }
+  }
+}
