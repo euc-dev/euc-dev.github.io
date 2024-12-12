@@ -35,9 +35,9 @@ Manage the Omnissa portfolio of products and automate configuration using APIs.
   url: /omnissa-access-apis/
   image: ../assets/logos/Access-h-lm.png
 
-- title: Manage and configure Identity Services via REST API
+- title: Manage and configure Identity Service via REST API
   
-  url: /omnissa-identity-services-api/
+  url: /omnissa-identity-service-api/
   image: ../../assets/logos/Identity-Service-h-lm.png
 
 - title: Manage and configure Notification Services via REST API
