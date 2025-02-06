@@ -2,6 +2,8 @@
 
 Welcome to the Omnissa Developer Portal repository.
 
+## Certain materials hosted on the Omnissa Developer Portal, including SDKs and other source code projects, were originally developed or released by VMware's End-User Computing (EUC) division.  They are maintained on the Developer Portal for historical reference and/or for support and compatibility purposes.  While these materials may contain references to "VMware," Omnissa is not currently affiliated with VMware.  On July 1, 2024, Omnissa, formerly the VMware EUC business, launched as an independent, global software company and digital workspace leader.
+
 This repo stores the https://developer.omnissa.com site in markdown format using MkDocs with the Material theme.
 
 This site is using MkDocs as the site renderer, and GitHub Pages as the hoster. As such, this repo will create a publicly available site at [https://euc-dev.github.io](https://euc-dev.github.io). A CNAME record and GitHub Pages configuration points [https://developer.omnissa.com](https://developer.omnissa.com) to this site.

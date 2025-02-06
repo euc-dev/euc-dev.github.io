@@ -8,6 +8,9 @@ hide:
 
 The Omnissa Developer Portal is a collection of resources and samples that developers, customers and partners can use to integrate and extend their Omnissa products.
 
+!!! note Notice
+    Certain materials hosted on the Omnissa Developer Portal, including SDKs and other source code projects, were originally developed or released by VMware's End-User Computing (EUC) division.  They are maintained on the Developer Portal for historical reference and/or for support and compatibility purposes.  While these materials may contain references to "VMware," Omnissa is not currently affiliated with VMware.  On July 1, 2024, Omnissa, formerly the VMware EUC business, launched as an independent, global software company and digital workspace leader.
+
 ## Featured Resources for Developers
 
 ::cards:: cols=5
