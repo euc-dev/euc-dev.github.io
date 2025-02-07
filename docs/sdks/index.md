@@ -10,25 +10,15 @@ Developers, Automation Engineers, and System Administrators can build world clas
 
 ::cards::
 
-- title: Workspace ONE UEM SDK for Android
-
-  url: /ws1-uem-sdk-for-android/
-  image: ../assets/logos/SDK-v-lm.png
-
-- title: Workspace ONE UEM SDK for iOS
-
-  url: /ws1-uem-sdk-for-ios/
-  image: ../assets/logos/SDK-v-lm.png
-
 - title: Horizon View Session Enhancement SDK
   content: use the Horizon View Session Enhancement Software Development Kit (SDK) to write host-side and client-side applications and allow communications between a clients and remote desktop
   url: ../horizon-sdks/view-session-management/index.md
-  image: ../assets/logos/Horizon.png
+  image: ../assets/logos/Horizon-v-lm.png
 
 - title: Horizon RDP VC Bridge SDK
   content: use the Horizon RDP VC Bridge SDK to write Windows applications that can load plugins on the Horizon Client
   url: ../horizon-sdks/rdpvcbridge/index.md
-  image: ../assets/logos/Horizon.png
+  image: ../assets/logos/Horizon-v-lm.png
 
 - title: Workspace ONE Intelligence SDK
   content: enables developers to capture real-time event data from key user flows in an app screen such as load time, network events, crash reports, and more
@@ -38,11 +28,11 @@ Developers, Automation Engineers, and System Administrators can build world clas
 - title: Workspace ONE SDK for Android
   content: enable additional app config and security capabilities that may not yet be available natively as part of the AppConfig Community for Android devices
   url: ../ws1-uem-sdk-for-android/index.md
-  image: ../assets/logos/icn_om_mobile_device-indigo.png
+  image: ../assets/logos/SDK-v-lm.png
 
 - title: Workspace ONE SDK for iOS
   content: enable additional app config and security capabilities that may not yet be available natively as part of the AppConfig Community for iOS devices
-  url: ../ws1-uem-sdk-for-ios/index.md
-  image: ../assets/logos/icn_om_indigo_management_7.png
+  url: ../ws1-sdk-uem-ios/index.md
+  image: ../assets/logos/SDK-v-lm.png
 
 ::/cards::
