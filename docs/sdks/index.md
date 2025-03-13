@@ -27,7 +27,7 @@ Developers, Automation Engineers, and System Administrators can build world clas
 
 - title: Workspace ONE SDK for Android
   content: enable additional app config and security capabilities that may not yet be available natively as part of the AppConfig Community for Android devices
-  url: ../ws1-uem-sdk-for-android/index.md
+  url: ../ws1-sdk-for-android/index.md
   image: ../assets/logos/SDK-v-lm.png
 
 - title: Workspace ONE SDK for iOS
