@@ -108,9 +108,9 @@ Additionally, documentation and guides are provided for APIs, SDKs and Powershel
   url: /workspace-one-uem-apis/
   image: ../../assets/logos/UEM-h-lm.png
 
-- title: Workspace ONE UEM SDK for Android
+- title: Workspace ONE SDK for Android
 
-  url: /ws1-uem-sdk-for-android/
+  url: /ws1-sdk-for-android/
   image: ../../assets/logos/SDK-v-lm.png
 
 - title: Workspace ONE UEM SDK for iOS
