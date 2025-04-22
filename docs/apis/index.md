@@ -48,6 +48,6 @@ Manage the Omnissa portfolio of products and automate configuration using APIs.
 - title: UAG REST API
   
   url: /uag-rest-apis/
-  image: ../../assets/logos/uag-v-lm.png
+  image: ../../assets/logos/UAG-h-lm.png
 
 ::/cards::

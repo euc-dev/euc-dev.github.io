@@ -53,11 +53,13 @@ theme:
     text: Outfit
     code: Poppins
   features:
+  - announce.dismiss
   - content.action.edit
   - content.action.view
   - content.code.annotate
   - content.code.copy
   - content.tabs.link
+  - header.autohide
   - navigation.header
   - navigation.indexes
   - navigation.instant
@@ -164,8 +166,8 @@ nav:
   - Code Samples: '*include ./samples/*/mkdocs.yml'
   - PowerCLI: '*include ./powercli/*/mkdocs.yml'
   # - Terraform: '*include ./terraform/*/mkdocs.yml'
-  - Terraform:
-    - ./terraform/index.md
+  #- Terraform:
+  #  - ./terraform/index.md
   - SDKs: '*include ./sdks/*/mkdocs.yml'
   - Support:
     - ./support/index.md
