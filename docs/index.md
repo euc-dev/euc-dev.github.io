@@ -8,8 +8,8 @@ hide:
 
 The Omnissa Developer Portal is a collection of resources and samples that developers, customers and partners can use to integrate and extend their Omnissa products.
 
-!!! danger Urgent Notification regarding legacy Domain End of Service
-    As part of the migration from legacy VMware-owned domains to Omnissa-owned domains, customers' network and security teams will need to make firewall changes to allow access to the new Omnissa-owned domains by June 15th, 2025, to prepare and not block the new Omnissa domain network requests in upcoming product and service updates.  This will also impact any API-driven tasks or automation that has been created.  Please go to https://kb.omnissa.com/s/article/6000840 for more information.
+!!! danger "Urgent Notification regarding legacy Domain End of Service"
+    As part of the migration from legacy VMware-owned domains to Omnissa-owned domains, customers' network and security teams will need to make firewall changes to allow access to the new Omnissa-owned domains by June 15th, 2025, to prepare and not block the new Omnissa domain network requests in upcoming product and service updates.  This will also impact any API-driven tasks or automation that has been created.  Please go to [KB6000840](https://kb.omnissa.com/s/article/6000840) for more information.
 
 ## Featured Resources for Developers
 
