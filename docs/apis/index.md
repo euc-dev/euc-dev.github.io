@@ -45,7 +45,7 @@ Manage the Omnissa portfolio of products and automate configuration using APIs.
   url: /ws1-notification-services-apis/
   image: ../../assets/logos/Hub-Services-h-lm.png
 
-- title: UAG REST API
+- title: Manage and configure UAG via REST API
   
   url: /uag-rest-apis/
   image: ../../assets/logos/UAG-h-lm.png
