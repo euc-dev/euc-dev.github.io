@@ -10,9 +10,9 @@ Developers, Automation Engineers, and System Administrators can build world clas
 
 ::cards::
 
-- title: Horizon View Session Enhancement SDK
+- title: Horizon Session Enhancement SDK
   content: use the Horizon View Session Enhancement Software Development Kit (SDK) to write host-side and client-side applications and allow communications between a clients and remote desktop
-  url: ../horizon-sdks/view-session-management/index.md
+  url: ../horizon-sdks/vdpservice/index.md
   image: ../assets/logos/Horizon-v-lm.png
 
 - title: Horizon RDP VC Bridge SDK
