@@ -166,8 +166,6 @@ nav:
   - Code Samples: '*include ./samples/*/mkdocs.yml'
   - PowerCLI: '*include ./powercli/*/mkdocs.yml'
   # - Terraform: '*include ./terraform/*/mkdocs.yml'
-  #- Terraform:
-  #  - ./terraform/index.md
   - SDKs: '*include ./sdks/*/mkdocs.yml'
   - Support:
     - ./support/index.md
