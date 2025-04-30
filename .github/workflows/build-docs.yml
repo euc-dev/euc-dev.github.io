@@ -25,6 +25,7 @@ jobs:
         #   git submodule update --recursive --init
       - uses: actions/setup-python@v5
         with:
+          fetch-depth: 0
           python-version: 3.x
       - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
       - uses: actions/cache@v4
