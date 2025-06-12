@@ -11,7 +11,9 @@
   --swiper-theme-color: #007aff
 }
 
-
+.md-main__inner {
+  margin-top: 0rem;
+}
 
 /* :root {
   --header-margin-top: 45px;
@@ -469,18 +471,18 @@
 
 ._site_footer_1g6q0_1 ._footer_top_1g6q0_20 {
   background: transparent linear-gradient(180deg, var(--east-bay) 0%, var(--dark-shade-blue) 100%);
-  padding: 79px 0 71px
+  padding: 20px 0 10px
 }
 
 @media (max-width: 1023.98px) {
   ._site_footer_1g6q0_1 ._footer_top_1g6q0_20 {
-    padding: 53px 0 45px
+    padding: 20px 0 10px
   }
 }
 
 @media (max-width: 767.98px) {
   ._site_footer_1g6q0_1 ._footer_top_1g6q0_20 {
-    padding: 46px 0 39px
+    padding: 20px 0 10px
   }
 }
 
@@ -530,7 +532,7 @@
   display: flex;
   -moz-column-gap: 20px;
   column-gap: 20px;
-  margin: 42px 0 38px
+  margin: 20px 0 20px
 }
 
 @media (max-width: 1199.98px) {
@@ -553,8 +555,8 @@
 }
 
 ._site_footer_1g6q0_1 ._footer_top_1g6q0_20 ._cl_left_1g6q0_54 ._social_icons_1g6q0_67 li a {
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
   background: var(--indigo);
   border-radius: 50%;
   display: flex;
@@ -590,7 +592,7 @@
 
 ._site_footer_1g6q0_1 ._footer_top_1g6q0_20 ._cl_left_1g6q0_54 ._copyright_1g6q0_118 {
   color: var(--cool-grey);
-  font-size: 18px;
+  font-size: 16px;
   line-height: 22px;
   max-width: 208px;
   font-weight: 300
@@ -695,8 +697,8 @@
 
 ._site_footer_1g6q0_1 ._footer_top_1g6q0_20 ._cl_right_1g6q0_125 ._footer_menu_1g6q0_134 ._widget_title_1g6q0_201 {
   font-size: 22px;
-  line-height: 30px;
-  margin-bottom: 15px;
+  line-height: 0px;
+  margin-bottom: 10px;
   display: inline-block;
   font-weight: 400
 }
@@ -724,7 +726,7 @@
 
 ._site_footer_1g6q0_1 ._footer_top_1g6q0_20 ._cl_right_1g6q0_125 ._footer_menu_lists_1g6q0_224 ._lists_1g6q0_224 {
   font-size: 16px;
-  line-height: 26px;
+  line-height: 20px;
   color: var(--vista-white);
   padding-bottom: 6px;
   font-weight: 300
@@ -744,18 +746,18 @@
 
 ._site_footer_1g6q0_1 ._footer_bottom_1g6q0_241 {
   background-color: var(--dark-byzantine-blue);
-  padding: 25px 0 19px
+  padding: 10px 0 10px
 }
 
 @media (max-width: 1439.98px) {
   ._site_footer_1g6q0_1 ._footer_bottom_1g6q0_241 {
-    padding: 25px 0 24px
+    padding: 10px 0 10px
   }
 }
 
 @media (max-width: 767.98px) {
   ._site_footer_1g6q0_1 ._footer_bottom_1g6q0_241 {
-    padding: 18px 15px 16px
+    padding: 10px 10px 10px
   }
 }
 
