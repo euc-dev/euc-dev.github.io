@@ -1,0 +1,4662 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "contact": {
+      "url": "https://www.omnissa.com/contact-us/"
+    },
+    "description": "The following swagger details the REST APIs available for Omnissa Identity Service.",
+    "license": {
+      "name": "Omnissa Identity Service Terms of Service",
+      "url": "https://www.omnissa.com/legal-center/"
+    },
+    "title": "Omnissa Identity Service",
+    "version": "latest"
+  },
+  "servers": [
+    {
+      "url": "https://{api_host}",
+      "variables": {
+        "api_host": {
+          "default": "example.com",
+          "description": "The API host"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/acs/authorize": {
+      "get": {
+        "description": "This is the starting point of the OAuth 2.0 flow to authenticate end users from your application.This authorization endpoint complies with the OAuth 2.0 specifications and must be used by clients to authenticate users and obtain an authorization code. To use this endpoint, your application must be registered as an OAuth 2.0 client in Omnissa Identity Service and have the 'authorization_code' grant type enabled.",
+        "operationId": "authorize",
+        "parameters": [
+          {
+            "description": "Specifies the callback endpoint in your application that will receive the authorization code. It must match the redirect_uri defined in your OAuth2.0 client registration in Omnissa Identity Service. When sending the redirect_uri as a URL parameter it has to be URL encoded.",
+            "example": "https://example-app.com/redirect?auth%3Doauth",
+            "in": "query",
+            "name": "redirect_uri",
+            "required": true,
+            "schema": {
+              "maxLength": 2048,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "description": "This is the identifier of the OAuth 2.0 client that was registered in Omnissa Identity Service.",
+            "example": "Example_AppID",
+            "in": "query",
+            "name": "client_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Specifies how the application should receive the authorization response. Supported response_type: 'code', 'id_token', 'id_token token', 'code id_token', 'code token', 'code id_token token'.",
+            "example": "code id_token",
+            "in": "query",
+            "name": "response_type",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A random string that your application generates and that will be sent back as a parameter during the URI redirection.",
+            "example": "5aPY-C1JSeyTiUPWV_DLDw",
+            "in": "query",
+            "name": "state",
+            "schema": {
+              "maxLength": 2048,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Optional list of scopes separated by a space and is URL encoded. The scopes must be equivalent or a subset of the scopes defined in the OAuth2.0 client. Scopes that doesn't match any of the scopes defined in the OAuth2.0 client will be ignored. If omitted or empty, the scopes defined in the OAuth2.0 client will be used.",
+            "example": "openid+profile+email+user",
+            "in": "query",
+            "name": "scope",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Specifies the user's domain. If this parameter is specified, the login screen will skip the domain selection page. This can be used when it is known that a single domain is used or the domain information can be inferred automatically (from the username for example). This is an Omnissa Identity Service optional parameter and is not in the OAuth 2.0 specification. ",
+            "example": "example.com",
+            "in": "query",
+            "name": "domain",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Specifies the user's login. In case your application already knows what user is going to login, and Omnissa Identity Service will have to pass this user to a third-party IdP, then adding this parameter will send the username as part of the SAML request. This is an Omnissa Identity Service optional parameter and is not in the OAuth 2.0 specification.",
+            "in": "query",
+            "name": "u",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Hint to the Authorization Server about the login identifier the End-User might use to log in (if necessary). This hint can be used by an RP if it first asks the End-User for their e-mail address (or other identifier) and then wants to pass that value as a hint to the discovered authorization service. This is a optional parameter prescribed in OpenID Connect specification.",
+            "in": "query",
+            "name": "login_hint",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "String value used to associate a Client session with an ID Token, and to mitigate replay attacks. The value is passed through unmodified from the Authentication Request to the ID Token. If present in the ID Token, Clients MUST verify that the nonce Claim Value is equal to the value of the nonce parameter sent in the Authentication Request. If present in the Authentication Request, Authorization Servers MUST include a nonce Claim in the ID Token with the Claim Value being the nonce value sent in the Authentication Request. Authorization Servers SHOULD perform no other processing on nonce values used. The nonce value is a case sensitive string.",
+            "in": "query",
+            "name": "nonce",
+            "schema": {
+              "maxLength": 1024,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Specifies whether to prompt the user for re-authentication or consent. Supported prompt values:'login' - Redirects the user to authenticate regardless if they have already authenticated or not. 'none' - Returns a response with error code 'login_required' when the user is not authenticated.",
+            "example": "login",
+            "in": "query",
+            "name": "prompt",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Maximum Authentication Age. Specifies the allowable elapsed time in seconds since the last time the End-User was actively authenticated.",
+            "in": "query",
+            "name": "max_age",
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Space-separated string that specifies the acr values that the Authorization Server is being requested to use for processing this Authentication Request, with the values appearing in order of preference. On Omnissa Identity Service currently we support only single authentication method and if multiple authentication methods are provided, only the first one will be considered, others will be rejected.",
+            "in": "query",
+            "name": "acr_values",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Specifies the code_challenge to be associated with the authorization code.",
+            "example": "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM",
+            "in": "query",
+            "name": "code_challenge",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The method used to transform the code_verifier to code_challenge. Currently, only S256 is supported by the authorization server.",
+            "example": "S256",
+            "in": "query",
+            "name": "code_challenge_method",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "The authorization request was successful."
+          },
+          "400": {
+            "description": "The authorization request failed. The error can be any of those: no client_id has been specified, the client_id does not exist, the redirect_uri has not been specified or does not match. The error message will contain 'error' and 'error_description' fields. See the OAuth2.0 spec for further details."
+          }
+        },
+        "summary": "The OAuth 2.0 authorization endpoint",
+        "tags": [
+          "Authentication",
+          "oauth2"
+        ]
+      }
+    },
+    "/acs/jwks": {
+      "get": {
+        "description": "This endpoint is responsible for fetching of the public certificate of a tenant in a JWK format.",
+        "operationId": "getJwkKeys",
+        "responses": {
+          "200": {
+            "content": {
+              "application/jwk-set+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JwksMedia"
+                }
+              }
+            },
+            "description": "Public certificate in JWK format successfully returned."
+          },
+          "404": {
+            "description": "The JWKs were not found."
+          }
+        },
+        "summary": "The OpenID Connect JWKS endpoint",
+        "tags": [
+          "Authentication",
+          "oidc"
+        ]
+      }
+    },
+    "/acs/.well-known/openid-configuration": {
+      "get": {
+        "description": "This endpoint follows the specification defined at http://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata. It provides a mechanism for an OpenID Connect Relying Party to discover the End-User's OpenID Provider and obtain information needed to interact with it, including its OAuth 2.0 endpoint locations.",
+        "operationId": "getOIDCConfiguration",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OIDCDiscovery"
+                }
+              }
+            },
+            "description": "RuleSet with the given ID was successfully returned."
+          }
+        },
+        "summary": "The OpenID Connect discovery endpoint",
+        "tags": [
+          "Authentication",
+          "oidc"
+        ]
+      }
+    },
+    "/acs/openid/logout": {
+      "get": {
+        "description": "This is an implementation of the OIDC logout spec: https://openid.net/specs/openid-connect-rpinitiated-1_0.html.",
+        "operationId": "logoutGet",
+        "parameters": [
+          {
+            "description": "URL to redirect back to the client after performing logout actions. This URL must be already configured on the client.",
+            "example": "https://example-app.com/redirect?auth%3Doauth",
+            "in": "query",
+            "name": "post_logout_redirect_uri",
+            "schema": {
+              "maxLength": 2048,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "description": "ID Token previously issued by WS1 Access passed to the Logout Endpoint as a hint about the End-User's current authenticated session with the Client. This is used to figure out the user trying to logout.",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+            "in": "query",
+            "name": "id_token_hint",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A random string that your application generates and that will be sent back as a parameter during the URI redirection.",
+            "example": "somerandomvalue",
+            "in": "query",
+            "name": "state",
+            "schema": {
+              "maxLength": 2048,
+              "minLength": 0,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "When the request is redirected to the passed in post_logout_redirect_uri parameter. In case of success as or expired IDToken, the request would still be redirected back to the passed in logout URI."
+          },
+          "400": {
+            "description": "When the logout redirect URI is mismatched between the request and the logout URI for the client, or missing logout redirect URI, or missing/invalid IDToken hint."
+          }
+        },
+        "summary": "The OpenID Connect RP-Initiated Logout endpoint",
+        "tags": [
+          "Authentication",
+          "oidc"
+        ]
+      },
+      "post": {
+        "description": "This is an implementation of the OIDC logout spec: https://openid.net/specs/openid-connect-rpinitiated-1_0.html.",
+        "operationId": "logoutPost",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/OpenIdLogoutFormData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "302": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            },
+            "description": "When the request is redirected to the passed in post_logout_redirect_uri parameter. In case of success as or expired IDToken, the request would still be redirected back to the passed in logout URI."
+          },
+          "400": {
+            "description": "When the logout redirect URI is mismatched between the request and the logout URI for the client, or missing logout redirect URI, or missing/invalid IDToken hint."
+          }
+        },
+        "summary": "The OpenID Connect RP-Initiated Logout endpoint",
+        "tags": [
+          "Authentication",
+          "oidc"
+        ]
+      }
+    },
+    "/acs/token": {
+      "post": {
+        "description": "This token endpoint complies with the OAuth 2.0 specification and must be used by the client to obtain an access token with client authentication. Note that the request payload must be in urlencoded form format (not JSON).",
+        "operationId": "getAccessToken",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenFormData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json;charset=UTF-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuth2Token"
+                }
+              }
+            },
+            "description": "Oauth 2.0 access token was successfully obtained."
+          },
+          "400": {
+            "description": "The error can be any of those: the provided grant type is not supported, the request is missing a required parameter, the provided authorization grant is invalid, the authenticated client is not authorized to use this authorization grant type. The error description will contain 'error' and 'error_description' fields. See the OAuth2.0 spec for further details."
+          }
+        },
+        "security": [
+          {
+            "basic_auth": []
+          }
+        ],
+        "summary": "Obtain an OAuth 2.0 access token and optionally a refresh token",
+        "tags": [
+          "Authentication",
+          "oauth2"
+        ]
+      }
+    },
+    "/acs/revoke": {
+      "post": {
+        "description": "This endpoint is responsible for invalidating the actual token and, if applicable, other tokens based on the same authorization grant and the authorization grant itself. Note that the request payload must be in urlencoded form format (not JSON).",
+        "operationId": "revoke",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenRevokeFormData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The token revocation was successful."
+          },
+          "400": {
+            "description": "Client ID in authorization is not found or token issued to a different client."
+          }
+        },
+        "security": [
+          {
+            "basic_auth": []
+          }
+        ],
+        "summary": "OAuth 2.0 token revocation endpoint",
+        "tags": [
+          "Authentication",
+          "oauth2"
+        ]
+      }
+    },
+    "/acs/userinfo": {
+      "get": {
+        "description": "This endpoint returns a JWT with claims. The access token should be sent using the Authorization header.",
+        "operationId": "getUserInfo",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdToken"
+                }
+              }
+            },
+            "description": "An ID token was successfully returned."
+          }
+        },
+        "summary": "The OpenID Connect UserInfo endpoint",
+        "tags": [
+          "Authentication",
+          "oidc"
+        ]
+      },
+      "post": {
+        "description": "This endpoint returns a JWT with claims. The Access Token should be sent using the Authorization header field.",
+        "operationId": "getUserInfoPost",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdToken"
+                }
+              }
+            },
+            "description": "An ID token was successfully returned."
+          }
+        },
+        "summary": "The OpenID Connect UserInfo endpoint",
+        "tags": [
+          "Authentication",
+          "oidc"
+        ]
+      }
+    },
+    "/acs/broker/oauth2-clients/{id}": {
+      "delete": {
+        "description": "This endpoint is responsible for deleting an existing OAuth 2.0 client by ID.",
+        "operationId": "deleteOAuth2ClientById",
+        "parameters": [
+          {
+            "description": "The ID of the Oauth 2.0 client",
+            "example": "my-auth-grant-client1",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OAuth 2.0 client was successfully deleted."
+          },
+          "404": {
+            "description": "The OAuth 2.0 client was not found."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Delete an OAuth 2.0 client by ID",
+        "tags": [
+          "administration",
+          "oauth2Clients"
+        ]
+      },
+      "get": {
+        "description": "This endpoint is responsible for fetching an OAuth 2.0 client with rule sets by client ID.",
+        "operationId": "getOAuth2ClientById",
+        "parameters": [
+          {
+            "description": "The ID of the Oauth 2.0 client",
+            "example": "my-auth-grant-client1",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.vmware.horizon.manager.accesscontrol.broker.oauth2client.with.rule.sets+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrokerOAuth2ClientMedia"
+                }
+              }
+            },
+            "description": "OAuth 2.0 client was fetched successfully."
+          },
+          "404": {
+            "description": "The OAuth 2.0 client was not found."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Get an OAuth 2.0 client by ID",
+        "tags": [
+          "administration",
+          "oauth2Clients"
+        ]
+      },
+      "patch": {
+        "description": "This endpoint is responsible for to updating an existing client using the client ID. Note that in order to delete an existing field when patching, it needs to be set to an empty value (i.e., \"\" for a string and [] for an array). Also note that when you patch an array field, the entire new value will replace the existing field value so you can't update individual values in an array field.",
+        "operationId": "patchOAuth2ClientById",
+        "parameters": [
+          {
+            "description": "OAuth 2.0 client identifier",
+            "example": "my-auth-grant-client1",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Flag indicating whether associated token should be revoked or not on ruleset removal.",
+            "in": "query",
+            "name": "revoke_token_on_rule_set_removal",
+            "schema": {
+              "default": true,
+              "enum": [
+                true,
+                false
+              ],
+              "type": "boolean"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.vmware.horizon.manager.accesscontrol.broker.oauth2client.with.rule.sets+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BrokerOAuth2ClientMedia"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.vmware.horizon.manager.accesscontrol.broker.oauth2client.with.rule.sets+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrokerOAuth2ClientMedia"
+                }
+              }
+            },
+            "description": "OAuth 2.0 client successfully updated."
+          },
+          "400": {
+            "description": "The request contains invalid information."
+          },
+          "404": {
+            "description": "OAuth2 Client was not found."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Update an existing OAuth 2.0 client",
+        "tags": [
+          "administration",
+          "oauth2Clients"
+        ]
+      },
+      "post": {
+        "description": "This endpoint is responsible for rotating an OAuth 2.0 client secret. The rotation is started using the start-rotate-secret action and it ends by explicitly calling the API with the retire-primary-secret action, or implicitly when the auto rotation duration expires. During the rotation, both the primary and secondary secrets can be used for the client credentials. When the rotation ends, the secondary secret will become the primary secret. When using the retire-primary-secret action, the BrokerOAuth2ClientStartSecretRotationMedia payload should be empty.",
+        "operationId": "rotateSecretForOAuth2ClientById",
+        "parameters": [
+          {
+            "description": "The OAuth 2.0 client identifier",
+            "example": "my-auth-grant-client1",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The action for the OAuth 2.0 client secret rotation. 'start-rotate-secret' will start secret rotation for the OAuth 2.0 client. 'retire-primary-secret' will explicitly finish an ongoing secret rotation by retiring the existing primary secret and replacing it with the secondary secret.",
+            "example": "start-rotate-secret",
+            "in": "query",
+            "name": "action",
+            "required": true,
+            "schema": {
+              "enum": [
+                "start-rotate-secret",
+                "retire-primary-secret"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.vmware.horizon.manager.accesscontrol.broker.oauth2client.secret.rotation+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BrokerOAuth2ClientStartSecretRotationMedia"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "OAuth 2.0 client secret rotation action was successful."
+          },
+          "400": {
+            "description": "Invalid start secret rotation input or secret rotation already started when action is start-rotate-secret. Secret rotation not started when action is retire-primary-secret."
+          },
+          "404": {
+            "description": "OAuth 2.0 client is not found."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Rotate secret for an OAuth 2.0 client",
+        "tags": [
+          "administration",
+          "oauth2Clients"
+        ]
+      }
+    },
+    "/acs/broker/oauth2-clients": {
+      "get": {
+        "description": "This endpoint is to list existing OAuth 2.0 clients. Returns a summary for each client.",
+        "operationId": "getAllOAuth2ClientSummaries",
+        "parameters": [
+          {
+            "description": "The index of the page. Pages start with index 1.",
+            "example": 1,
+            "in": "query",
+            "name": "start_index",
+            "schema": {
+              "default": 1,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of results per page.",
+            "example": 50,
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "default": 20,
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.vmware.horizon.manager.accesscontrol.broker.oauth2client.list+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrokerOAuth2ClientList"
+                }
+              }
+            },
+            "description": "OAuth2 Clients returned successfully."
+          },
+          "400": {
+            "description": "Invalid starting index or page size."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "List existing OAuth 2.0 clients",
+        "tags": [
+          "administration",
+          "oauth2Clients"
+        ]
+      },
+      "post": {
+        "description": "This endpoint is responsible for creating a new OAuth 2.0 client with pre-defined rule sets.",
+        "operationId": "createNewOAuth2Client",
+        "requestBody": {
+          "content": {
+            "application/vnd.vmware.horizon.manager.accesscontrol.broker.oauth2client.with.rule.sets+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BrokerOAuth2ClientMedia"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/vnd.vmware.horizon.manager.accesscontrol.broker.oauth2client.with.rule.sets+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrokerOAuth2ClientMedia"
+                }
+              }
+            },
+            "description": "The OAuth 2.0 client was created successfully."
+          },
+          "400": {
+            "description": "Invalid provided OAuth 2.0 client information. Could be non-permitted characters in client id, invalid scope string, redirect uri missing or not in a URL format in an authorization_code grant client, invalid grant type, etc."
+          },
+          "409": {
+            "description": "An OAuth 2.0 client with the same ID already exists."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Create a new OAuth 2.0 client",
+        "tags": [
+          "administration",
+          "oauth2Clients"
+        ]
+      }
+    },
+    "/federation/broker/identity-providers/{idpId}": {
+      "delete": {
+        "description": "This endpoint is responsible for deleting an identity provider by ID.",
+        "operationId": "deleteIdentityProviderById",
+        "parameters": [
+          {
+            "description": "The ID of the identity provider",
+            "in": "path",
+            "name": "idpId",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted the identity provider."
+          },
+          "404": {
+            "description": "The identity provider was not found."
+          },
+          "409": {
+            "description": "The identity provider is referenced in Workspace ONE Access policies with modified or non-default rule sets. Corresponding policy rules have to be removed before deleting the identity provider."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Delete an identity provider by ID",
+        "tags": [
+          "administration",
+          "identityProviders"
+        ]
+      },
+      "get": {
+        "description": "This endpoint is responsible for fetching an identity provider by ID.",
+        "operationId": "getIdentityProviderById",
+        "parameters": [
+          {
+            "description": "The ID of the identity provider",
+            "in": "path",
+            "name": "idpId",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.vmware.vidm.federation.broker.identityprovider+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrokerIdentityProviderMedia"
+                }
+              }
+            },
+            "description": "Successfully fetched the identity provider."
+          },
+          "404": {
+            "description": "The identity provider is not found."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Get an identity provider by ID",
+        "tags": [
+          "administration",
+          "identityProviders"
+        ]
+      },
+      "patch": {
+        "description": "This endpoint is responsible updating an identity provider by ID. Note that in order to delete an existing field when patching, it needs to be set to an empty value (i.e., \"\" for a string, [] for an array, and {} for an object). Also note that when you patch array and object fields (excluding profile fields), the entire new value will replace the existing field value so you can't update individual values in array or object fields.",
+        "operationId": "patchIdentityProviderById",
+        "parameters": [
+          {
+            "description": "The ID of the identity provider",
+            "in": "path",
+            "name": "idpId",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.vmware.vidm.federation.broker.identityprovider+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BrokerIdentityProviderMedia"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.vmware.vidm.federation.broker.identityprovider+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrokerIdentityProviderMedia"
+                }
+              }
+            },
+            "description": "Successfully updated the identity provider."
+          },
+          "400": {
+            "description": "The request contains invalid information."
+          },
+          "404": {
+            "description": "The identity provider was not found."
+          },
+          "409": {
+            "description": "An identity provider with the same new name already exists."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Update an identity provider by ID",
+        "tags": [
+          "administration",
+          "identityProviders"
+        ]
+      }
+    },
+    "/federation/broker/identity-providers": {
+      "get": {
+        "description": "This endpoint is responsible for fetching a summarized list of identity providers.",
+        "operationId": "getAllIdentityProviders",
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.vmware.vidm.federation.broker.identityprovider.list+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrokerIdentityProviderList"
+                }
+              }
+            },
+            "description": "Identity providers list returned successfully."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Get a summarized list of identity providers",
+        "tags": [
+          "administration",
+          "identityProviders"
+        ]
+      },
+      "post": {
+        "description": "This endpoint is responsible for creating an identity provider. Note that SAML type identity providers are currently not supported for vCenter.",
+        "operationId": "createNewIdentityProvider",
+        "requestBody": {
+          "content": {
+            "application/vnd.vmware.vidm.federation.broker.identityprovider+json": {
+              "examples": {
+                "request_for_oidc": {
+                  "description": "request_for_oidc",
+                  "value": {
+                    "idp_name": "example_idp_name",
+                    "idp_type": "OIDC",
+                    "directory_list": [
+                      {
+                        "id": "urn:uuid:a200fc0b-5222-97f2-9cfd-c6df2c2c07e4"
+                      }
+                    ],
+                    "oidc_profile": {
+                      "client_id": "my-auth-grant-client1",
+                      "client_secret": "my-auth-grant-client1-secret",
+                      "configuration_url": "https://example.com/.well-known/openid-configuration",
+                      "oidc_user_attribute_mapping": {
+                        "email": "user_email"
+                      },
+                      "authorize_params": {
+                        "param1": "param1_value"
+                      },
+                      "token_params": {
+                        "param1": "param1_value"
+                      },
+                      "pass_through_claims": false,
+                      "open_id_user_identifier_attribute": "sub",
+                      "internal_user_identifier_attribute": "ExternalId"
+                    },
+                    "auth_type_list": [
+                      {
+                        "id": "4945fbdd-e80f-4aec-ad9d-aee6deed2acd",
+                        "auth_method_name": "auth_method_name_value",
+                        "saml_authn_context": "saml_authn_context_value"
+                      }
+                    ]
+                  }
+                }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/BrokerIdentityProviderMedia"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/vnd.vmware.vidm.federation.broker.identityprovider+json": {
+                "examples": {
+                  "response_for_oidc": {
+                    "description": "response_for_oidc",
+                    "value": {
+                      "idp_name": "example_idp_name",
+                      "idp_type": "OIDC",
+                      "directory_list": [
+                        {
+                          "id": "urn:uuid:a200fc0b-5222-97f2-9cfd-c6df2c2c07e4"
+                        }
+                      ],
+                      "oidc_profile": {
+                        "client_id": "my-auth-grant-client1",
+                        "client_secret": "my-auth-grant-client1-secret",
+                        "configuration_url": "https://example.com/.well-known/openid-configuration",
+                        "oidc_user_attribute_mapping": {
+                          "email": "user_email"
+                        },
+                        "authorize_params": {
+                          "param1": "param1_value"
+                        },
+                        "token_params": {
+                          "param1": "param1_value"
+                        },
+                        "pass_through_claims": false,
+                        "open_id_user_identifier_attribute": "sub",
+                        "internal_user_identifier_attribute": "ExternalId"
+                      },
+                      "auth_type_list": [
+                        {
+                          "id": "4945fbdd-e80f-4aec-ad9d-aee6deed2acd",
+                          "auth_method_name": "auth_method_name_value",
+                          "saml_authn_context": "saml_authn_context_value"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/BrokerIdentityProviderMedia"
+                }
+              }
+            },
+            "description": "The identity provider was successfully added."
+          },
+          "400": {
+            "description": "The identity provider information is invalid."
+          },
+          "409": {
+            "description": "An identity provider with the same name already exists."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Create a new identity provider",
+        "tags": [
+          "administration",
+          "identityProviders"
+        ]
+      }
+    },
+    "/federation/broker/saml-sp-metadata/details": {
+      "get": {
+        "description": "This endpoint is responsible for fetching SAML service provider metadata details including certificates.",
+        "operationId": "getSamlServiceProviderMetadataDetails",
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.vmware.vidm.federation.broker.samlspmetadata.details+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SamlSpMetadataMedia"
+                }
+              }
+            },
+            "description": "The SAML service provider metadata details were successfully returned ."
+          },
+          "404": {
+            "description": "The SAML service provider metadata does not exist."
+          }
+        },
+        "summary": "Get SAML service provider metadata details",
+        "tags": [
+          "administration",
+          "samlSpMetadata"
+        ]
+      }
+    },
+    "/federation/broker/saml-sp-metadata/download-xml": {
+      "get": {
+        "description": "This endpoint is responsible for downloading SAML service provider metadata XML as a file attachment.",
+        "operationId": "getSamlServiceProviderMetadataDownload",
+        "responses": {
+          "200": {
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "format": "byte",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The SAML service provider metadata XML was successfully returned as byte stream."
+          },
+          "404": {
+            "description": "The SAML service provider metadata does not exist."
+          }
+        },
+        "summary": "Download SAML service provider metadata XML",
+        "tags": [
+          "administration",
+          "samlSpMetadata"
+        ]
+      }
+    },
+    "/federation/broker/saml-sp-metadata/xml": {
+      "get": {
+        "description": "This endpoint is responsible for fetching of SAML service provider metadata XML.",
+        "operationId": "getSamlServiceProviderMetadataXml",
+        "responses": {
+          "200": {
+            "content": {
+              "text/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successfully fetched the SAML service provider metadata XML."
+          },
+          "404": {
+            "description": "SAML service provider metadata does not exist."
+          }
+        },
+        "summary": "Get SAML service provider metadata XML",
+        "tags": [
+          "administration",
+          "samlSpMetadata"
+        ]
+      }
+    },
+    "/usergroup/broker/directories": {
+      "get": {
+        "description": "This endpoint is responsible for listing the existing directories.",
+        "operationId": "getAllDirectories",
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.vmware.vidm.usergroup.broker.directory.list+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrokerDirectoryList"
+                }
+              }
+            },
+            "description": "Directory list was successfully returned."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Get a list of directories",
+        "tags": [
+          "administration",
+          "directories"
+        ]
+      },
+      "post": {
+        "description": "This endpoint is responsible for creating a directory for users and groups.",
+        "operationId": "createNewDirectory",
+        "requestBody": {
+          "content": {
+            "application/vnd.vmware.vidm.usergroup.broker.directory+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BrokerDirectoryMedia"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/vnd.vmware.vidm.usergroup.broker.directory+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrokerDirectoryMedia"
+                }
+              }
+            },
+            "description": "The directory has been created."
+          },
+          "400": {
+            "description": "The directory definition contains invalid input."
+          },
+          "409": {
+            "description": "The directory or domain name already exists."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Create a new directory for users and groups",
+        "tags": [
+          "administration",
+          "directories"
+        ]
+      }
+    },
+    "/usergroup/broker/directories/{id}": {
+      "delete": {
+        "description": "This endpoint is responsible for deleting a directory by ID. This includes the deletion of all associated OAuth 2.0 clients, sync client configurations, users, groups and the directory.",
+        "operationId": "deleteDirectoryById",
+        "parameters": [
+          {
+            "description": "The ID of the directory",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "The directory was successfully deleted."
+          },
+          "404": {
+            "description": "The directory was not found."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Delete a directory by ID",
+        "tags": [
+          "administration",
+          "directories"
+        ]
+      },
+      "get": {
+        "description": "This endpoint is responsible for fetching a directory by ID.",
+        "operationId": "getDirectoryById",
+        "parameters": [
+          {
+            "description": "The ID of the directory",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.vmware.vidm.usergroup.broker.directory+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrokerDirectoryMedia"
+                }
+              }
+            },
+            "description": "Successfully fetched the directory info."
+          },
+          "404": {
+            "description": "The directory was not found."
+          },
+          "409": {
+            "description": "More than one Sync Client Configurations was found for the directory."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Get a directory by ID",
+        "tags": [
+          "administration",
+          "directories"
+        ]
+      },
+      "patch": {
+        "description": "This endpoint is responsible for updating a directory by ID.",
+        "operationId": "patchDirectoryById",
+        "parameters": [
+          {
+            "description": "The ID of the directory",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.vmware.vidm.usergroup.broker.directory+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BrokerDirectoryMedia"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.vmware.vidm.usergroup.broker.directory+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrokerDirectoryMedia"
+                }
+              }
+            },
+            "description": "The directory has been updated."
+          },
+          "400": {
+            "description": "The directory input is invalid."
+          },
+          "404": {
+            "description": "The directory was not found."
+          },
+          "409": {
+            "description": "The directory or domain name already exists, no Sync Client Configuration was found for the directory, or more than one Sync Client Configurations were found for the directory."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Update a directory by ID",
+        "tags": [
+          "administration",
+          "directories"
+        ]
+      }
+    },
+    "/usergroup/broker/directories/{id}/sync-client": {
+      "get": {
+        "description": "This endpoint is responsible retrieving the configuration of the directory sync client.",
+        "operationId": "getDirectorySyncClientById",
+        "parameters": [
+          {
+            "description": "The ID of the directory",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.vmware.vidm.usergroup.broker.directory.syncclientconfiguration+json": {
+                "examples": {
+                  "combined_response": {
+                    "description": "combined_response",
+                    "value": {
+                      "_links": {
+                        "self": {
+                          "href": "https://example.com/path-to-self"
+                        }
+                      },
+                      "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9xxxxHVcA76zjsGN2w",
+                      "access_token_expire_in": 21599,
+                      "client_id": "syncClientIdUhYRj1PAqbYz15qrzam7G1W8rOm8kkPi",
+                      "generate_token": true,
+                      "token_ttl": 1800
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/BrokerSyncClientConfigurationMedia"
+                }
+              }
+            },
+            "description": "Successfully fetched directory sync client configuration."
+          },
+          "404": {
+            "description": "The sync client configuration for the directory was not found."
+          },
+          "409": {
+            "description": "More than one sync client configuration were found for the directory."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Get a directory sync client configuration",
+        "tags": [
+          "administration",
+          "directories",
+          "sync-client"
+        ]
+      },
+      "post": {
+        "description": "This endpoint is responsible for generating credentials for a sync client, returning the new credentials and invalidating the previous ones. The sync client credentials are either a long-lived access token when generate_token is set to true or a client id and secret when generate_token is set to false.",
+        "operationId": "generateCredentialsForSyncClient",
+        "parameters": [
+          {
+            "description": "The ID of the directory",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Requested action. Allowed values are [\"generate_credentials\"]",
+            "in": "query",
+            "name": "action",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.vmware.vidm.usergroup.broker.directory.syncclientconfiguration+json": {
+              "examples": {
+                "token_flow": {
+                  "description": "token_flow",
+                  "value": {
+                    "generate_token": true,
+                    "token_ttl": 1800
+                  }
+                }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/BrokerSyncClientConfigurationMedia"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.vmware.vidm.usergroup.broker.directory.syncclientconfiguration+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrokerSyncClientConfigurationMedia"
+                }
+              }
+            },
+            "description": "Sync client's credentials were successfully generated."
+          },
+          "400": {
+            "description": "Invalid parameters for the generate credentials request."
+          },
+          "404": {
+            "description": "The sync client configuration was not found."
+          },
+          "409": {
+            "description": "More than one sync client configuration for the directory were found."
+          }
+        },
+        "security": [
+          {
+            "admin": []
+          }
+        ],
+        "summary": "Generate credentials for a sync client",
+        "tags": [
+          "administration",
+          "directories",
+          "sync-client"
+        ]
+      }
+    },
+    "/usergroup/scim/v2/Groups": {
+      "get": {
+        "description": "This endpoint is responsible for fetching a list of groups with specific criteria. For more information, check the specification: https://tools.ietf.org/html/rfc7644#section-3.4.2.",
+        "operationId": "searchGroups",
+        "parameters": [
+          {
+            "description": "When specified, only those resources matching the filter expression SHALL be returned. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.2).",
+            "in": "query",
+            "name": "filter",
+            "schema": {
+              "maxLength": 2000,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Specifies the attribute whose value. SHALL be used to order the returned responses. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.3).",
+            "in": "query",
+            "name": "sortBy",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The order in which the sortBy parameter is applied. Allowed values are ascending and descending. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.3).",
+            "in": "query",
+            "name": "sortOrder",
+            "schema": {
+              "default": "ascending",
+              "enum": [
+                "ascending",
+                "descending"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "The 1-based index of the first result in the current set of list results. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.4).",
+            "in": "query",
+            "name": "startIndex",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "The number of resources returned in a list response. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.4).",
+            "in": "query",
+            "name": "count",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Return resources with only requested and always returned attributes. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.5).",
+            "example": "name,meta",
+            "in": "query",
+            "name": "attributes",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Return resources with all default and always returned attributes without excluded attributes. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.5)",
+            "example": "name,meta",
+            "in": "query",
+            "name": "excludedAttributes",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupListMedia"
+                }
+              }
+            },
+            "description": "Successfully fetched the list of groups."
+          },
+          "400": {
+            "description": "The request contains invalid information."
+          }
+        },
+        "summary": "Get groups with specific criteria",
+        "tags": [
+          "scim2",
+          "groups"
+        ]
+      },
+      "post": {
+        "description": "This endpoint is responsible for creating a new group. For more information, check the specification: https://tools.ietf.org/html/rfc7644#section-3.3.",
+        "operationId": "createGroup",
+        "requestBody": {
+          "content": {
+            "application/scim+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupMedia"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupMedia"
+                }
+              }
+            },
+            "description": "The group was successfully created."
+          },
+          "400": {
+            "description": "The request contains invalid information."
+          }
+        },
+        "summary": "Create a new SCIM group",
+        "tags": [
+          "scim2",
+          "groups"
+        ]
+      }
+    },
+    "/usergroup/scim/v2/Groups/{id}": {
+      "delete": {
+        "description": "This endpoint is responsible for deleting a group. For more information, check the specification: https://tools.ietf.org/html/rfc7644#section-3.6.",
+        "operationId": "deleteGroup",
+        "parameters": [
+          {
+            "description": "The ID of the group",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The group was successfully deleted."
+          },
+          "404": {
+            "description": "The group was not found."
+          },
+          "409": {
+            "description": "Deletion of the group is not allowed."
+          }
+        },
+        "summary": "Delete an existing group by ID",
+        "tags": [
+          "scim2",
+          "groups"
+        ]
+      },
+      "get": {
+        "description": "This endpoint is responsible to fetching a SCIM group. For more information, check the specification: https://tools.ietf.org/html/rfc7644#section-3.4.1.",
+        "operationId": "getGroup",
+        "parameters": [
+          {
+            "description": "The ID of the group",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Return resource with only requested attributes. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.5).",
+            "example": "name,meta",
+            "in": "query",
+            "name": "attributes",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Return resource with all default and always returned attributes without excluded attributes. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.5).",
+            "example": "name,meta",
+            "in": "query",
+            "name": "excludedAttributes",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupMedia"
+                }
+              }
+            },
+            "description": "The group was successfully fetched."
+          },
+          "404": {
+            "description": "The group was not found."
+          }
+        },
+        "summary": "Get an existing group by ID",
+        "tags": [
+          "scim2",
+          "groups"
+        ]
+      },
+      "patch": {
+        "description": "This endpoint is responsible for patching a group. For more information, check the specification: https://tools.ietf.org/html/rfc7644#section-3.5.2.",
+        "operationId": "patchGroup",
+        "parameters": [
+          {
+            "description": "The ID of the group",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/scim+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchRequestMedia"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupMedia"
+                }
+              }
+            },
+            "description": "The group was successfully updated."
+          },
+          "400": {
+            "description": "The request contains invalid information."
+          },
+          "404": {
+            "description": "The group was not found."
+          },
+          "409": {
+            "description": "The specified version number does not match the resource's latest version number, or a service provider refused to create a new, duplicate resource."
+          }
+        },
+        "summary": "Patch an existing group by ID",
+        "tags": [
+          "scim2",
+          "groups"
+        ]
+      },
+      "put": {
+        "description": "This endpoint is responsible for updating a group. For more information, check the specification: https://tools.ietf.org/html/rfc7644#section-3.5.1.",
+        "operationId": "putGroup",
+        "parameters": [
+          {
+            "description": "The ID of the group",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/scim+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupMedia"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupMedia"
+                }
+              }
+            },
+            "description": "The group was successfully updated."
+          },
+          "400": {
+            "description": "The request contains invalid information."
+          },
+          "404": {
+            "description": "The group was not found."
+          },
+          "409": {
+            "description": "The specified version number does not match the resource's latest version number, or a service provider refused to create a new, duplicate resource."
+          }
+        },
+        "summary": "Update an existing group by ID",
+        "tags": [
+          "scim2",
+          "groups"
+        ]
+      }
+    },
+    "/usergroup/scim/v2/Groups/.search": {
+      "post": {
+        "description": "This endpoint is responsible for fetching a list of groups with specific criteria. For more information, check the specification: https://tools.ietf.org/html/rfc7644#section-3.4.3.",
+        "operationId": "postGroupsSearch",
+        "requestBody": {
+          "content": {
+            "application/scim+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRequestMedia"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupListMedia"
+                }
+              }
+            },
+            "description": "Successfully fetched the list of groups."
+          }
+        },
+        "summary": "Get groups with specific criteria",
+        "tags": [
+          "scim2",
+          "groups"
+        ]
+      }
+    },
+    "/usergroup/scim/v2/Me": {
+      "get": {
+        "description": "This endpoint is responsible for fetching the currently authenticated user. For more information, check the specification: https://tools.ietf.org/html/rfc7644#section-3.11.",
+        "operationId": "getMe",
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMedia"
+                }
+              }
+            },
+            "description": "The authenticated user was successfully fetched."
+          },
+          "400": {
+            "description": "The request contains invalid information."
+          },
+          "404": {
+            "description": "The user was not found."
+          }
+        },
+        "summary": "Get the currently authenticated user",
+        "tags": [
+          "scim2",
+          "me"
+        ]
+      }
+    },
+    "/usergroup/scim/v2/Users": {
+      "get": {
+        "description": "This endpoint is responsible for fetching a list of users with specific criteria. For more information, check the specification: https://tools.ietf.org/html/rfc7644#section-3.4.2.",
+        "operationId": "getUserSearch",
+        "parameters": [
+          {
+            "description": "When specified, only those resources matching the filter expression SHALL be returned. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.2).",
+            "in": "query",
+            "name": "filter",
+            "schema": {
+              "maxLength": 2000,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Specifies the attribute whose value. SHALL be used to order the returned responses. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.3).",
+            "in": "query",
+            "name": "sortBy",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The order in which the sortBy parameter is applied. Allowed values are ascending and descending. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.3).",
+            "in": "query",
+            "name": "sortOrder",
+            "schema": {
+              "default": "ascending",
+              "enum": [
+                "ascending",
+                "descending"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "The 1-based index of the first result in the current set of list results. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.4).",
+            "in": "query",
+            "name": "startIndex",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "The number of resources returned in a list response. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.4).",
+            "in": "query",
+            "name": "count",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Return resources with only requested and always returned attributes. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.5).",
+            "example": "name,meta",
+            "in": "query",
+            "name": "attributes",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Return resources with all default and always returned attributes without excluded attributes. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.5).",
+            "example": "name,meta",
+            "in": "query",
+            "name": "excludedAttributes",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserListMedia"
+                }
+              }
+            },
+            "description": "Successfully fetched the list of users."
+          },
+          "400": {
+            "description": "The request contains invalid information."
+          }
+        },
+        "summary": "Search for users in a tenant",
+        "tags": [
+          "scim2",
+          "users"
+        ]
+      },
+      "post": {
+        "description": "This endpoint is responsible for creating a new user. For more information, check the specification: https://tools.ietf.org/html/rfc7644#section-3.3.",
+        "operationId": "createUser",
+        "requestBody": {
+          "content": {
+            "application/scim+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMedia"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMedia"
+                }
+              }
+            },
+            "description": "The user was successfully created."
+          },
+          "400": {
+            "description": "The request contains invalid information."
+          }
+        },
+        "summary": "Create a new SCIM user",
+        "tags": [
+          "scim2",
+          "users"
+        ]
+      }
+    },
+    "/usergroup/scim/v2/Users/{id}": {
+      "delete": {
+        "description": "This endpoint is responsible for deleting a user. For more information, check the specification: https://tools.ietf.org/html/rfc7644#section-3.6.",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "description": "The ID of the user",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The user was successfully deleted."
+          },
+          "404": {
+            "description": "The user was not found."
+          }
+        },
+        "summary": "Delete an existing user by ID",
+        "tags": [
+          "scim2",
+          "users"
+        ]
+      },
+      "get": {
+        "description": "This endpoint is responsible for fetching a user. For more information, check the specification: https://tools.ietf.org/html/rfc7644#section-3.4.1.",
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "description": "The ID of the user",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Returns resource with only requested attributes. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.5).",
+            "example": "name,meta",
+            "in": "query",
+            "name": "attributes",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Returns resource with all default and always returned attributes without excluded attributes. Functionality based on SCIM 2.0 (https://tools.ietf.org/html/rfc7644#section-3.4.2.5).",
+            "example": "name,meta",
+            "in": "query",
+            "name": "excludedAttributes",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMedia"
+                }
+              }
+            },
+            "description": "The user was successfully fetched."
+          },
+          "404": {
+            "description": "The user was not found."
+          }
+        },
+        "summary": "Get an existing user by ID",
+        "tags": [
+          "scim2",
+          "users"
+        ]
+      },
+      "patch": {
+        "description": "This endpoint is responsible for pathing a user. For more information, check the specification: https://tools.ietf.org/html/rfc7644#section-3.5.2.",
+        "operationId": "patchUser",
+        "parameters": [
+          {
+            "description": "The ID of the user",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/scim+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchRequestMedia"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMedia"
+                }
+              }
+            },
+            "description": "The user was successfully updated."
+          },
+          "400": {
+            "description": "The request contains invalid information."
+          },
+          "404": {
+            "description": "The user was not found."
+          },
+          "409": {
+            "description": "The specified version number does not match the resource's latest version number, or a service provider refused to create a new, duplicate resource."
+          }
+        },
+        "summary": "Patch an existing user by ID",
+        "tags": [
+          "scim2",
+          "users"
+        ]
+      },
+      "put": {
+        "description": "This endpoint is responsible for updating a user. For more information, check the specification: https://tools.ietf.org/html/rfc7644#section-3.5.1.",
+        "operationId": "putUser",
+        "parameters": [
+          {
+            "description": "The ID of the user",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/scim+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMedia"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMedia"
+                }
+              }
+            },
+            "description": "The user was successfully updated."
+          },
+          "400": {
+            "description": "The request contains invalid information."
+          },
+          "404": {
+            "description": "The user was not found."
+          },
+          "409": {
+            "description": "The specified version number does not match the resource's latest version number, or a service provider refused to create a new, duplicate resource."
+          }
+        },
+        "summary": "Update a user by ID",
+        "tags": [
+          "scim2",
+          "users"
+        ]
+      }
+    },
+    "/usergroup/scim/v2/Users/.search": {
+      "post": {
+        "description": "This endpoint is responsible for fetching a list of users with specific criteria. For more information, check the specification: https://tools.ietf.org/html/rfc7644#section-3.4.3.",
+        "operationId": "postUserSearch",
+        "requestBody": {
+          "content": {
+            "application/scim+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRequestMedia"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserListMedia"
+                }
+              }
+            },
+            "description": "Successfully fetched the list of users."
+          }
+        },
+        "summary": "Search for users in a tenant",
+        "tags": [
+          "scim2",
+          "users"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Response": {
+        "type": "object"
+      },
+      "JwksMedia": {
+        "description": "The JWKS (JSON Web Key Set) as defined in the specification: https://www.rfc-editor.org/rfc/rfc7517",
+        "properties": {
+          "keys": {
+            "description": "A collection of public JWK (JSON Web Key)",
+            "items": {
+              "$ref": "#/components/schemas/JwkTO"
+            },
+            "readOnly": true,
+            "type": "array"
+          }
+        },
+        "required": [
+          "keys"
+        ],
+        "type": "object"
+      },
+      "JwkTO": {
+        "description": "The JSON Web Key as defined in the specification: https://www.rfc-editor.org/rfc/rfc7517",
+        "properties": {
+          "crv": {
+            "description": "The cryptographic curve used with the Elliptic Curve key. This is only returned when the key type is EC.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "x": {
+            "description": "The 'x' coordinate for the Elliptic Curve point in Base64 URL encoded format. This is only returned when the key type is EC.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "y": {
+            "description": "The 'y' coordinate for the Elliptic Curve point in Base64 URL encoded format. This is only returned when the key type is EC.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "k": {
+            "description": "The 'k' (key value) parameter contains the value of the symmetric (or other single-valued) key. It is represented as the Base64 URL encoding of the octet sequence containing the key value. This is only returned when the key type is oct.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "kty": {
+            "description": "Key type which identifies the cryptographic algorithm family used with the key. The key type must be present in a JWK according to the JWK spec at https://www.rfc-editor.org/rfc/rfc7517#section-4.1.",
+            "enum": [
+              "RSA",
+              "EC",
+              "oct"
+            ],
+            "example": "RSA",
+            "readOnly": true,
+            "type": "string"
+          },
+          "kid": {
+            "description": "The key ID. It can be used to match a specific key.",
+            "example": "1500075388",
+            "readOnly": true,
+            "type": "string"
+          },
+          "use": {
+            "description": "Indicates whether the public key is used for encrypting data (enc) or verifying the signature on data (sig).",
+            "enum": [
+              "sig",
+              "enc"
+            ],
+            "example": "sig",
+            "readOnly": true,
+            "type": "string"
+          },
+          "alg": {
+            "description": "Identifies the algorithm intended for use with the key.",
+            "example": "RS256",
+            "readOnly": true,
+            "type": "string"
+          },
+          "e": {
+            "description": "The public exponent that contains the exponent value for the RSA public key as a Base64urlUInt-encoded value. This is only returned when the key type is RSA.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "n": {
+            "description": "The modulus parameter that contains the modulus value for the RSA public key as a Base64urlUInt-encoded value. This is only returned when the key type is RSA.",
+            "readOnly": true,
+            "type": "string"
+          }
+        },
+        "readOnly": true,
+        "required": [
+          "kty"
+        ],
+        "type": "object"
+      },
+      "OIDCDiscovery": {
+        "description": "The OpenID configuration document as defined by the specification: http://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata",
+        "properties": {
+          "issuer": {
+            "description": "The identifier of the token's issuer. This is identical to the 'iss' Claim value in ID tokens.",
+            "example": "https://acme.workspaceoneaccess.com/acs",
+            "type": "string"
+          },
+          "authorization_endpoint": {
+            "description": "The URL of the OAuth 2.0 Authorization endpoint",
+            "example": "https://acme.workspaceoneaccess.com/acs/authorize",
+            "type": "string"
+          },
+          "token_endpoint": {
+            "description": "The URL of the OAuth 2.0 Token endpoint",
+            "example": "https://acme.workspaceoneaccess.com/acs/token",
+            "type": "string"
+          },
+          "jwks_uri": {
+            "description": "The URL of JSON Web Key Set document",
+            "example": "https://acme.workspaceoneaccess.com/SAAS/API/1.0/REST/auth/token?attribute=publicKey&format=jwks",
+            "type": "string"
+          },
+          "subject_types_supported": {
+            "description": "A list of the Subject identifier types that Omnissa Identity Service supports",
+            "items": {
+              "enum": [
+                "pairwise",
+                "public"
+              ],
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "response_types_supported": {
+            "description": "A list of the OAuth 2.0 response_type values that Omnissa Identity Service supports",
+            "items": {
+              "description": "A list of the OAuth 2.0 response_type values that Omnissa Identity Service supports",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "id_token_signing_alg_values_supported": {
+            "description": "A list of the JWS signing algorithms supported for the ID Token to encode the Claims in a JWT",
+            "items": {
+              "description": "A list of the JWS signing algorithms supported for the ID Token to encode the Claims in a JWT",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "token_endpoint_auth_methods_supported": {
+            "description": "A list of the auth methods supported by OAuth 2.0 token endpoint",
+            "items": {
+              "description": "A list of the auth methods supported by OAuth 2.0 token endpoint",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "userinfo_endpoint": {
+            "description": "The URL of the user info endpoint",
+            "example": "https://acme.workspaceoneaccess.com/acs/userinfo",
+            "type": "string"
+          },
+          "end_session_endpoint": {
+            "description": "The URL at the OP to which an RP can perform a redirect to request that the end-user be logged out at the OP",
+            "example": "https://acme.workspaceoneaccess.com/post_logout",
+            "type": "string"
+          },
+          "claims_supported": {
+            "description": "A list of the claims Omnissa Identity Service may be able to supply values for. Note that for privacy or other reasons, this might not be an exhaustive list.",
+            "items": {
+              "description": "A list of the claims Omnissa Identity Service may be able to supply values for. Note that for privacy or other reasons, this might not be an exhaustive list.",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "scopes_supported": {
+            "description": "A list of the OAuth 2.0 scope values that Omnissa Identity Service supports",
+            "items": {
+              "description": "A list of the OAuth 2.0 scope values that Omnissa Identity Service supports",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "revocation_endpoint": {
+            "description": "The URL of the OAuth 2.0 revocation endpoint",
+            "type": "string"
+          }
+        },
+        "required": [
+          "authorization_endpoint",
+          "id_token_signing_alg_values_supported",
+          "issuer",
+          "jwks_uri",
+          "response_types_supported",
+          "subject_types_supported",
+          "token_endpoint"
+        ],
+        "type": "object"
+      },
+      "OpenIdLogoutFormData": {
+        "description": "Represents OpenId Connect logout form data",
+        "properties": {
+          "post_logout_redirect_uri": {
+            "description": "URL to redirect back to the client after performing logout actions. This URL must be already configured on the client.",
+            "example": "https://example-app.com/redirect?auth%3Doauth",
+            "type": "string"
+          },
+          "id_token_hint": {
+            "description": "ID Token previously issued by WS1 Access passed to the Logout Endpoint as a hint about the End-User's current authenticated session with the Client. This is used to figure out the user trying to logout.",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+            "type": "string"
+          },
+          "state": {
+            "description": "A random string that your application generates and that will be sent back as a parameter during the URI redirection.",
+            "example": "somerandomvalue",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id_token_hint"
+        ],
+        "type": "object"
+      },
+      "OAuth2Token": {
+        "description": "The OAuth 2.0 token object",
+        "properties": {
+          "scope": {
+            "description": "The scope of the access token issued. The value is expressed as a list of space-\ndelimited, case-sensitive strings.",
+            "example": "\"admin openid\"",
+            "type": "string"
+          },
+          "access_token": {
+            "description": "The requested access token. This token can now be used to call Omnissa Identity Service APIs. For example, with the 'Bearer' token type, use 'Bearer &lt;this access token value&gt;' as the 'Authorization' header. The access token is a [JSON web token](\"https://jwt.io/\") (JWT).",
+            "example": "\"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9xxxxHVcA76zjsGN2w...\"",
+            "type": "string"
+          },
+          "token_type": {
+            "description": "The access token type. It provides the client with the information required to successfully utilize the access token to make a protected resource request. For example, the 'Bearer' token type is utilized by simply including the access token string in the request: Authorization: Bearer mF_9.B5f-4.1JqM",
+            "example": "\"Bearer\"",
+            "type": "string"
+          },
+          "expires_in": {
+            "description": "The time (in seconds) in which this token expires. If the return value is positive, the access token is going to expire in that many seconds. If the return value is 0, the access token already expired. If the return value is -1, token state could not be determined, since the access token doesn't contain expiration value.",
+            "example": 21599,
+            "format": "int64",
+            "type": "integer"
+          },
+          "refresh_token": {
+            "description": "The refresh token associated with the access token, if any. This refresh token can be used to request a refresh for the associated access token.",
+            "example": "21599",
+            "type": "string"
+          },
+          "id_token": {
+            "description": "ID Token value as defined by OpenID Connect 1.0",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "TokenFormData": {
+        "description": "The form fields that can be used when requesting an access token",
+        "properties": {
+          "client_id": {
+            "description": "This is the identifier of the OAuth 2.0 client that was registered in Omnissa Identity Service. Only used when a basic Authorization header is not present in the request.",
+            "example": "Example_AppID",
+            "maxLength": 256,
+            "pattern": "^[a-zA-Z0-9\\-_.@]+$",
+            "type": "string"
+          },
+          "client_secret": {
+            "description": "The client secret. Only used when a basic Authorization header is not present in the request.",
+            "maxLength": 4096,
+            "pattern": "^[\\x20-\\x7E]+$",
+            "type": "string"
+          },
+          "scope": {
+            "description": "Optional list of scopes separated by a space and is URL encoded. The scopes must be equivalent or a subset of the scopes defined in the OAuth2.0 client. Scopes that doesn't match any of the scopes defined in the OAuth2.0 client will be ignored. If omitted or empty, the scopes defined in the OAuth2.0 client will be used.",
+            "example": "openid profile email",
+            "maxLength": 1024,
+            "pattern": "^[a-zA-Z0-9\\-\":\\s_.+]+$",
+            "type": "string"
+          },
+          "redirect_uri": {
+            "description": "Specifies the callback endpoint in your application that will receive the authorization code. It must match the redirect_uri defined in your OAuth2.0 client registration in Omnissa Identity Service. When sending the redirect_uri as a URL parameter it has to be URL encoded. Required only if the grant_type is 'authorization_code'.",
+            "example": "https://example-app.com/redirect?auth%3Doauth",
+            "maxLength": 2048,
+            "type": "string"
+          },
+          "domain": {
+            "description": "Specifies the user's domain. If this parameter is specified, the login screen will skip the domain selection page. This can be used when it is known that a single domain is used or the domain information can be inferred automatically (from the username for example). This is an Omnissa Identity Service optional parameter and is not in the OAuth 2.0 specification. Required only if the grant_type is 'password'.",
+            "example": "example.com",
+            "maxLength": 100,
+            "pattern": "^[a-zA-Z0-9+\\-_.@\\s]+$",
+            "type": "string"
+          },
+          "username": {
+            "description": "The username, UTF-8 encoded. Required only when grant_type is 'password'.",
+            "maxLength": 150,
+            "type": "string"
+          },
+          "password": {
+            "description": "The password, UTF-8 encoded. Required only when grant_type is 'password'.",
+            "maxLength": 256,
+            "type": "string"
+          },
+          "grant_type": {
+            "description": "Specifies the OAuth grant type the client is making. It must be one of the grant types that are defined in the OAuth2.0 client. Omnissa Identity Service supports the following grant types from the OAuth specifications: authorization_code, password, client_credentials, and refresh_token. Omnissa Identity Service also supports the grant type urn:ietf:params:oauth:grant-type:jwt-bearer for using JWTs for authorization as described in the JWT Bearer Token Profiles for OAuth 2.0 specifications.",
+            "enum": [
+              "authorization_code",
+              "password",
+              "client_credentials",
+              "refresh_token",
+              "urn:ietf:params:oauth:grant-type:jwt-bearer"
+            ],
+            "example": "client_credentials",
+            "type": "string"
+          },
+          "code": {
+            "description": "The authorization code received from the authorize request. Required only if the grant_type is 'authorization_code'.",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "refresh_token": {
+            "description": "The refresh token, which can be used to obtain new\naccess tokens using the same authorization grant.. Required only if the grant_type is 'refresh_token'.",
+            "maxLength": 150,
+            "pattern": "^[A-Za-z0-9]+$",
+            "type": "string"
+          },
+          "assertion": {
+            "description": "The assertion being used as an authorization grant.If an assertion is not valid or has expired 'invalid_grant' error code is returned.. Required only if the grant_type is 'urn:ietf:params:oauth:grant-type:jwt-bearer'.",
+            "maxLength": 4096,
+            "type": "string"
+          },
+          "subject_token_type": {
+            "description": "Field is reserved for future use.",
+            "type": "string"
+          },
+          "subject_token": {
+            "description": "Field is reserved for future use.",
+            "type": "string"
+          },
+          "code_verifier": {
+            "description": "Specifies the code_verifier to be verified with the authorization code. The client needs to sends this along with the authorization code for PKCE.",
+            "example": "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk",
+            "maxLength": 128,
+            "pattern": "^[a-zA-Z0-9\\-_.~]+$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grant_type"
+        ],
+        "type": "object"
+      },
+      "TokenRevokeFormData": {
+        "description": "The form fields that can be used when requesting an access token to be invalidated",
+        "properties": {
+          "token": {
+            "description": "The token that the client wants to get revoked",
+            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9xxxxHVcA76zjsGN2w...",
+            "maxLength": 4096,
+            "pattern": "^[a-zA-Z0-9+/\\-_=.]+$",
+            "type": "string"
+          },
+          "token_type_hint": {
+            "description": "A hint about the type of the token\n           submitted for revocation.  Clients MAY pass this parameter in\n           order to help the authorization server to optimize the token\n           lookup.",
+            "enum": [
+              "access_token",
+              "refresh_token"
+            ],
+            "example": "access_token",
+            "type": "string"
+          }
+        },
+        "required": [
+          "token"
+        ],
+        "type": "object"
+      },
+      "IdToken": {
+        "description": "The ID Token object as per the OpenID Connect specification. See:https://openid.net/specs/openid-connect-core-1_0.html#IDToken",
+        "properties": {
+          "signature": {
+            "type": "string"
+          },
+          "nonce": {
+            "description": "String value used to associate a Client session with an ID Token. The value is passed through unmodified from the Authentication Request to the ID Token. ",
+            "type": "string"
+          },
+          "customClaims": {
+            "additionalProperties": {
+              "type": "object"
+            },
+            "type": "object",
+            "writeOnly": true
+          },
+          "name": {
+            "description": "The end-user's full name in displayable form",
+            "type": "string"
+          },
+          "locale": {
+            "description": "The locale of the end-user",
+            "example": "en_US",
+            "type": "string"
+          },
+          "email": {
+            "description": "The end-user's preferred e-mail address",
+            "type": "string"
+          },
+          "expired": {
+            "type": "boolean"
+          },
+          "jwsHeader": {
+            "$ref": "#/components/schemas/JWSHeader"
+          },
+          "given_name": {
+            "description": "The given name(s) or first name(s) of the end-user",
+            "type": "string"
+          },
+          "family_name": {
+            "description": "The surname(s) or last name(s) of the end-user",
+            "type": "string"
+          },
+          "subject": {
+            "description": "This is the same as the subject identifier. It is maintained to provide backward compatibility with SAAS.",
+            "example": "exampleuser@TENANT",
+            "type": "string"
+          },
+          "aud": {
+            "description": "The audience(s) that this ID Token is intended. The audience value is the OAuth 2.0 client_id of the Relying Party.",
+            "example": [
+              "MyOAuth2Client@e9d80cec-4e12-4970-828d-ae4557e33174"
+            ],
+            "items": {
+              "description": "The audience(s) that this ID Token is intended. The audience value is the OAuth 2.0 client_id of the Relying Party.",
+              "example": "[\"MyOAuth2Client@e9d80cec-4e12-4970-828d-ae4557e33174\"]",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "auth_time": {
+            "description": "The time when the end-user authentication occurred. Its value is a JSON number representing the number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time.",
+            "example": 1539988834,
+            "format": "int64",
+            "type": "integer"
+          },
+          "acr": {
+            "description": "The authentication context used to authenticate the user",
+            "type": "string"
+          },
+          "azp": {
+            "description": "Authorized party - the party to which the ID Token was issued. Contains the OAuth 2.0 Client ID of this party.",
+            "example": "MyOAuth2Client@e9d80cec-4e12-4970-828d-ae4557e33174",
+            "type": "string"
+          },
+          "at_hash": {
+            "description": "The access token hash value. Base64url encoded value.",
+            "type": "string"
+          },
+          "c_hash": {
+            "description": "The hash of the access code. Base 64 URL encoded value. Returned when the ID Token is issued from the Authorization Endpoint with a \"code\" or \"code id_token\", or \"code id_token token\" as the response type.",
+            "type": "string"
+          },
+          "email_verified": {
+            "description": "The verified e-mail address of the end-user",
+            "type": "boolean"
+          },
+          "phone_number": {
+            "description": "The end-user's preferred telephone number",
+            "type": "string"
+          },
+          "updated_at": {
+            "description": "The time the end-user's information was last updated. Its value is a JSON number representing the number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time.",
+            "example": 1539988834,
+            "format": "int64",
+            "type": "integer"
+          },
+          "group_ids": {
+            "description": "The IDs of all groups the user belongs to",
+            "items": {
+              "description": "The IDs of all groups the user belongs to",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "group_names": {
+            "description": "The names of all groups the user belongs to",
+            "items": {
+              "description": "The names of all groups the user belongs to",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "oid": {
+            "description": "Get the oid of the user",
+            "type": "string"
+          },
+          "exp": {
+            "description": "The expiration time on or after which the ID Token MUST NOT be accepted for processing. Its value is a JSON number representing the number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time.",
+            "example": 1539988834,
+            "format": "int64",
+            "type": "integer"
+          },
+          "iat": {
+            "description": "The time at which the JWT was issued. Its value is a JSON number representing the number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time.",
+            "example": 1539988834,
+            "format": "int64",
+            "type": "integer"
+          },
+          "iss": {
+            "description": "The identifier for the authority that issued the token",
+            "example": "https://acme.workspaceoneaccess.com/acs",
+            "type": "string"
+          },
+          "sub": {
+            "description": "The subject identifier of the subject for whom the ID Token is issued.",
+            "example": "exampleuser@TENANT",
+            "type": "string"
+          },
+          "user_name": {
+            "description": "Get the name of the user",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sub",
+          "subject"
+        ],
+        "type": "object"
+      },
+      "JWSHeader": {
+        "properties": {
+          "typ": {
+            "type": "string"
+          },
+          "alg": {
+            "enum": [
+              "HS256",
+              "HS384",
+              "HS512",
+              "RS256",
+              "RS384",
+              "RS512",
+              "ES256",
+              "ES384",
+              "ES512",
+              "none"
+            ],
+            "type": "string"
+          },
+          "kid": {
+            "type": "string"
+          },
+          "jku": {
+            "type": "string"
+          },
+          "jwk": {
+            "type": "string"
+          },
+          "x5u": {
+            "type": "string"
+          },
+          "x5t": {
+            "type": "string"
+          },
+          "x5c": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "BrokerOAuth2ClientMedia": {
+        "description": "This is a request media to create an OAuth 2.0 client with optional pre-defined rule sets.",
+        "properties": {
+          "id": {
+            "description": "Id of the client, it's auto-generated on client creation and cannot be updated.",
+            "example": "d24afa39-05a1-433f-8aa9-ad41c9a3d394",
+            "format": "uuid",
+            "readOnly": true,
+            "type": "string"
+          },
+          "secret": {
+            "description": "OAuth 2.0 Client secret (a string provided by an admin or an Omnissa Identity Service auto-generated string). If secret string not provided, an auto-generated secret will be returned. For additional security, stored secret will not be returned in get/update API responses Public clients will not have any secret auto generated for them while confidential clients will always have clientSecret.",
+            "example": "my-auth-grant-client1-secret",
+            "type": "string"
+          },
+          "scope": {
+            "description": "Array of access request scopes that are allowed by this OAuth 2.0 Client. Available scope options are:  admin - Admin Level Access,  user - User Level Access,  profile - Access to User's profile (FirstName//LastName//Display Name//Image), email - Access to User's Email. This field is required for creating an OAuth 2.0 client.",
+            "example": [
+              "admin",
+              "user",
+              "openid",
+              "profile",
+              "email"
+            ],
+            "items": {
+              "description": "Array of access request scopes that are allowed by this OAuth 2.0 Client. Available scope options are:  admin - Admin Level Access,  user - User Level Access,  profile - Access to User's profile (FirstName//LastName//Display Name//Image), email - Access to User's Email. This field is required for creating an OAuth 2.0 client.",
+              "example": "[\"admin\",\"user\",\"openid\",\"profile\",\"email\"]",
+              "type": "string",
+              "x-patching": {
+                "patchable": "true",
+                "allow-empty": "false"
+              }
+            },
+            "type": "array",
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "false"
+            }
+          },
+          "_links": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "description": "The resource HATEOAS links. Usually includes a \"self\" link for this resource",
+            "example": {
+              "self": {
+                "href": "https://example.com/path-to-self"
+              }
+            },
+            "readOnly": true,
+            "type": "object"
+          },
+          "client_id": {
+            "description": "OAuth 2.0 Client identifier that the client uses to identify itself during the OAuth 2.0 exchanges. The client ID must contain only alphanumeric (A-Z, a-z, 0-9), period (.), underscore (_), hyphen (-) and at sign (@) characters. This field is required for creating an OAuth 2.0 client.",
+            "example": "my-auth-grant-client1",
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9-_.@]+$",
+            "type": "string"
+          },
+          "access_token_ttl": {
+            "description": "How long in minutes new access tokens issued to this client should live",
+            "example": 10080,
+            "format": "int32",
+            "type": "integer",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "refresh_token_ttl": {
+            "description": "How long in minutes new refresh tokens issued to this client should live. Only applicable and mandatory if grant_types includes \"refresh_token\" . For patching, the value 0 should be used to nullify the field.",
+            "example": 525600,
+            "format": "int32",
+            "type": "integer",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "refresh_token_idle_ttl": {
+            "description": "How long in minutes new refresh tokens issued to this client can be idle. Only applicable and mandatory if grant_types includes \"refresh_token\". Its value should be less than the refresh token TTL value For patching, the value 0 should be used to nullify the field.",
+            "example": 525600,
+            "format": "int32",
+            "type": "integer",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "primary_secret_auto_retires_at": {
+            "description": "Indicates expiry time of the primary secret if secret rotation was initiated for this client. Expiry duration can be specified by using primary_secret_auto_retire_duration when initiating secret rotation using the secret rotation API. Value is specified in UTC timezone. This field is readonly.",
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer"
+          },
+          "rotate_secret": {
+            "description": "Indicates whether a client secret rotation is in progress. Rotation will be completed automatically at the time indicated by primary_secret_auto_retires_at or can be invoked before this period explicitly using the rotateSecret API 'retire-primary-secret' action.",
+            "example": true,
+            "readOnly": true,
+            "type": "boolean",
+            "x-patching": {
+              "patchable": "false"
+            }
+          },
+          "grant_types": {
+            "description": "Array of OAuth 2.0 Access Grant Types that are enabled in this OAuth 2.0 Client. Available Grant types are: authorization_code, client_credentials password. This field is required for creating an OAuth 2.0 client.",
+            "example": [
+              "authorization_code",
+              "client_credentials"
+            ],
+            "items": {
+              "enum": [
+                "password",
+                "client_credentials",
+                "refresh_token",
+                "authorization_code",
+                "token",
+                "id_token"
+              ],
+              "type": "string"
+            },
+            "type": "array",
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "false"
+            }
+          },
+          "redirect_uris": {
+            "description": "Array of absolute URIs of application endpoints that are allowed to receive the authorization code and access token. The redirect_uri sent by the application as part of the Authorization Code Grant Oauth 2.0 flow is verified against this list. A Wildcard can be substituted for any string to skip the check for a particular URL section. The field is required if grant_types contain an \"authorization_code\" grant type.",
+            "example": [
+              "https://*.hostname1.com/auth/*",
+              "https://*.hostname2.com/auth/*"
+            ],
+            "items": {
+              "description": "Array of absolute URIs of application endpoints that are allowed to receive the authorization code and access token. The redirect_uri sent by the application as part of the Authorization Code Grant Oauth 2.0 flow is verified against this list. A Wildcard can be substituted for any string to skip the check for a particular URL section. The field is required if grant_types contain an \"authorization_code\" grant type.",
+              "example": "[\"https://*.hostname1.com/auth/*\",\"https://*.hostname2.com/auth/*\"]",
+              "type": "string",
+              "x-patching": {
+                "patchable": "true",
+                "allow-empty": "true"
+              }
+            },
+            "type": "array",
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "true"
+            }
+          },
+          "post_logout_redirect_uris": {
+            "description": "Array of absolute URLs supplied by the RP to which it MAY request that the End-User's User Agent be redirected using the post_logout_redirect_uri parameter after a logout has been performed. These URLs SHOULD use the https scheme and MAY contain port, path, and query parameter components;  however, they MAY use the http scheme, provided that the Client Type is confidential. A Wildcard can be substituted for any string to skip the check for a particular URL section.",
+            "example": [
+              "https://*.hostname1.com/openid/logout/*",
+              "https://*.hostname2.com/logout/*"
+            ],
+            "items": {
+              "description": "Array of absolute URLs supplied by the RP to which it MAY request that the End-User's User Agent be redirected using the post_logout_redirect_uri parameter after a logout has been performed. These URLs SHOULD use the https scheme and MAY contain port, path, and query parameter components;  however, they MAY use the http scheme, provided that the Client Type is confidential. A Wildcard can be substituted for any string to skip the check for a particular URL section.",
+              "example": "[\"https://*.hostname1.com/openid/logout/*\",\"https://*.hostname2.com/logout/*\"]",
+              "type": "string",
+              "x-patching": {
+                "patchable": "true",
+                "allow-empty": "true"
+              }
+            },
+            "type": "array",
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "true"
+            }
+          },
+          "rule_set_names": {
+            "description": "Array of built in rule set names to associate this client with. Each ruleset, allows the client to call a specific set of tenant APIs. TENANT_ADMIN - Allows the client to call all the tenant APIs. READ_ONLY_TENANT_ADMIN - Allows the client to call all the tenant read only APIs (i.e., APIs that doesn't make any changes). IDP_AND_DIRECTORY_ADMIN - Allows the client to call all the tenant Identity Providers and Directories APIs.",
+            "example": [
+              "IDP_AND_DIRECTORY_ADMIN",
+              "READ_ONLY_TENANT_ADMIN"
+            ],
+            "items": {
+              "enum": [
+                "TENANT_ADMIN",
+                "IDP_AND_DIRECTORY_ADMIN",
+                "READ_ONLY_TENANT_ADMIN"
+              ],
+              "type": "string"
+            },
+            "type": "array",
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "true"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "Link": {
+        "description": "The resource HATEOAS links. Usually includes a \"self\" link for this resource",
+        "example": {
+          "self": {
+            "href": "https://example.com/path-to-self"
+          }
+        },
+        "properties": {
+          "href": {
+            "format": "uri",
+            "type": "string"
+          }
+        },
+        "readOnly": true,
+        "type": "object"
+      },
+      "BrokerOAuth2ClientStartSecretRotationMedia": {
+        "description": "Media for OAuth 2.0 client start secret rotation action.",
+        "properties": {
+          "_links": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "description": "The resource HATEOAS links. Usually includes a \"self\" link for this resource",
+            "example": {
+              "self": {
+                "href": "https://example.com/path-to-self"
+              }
+            },
+            "readOnly": true,
+            "type": "object"
+          },
+          "primary_secret_auto_retire_duration": {
+            "default": 1440,
+            "description": "Indicates how long in minutes until primary secret will retire automatically. Default value if not specified is 1 day. Maximum value is 7 days. The field is optional when starting a secret rotation and it is ignored when ending a rotation",
+            "example": 2880,
+            "format": "int32",
+            "maximum": 10080,
+            "minimum": 0,
+            "type": "integer",
+            "writeOnly": true
+          },
+          "secondary_secret": {
+            "description": "An alternative secret to the client primary secret that will replace the existing primary secret when the secret rotation ends. The field is mandatory when starting a secret rotation and it is ignored when ending a rotation.",
+            "example": "MySecret@#$",
+            "maxLength": 4096,
+            "minLength": 0,
+            "type": "string",
+            "writeOnly": true
+          }
+        },
+        "type": "object"
+      },
+      "BrokerOAuth2ClientList": {
+        "description": "The list of OAuth 2.0 client summaries.",
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/BrokerOAuth2ClientSummary"
+            },
+            "type": "array"
+          },
+          "totalCount": {
+            "description": "Count of total number of elements for the request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "pageNumber": {
+            "description": "Current page number",
+            "format": "int32",
+            "type": "integer"
+          },
+          "totalPages": {
+            "description": "Total number of pages for the request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "pageSize": {
+            "description": "Number of elements returned per page",
+            "format": "int32",
+            "type": "integer"
+          },
+          "_links": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "description": "The resource HATEOAS links. Usually includes a \"self\" link for this resource",
+            "example": {
+              "self": {
+                "href": "https://example.com/path-to-self"
+              }
+            },
+            "readOnly": true,
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "BrokerOAuth2ClientSummary": {
+        "description": "Represents a summary of an OAuth 2.0 client",
+        "properties": {
+          "scope": {
+            "description": "Array of access request scopes that are allowed by this OAuth 2.0 Client.",
+            "example": [
+              "admin",
+              "openid",
+              "profile",
+              "email"
+            ],
+            "items": {
+              "description": "Array of access request scopes that are allowed by this OAuth 2.0 Client.",
+              "example": "[\"admin\",\"openid\",\"profile\",\"email\"]",
+              "readOnly": true,
+              "type": "string"
+            },
+            "readOnly": true,
+            "type": "array"
+          },
+          "_links": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "description": "The resource HATEOAS links. Usually includes a \"self\" link for this resource",
+            "example": {
+              "self": {
+                "href": "https://example.com/path-to-self"
+              }
+            },
+            "readOnly": true,
+            "type": "object"
+          },
+          "client_id": {
+            "description": "The client identifier of the OAuth 2.0 client",
+            "example": "oauth_clientid",
+            "readOnly": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "BrokerIdentityProviderMedia": {
+        "description": "Represents the request information for Omnissa Identity Service OIDC Identity Provider API.",
+        "properties": {
+          "_links": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "description": "The resource HATEOAS links. Usually includes a \"self\" link for this resource",
+            "example": {
+              "self": {
+                "href": "https://example.com/path-to-self"
+              }
+            },
+            "readOnly": true,
+            "type": "object"
+          },
+          "id": {
+            "description": "The unique identifier of the identity provider",
+            "example": "5e895ddb-c2ae-414a-9db3-a2d693ee0db1",
+            "format": "uuid",
+            "readOnly": true,
+            "type": "string"
+          },
+          "idp_name": {
+            "description": "This is the name of the identity provider. It must be unique for a tenant. It is required for creating and optional for patching an identity provider. The allowed symbols are letters in any language, digits (0-9), space and -_",
+            "example": "example_idp_name",
+            "maxLength": 100,
+            "type": "string",
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "false"
+            }
+          },
+          "idp_type": {
+            "description": "The protocol type to be used for the external identity provider. It is required for creating and optional for patching an identity provider.",
+            "enum": [
+              "OIDC",
+              "SAML"
+            ],
+            "example": "OIDC",
+            "type": "string"
+          },
+          "directory_list": {
+            "description": "The list of directories associated with this identity provider. It is required for creating and optional for patching an identity provider.",
+            "items": {
+              "$ref": "#/components/schemas/DirectoryTO"
+            },
+            "type": "array",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "oidc_profile": {
+            "$ref": "#/components/schemas/OidcProfileTO"
+          },
+          "saml_profile": {
+            "$ref": "#/components/schemas/SamlProfileTO"
+          },
+          "trust_certificates": {
+            "description": "List of certificate chains encoded in PEM format. It is optional for both creating and patching an identity provider. The certificates in the chain have to be separated by a line break and the encoded certificate between the BEGIN/END markers needs to be surrounded by line breaks. The chains in the array cannot be more than three and each chain can consist of maximum five certificates. When updating this field, the entire list of certificate chains is updated. There is no support for managing individual chains in the list.",
+            "example": [
+              "-----BEGIN CERTIFICATE-----\n<encoded-certificate-1>\n-----END CERTIFICATE-----\n-----BEGIN CERTIFICATE-----\n<encoded-certificate-2>\n-----END CERTIFICATE-----",
+              "-----BEGIN CERTIFICATE-----\n<another-encoded-certificate\n-----END CERTIFICATE-----"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "true"
+            }
+          },
+          "auth_type_list": {
+            "description": "The list of auth methods associated with this identity provider. This field is only modifiable via patch, and will always be defaulted during create. When updating this field, the entire list of auth methods is updated. At least one auth method must be present for the identity provider. If auth methods are not provided during a patch, the existing auth methods will not be changed. Provide the uuid of the auth method when patching an existing auth method",
+            "items": {
+              "$ref": "#/components/schemas/IdPAuthTypeTO"
+            },
+            "type": "array",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "idp_source_type": {
+            "description": "The source type of the identity provider. Certain customizations can be applied based on source. For example, subject is sent in login_hint parameter rather than in SAML request for source type 'ENTRA'.",
+            "enum": [
+              "GENERIC",
+              "ENTRA",
+              "OKTA"
+            ],
+            "example": "ENTRA",
+            "type": "string"
+          }
+        },
+        "required": [
+          "auth_type_list"
+        ],
+        "type": "object"
+      },
+      "DirectoryTO": {
+        "description": "Represents a directory associated with the identity provider",
+        "properties": {
+          "id": {
+            "description": "The unique identifier of the directory",
+            "example": "165178fc-acba-46d3-8a0a-6099ab71eb51",
+            "format": "uuid",
+            "type": "string"
+          },
+          "name": {
+            "description": "User provided directory name. If the directory with this id is not found, an empty string is returned",
+            "example": "my_dir 1",
+            "readOnly": true,
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "x-patching": {
+          "patchable": "true"
+        }
+      },
+      "OidcProfileTO": {
+        "description": "Represents an Identity Provider OIDC profile. It must be present only if idp_type=OIDC and is otherwise ignored. It is required for creating and optional for patching an identity provider.",
+        "properties": {
+          "configuration_url": {
+            "description": "Configuration url (OIDC) to discover authorize, token, issuer and jwks endpoints.",
+            "example": "https://example.com/.well-known/openid-configuration",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "false"
+            }
+          },
+          "client_id": {
+            "description": "The external identity provider OAuth 2.0 client ID that is used by Omnissa Identity Service to federate to the external identity provider",
+            "example": "my-auth-grant-client1",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "false"
+            }
+          },
+          "client_secret": {
+            "description": "The external identity provider OAuth 2.0 client secret",
+            "example": "my-auth-grant-client1-secret",
+            "type": "string",
+            "writeOnly": true,
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "false"
+            }
+          },
+          "oidc_user_attribute_mapping": {
+            "additionalProperties": {
+              "description": "The mappings of the attribute names that are stored for users by Omnissa Identity Service to the claims in the 3rd party Identity Provider ID token. The keys are the Omnissa Identity Service attribute names and the values are the claims in the ID token.",
+              "example": "{\"email\":\"user_email\"}",
+              "type": "string",
+              "x-patching": {
+                "patchable": "true"
+              }
+            },
+            "description": "The mappings of the attribute names that are stored for users by Omnissa Identity Service to the claims in the 3rd party Identity Provider ID token. The keys are the Omnissa Identity Service attribute names and the values are the claims in the ID token.",
+            "example": {
+              "email": "user_email"
+            },
+            "type": "object",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "authorize_params": {
+            "additionalProperties": {
+              "description": "Additional custom authorize parameters to be sent in authorize requests to the identity provider",
+              "example": "{\"param1\":\"param1_value\"}",
+              "type": "string",
+              "x-patching": {
+                "patchable": "true"
+              }
+            },
+            "description": "Additional custom authorize parameters to be sent in authorize requests to the identity provider",
+            "example": {
+              "param1": "param1_value"
+            },
+            "type": "object",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "token_params": {
+            "additionalProperties": {
+              "description": "Additional custom token parameters to be sent in token request",
+              "example": "{\"param1\":\"param1_value\"}",
+              "type": "string",
+              "x-patching": {
+                "patchable": "true"
+              }
+            },
+            "description": "Additional custom token parameters to be sent in token request",
+            "example": {
+              "param1": "param1_value"
+            },
+            "type": "object",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "pass_through_claims": {
+            "default": false,
+            "description": "Boolean representing if custom claims from third party ID token should be passed through",
+            "example": false,
+            "type": "boolean",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "open_id_user_identifier_attribute": {
+            "default": "sub",
+            "description": "The OIDC claim name that holds the user identifier used to loop up user",
+            "example": "sub",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "internal_user_identifier_attribute": {
+            "default": "ExternalId",
+            "description": "Name of user attribute used to look up user",
+            "example": "ExternalId",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "login_hint_user_attribute": {
+            "default": "userName",
+            "description": "Name of user attribute used as login hint in OIDC flow",
+            "example": "userName",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "send_login_hint_in_request": {
+            "default": false,
+            "description": "Boolean representing if login hint should be passed through in request",
+            "example": false,
+            "type": "boolean",
+            "x-patching": {
+              "patchable": "true"
+            }
+          }
+        },
+        "required": [
+          "client_id",
+          "client_secret",
+          "configuration_url"
+        ],
+        "type": "object"
+      },
+      "SamlProfileTO": {
+        "description": "Represents an Identity Provider SAML profile. It must be present only if idp_type=SAML and is otherwise ignored. It is required for creating and optional for patching an identity provider.",
+        "properties": {
+          "saml_metadata": {
+            "description": "SAML 2.0 protocol metadata in XML format encoded using Base64. If this field is not set, you must set saml_metadata_url. If both fields are set, this field take precedence. The Base64 encoded text have a maximum length of 100K",
+            "example": "See https://en.wikipedia.org/wiki/SAML_metadata#Identity_provider_metadata for an example of an IDP SAML metadata",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "saml_metadata_url": {
+            "description": "SAML metadata URL. For SAML20 protocol. If this field is not set, you must set saml_metadata. If this field is set, metadata is downloaded each time. If both fields are set, saml_metadata take precedence",
+            "example": "https://example.com/path/to/my/saml/metadata.xml",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "saml_name_id_user_attribute_mapping": {
+            "additionalProperties": {
+              "description": "User attribute mappings for each SAML attribute that is received in SAML response. The keys are the Omnissa Identity Service attribute names and the values are the SAML attribute names. If this field is not set, you must set saml_identity_user_attribute_mapping. If both fields are set, saml_identity_user_attribute_mapping take precedence",
+              "example": "{\"param1\":\"param1_value\"}",
+              "type": "string",
+              "x-patching": {
+                "patchable": "true"
+              }
+            },
+            "description": "User attribute mappings for each SAML attribute that is received in SAML response. The keys are the Omnissa Identity Service attribute names and the values are the SAML attribute names. If this field is not set, you must set saml_identity_user_attribute_mapping. If both fields are set, saml_identity_user_attribute_mapping take precedence",
+            "example": {
+              "param1": "param1_value"
+            },
+            "type": "object",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "saml_identity_user_attribute_mapping": {
+            "$ref": "#/components/schemas/SamlIdentityAttributeTO"
+          },
+          "request_name_id_format_type": {
+            "description": "NameIdFormat to use in SAML requests to this identity provider. If not set, urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified will be used",
+            "example": "urn:oasis:names:tc:SAML:2.0:nameid-format:transient",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "request_preferred_binding": {
+            "description": "Preferred binding to use in SAML requests to this identity provider.",
+            "enum": [
+              "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect",
+              "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+            ],
+            "example": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect",
+            "pattern": "urn:oasis:names:tc:SAML:2[.]0:bindings:HTTP[-]Redirect|urn:oasis:names:tc:SAML:2[.]0:bindings:HTTP[-]POST",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "false"
+            }
+          },
+          "send_subject_in_request": {
+            "default": false,
+            "description": "Indicates if subject should be sent in saml request",
+            "example": false,
+            "type": "boolean",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "send_subject_with_mapping": {
+            "default": false,
+            "description": "Indicates if NameId mapping should be used to decide which user attribute to send in SAML request.",
+            "example": false,
+            "type": "boolean",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "saml_slo_configuration": {
+            "$ref": "#/components/schemas/SamlSloConfigurationTO"
+          },
+          "jit_group_membership_attr_name": {
+            "description": "Specifies the group membership SAML attribute name.",
+            "example": "groups",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "saml_pass_through_claim_names": {
+            "description": "SAML assertion attribute names configured as pass through claims coming from third party SAML IDP.",
+            "example": [
+              "attr1",
+              "attr2"
+            ],
+            "items": {
+              "description": "SAML assertion attribute names configured as pass through claims coming from third party SAML IDP.",
+              "example": "[\"attr1\",\"attr2\"]",
+              "type": "string",
+              "x-patching": {
+                "patchable": "true"
+              }
+            },
+            "type": "array",
+            "x-patching": {
+              "patchable": "true"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "SamlIdentityAttributeTO": {
+        "description": "SAML attribute which contains the user identity",
+        "properties": {
+          "saml_attribute_format": {
+            "description": "SAML attribute format type. See \"https://www.oasis-open.org/committees/download.php/56776/sstc-saml-core-errata-2.0-wd-07.pdf\" section 8.",
+            "example": "urn:oasis:names:tc:SAML:2.0:attrname-format:basic",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "false"
+            }
+          },
+          "saml_attribute_name": {
+            "description": "SAML attribute name containing identity",
+            "example": "uid",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "false"
+            }
+          },
+          "idm_attribute": {
+            "description": "The name of the Omnissa Identity Service attribute mapped to the SAML attribute name which contains the identity information",
+            "example": "userName",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true"
+            }
+          }
+        },
+        "required": [
+          "saml_attribute_format",
+          "saml_attribute_name"
+        ],
+        "type": "object",
+        "x-patching": {
+          "patchable": "true"
+        }
+      },
+      "SamlSloConfigurationTO": {
+        "description": "SAML2 Single logout request configuration.",
+        "properties": {
+          "slo_url": {
+            "description": "Single Logout request URL. When the filed is null or blank, the SLO URL from the metadata is used.",
+            "example": "https://www.okta.com/slologout",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "relay_state_param": {
+            "description": "Relay state parameter that is passed to the SLO request URL.",
+            "example": "param",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "enabled": {
+            "default": true,
+            "description": "Indicates if SLO is enabled. When set to false, the SLO configuration will be removed.",
+            "example": true,
+            "type": "boolean",
+            "writeOnly": true,
+            "x-patching": {
+              "patchable": "true"
+            }
+          }
+        },
+        "type": "object",
+        "x-patching": {
+          "patchable": "true"
+        }
+      },
+      "IdPAuthTypeTO": {
+        "description": "Auth method for identity provider",
+        "properties": {
+          "id": {
+            "description": "The unique identifier for the auth method",
+            "example": "8edacc5b-ff9d-4f8d-8575-6a137619fc88",
+            "format": "uuid",
+            "readOnly": true,
+            "type": "string",
+            "x-patching": {
+              "patchable": "false"
+            }
+          },
+          "auth_method_name": {
+            "description": "The name of the auth method",
+            "example": "example_auth_method_name",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "false"
+            }
+          },
+          "saml_authn_context": {
+            "description": "The SAML authentication context mapped to this auth method.",
+            "example": "urn:oasis:names:tc:SAML:2.0:ac:classes:unspecified",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true"
+            }
+          }
+        },
+        "required": [
+          "auth_method_name",
+          "saml_authn_context"
+        ],
+        "type": "object",
+        "x-patching": {
+          "patchable": "true"
+        }
+      },
+      "BrokerIdentityProviderList": {
+        "description": "Represents a summarised list of identity providers",
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/BrokerShortIdentityProviderMedia"
+            },
+            "type": "array"
+          },
+          "_links": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "description": "The resource HATEOAS links. Usually includes a \"self\" link for this resource",
+            "example": {
+              "self": {
+                "href": "https://example.com/path-to-self"
+              }
+            },
+            "readOnly": true,
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "BrokerShortIdentityProviderMedia": {
+        "description": "Represents a summary of an IdentityProvider",
+        "properties": {
+          "_links": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "description": "The resource HATEOAS links. Usually includes a \"self\" link for this resource",
+            "example": {
+              "self": {
+                "href": "https://example.com/path-to-self"
+              }
+            },
+            "readOnly": true,
+            "type": "object"
+          },
+          "id": {
+            "description": "The unique identifier of the identity provider",
+            "example": "012a190a-e409-4f39-b61f-22f04fbdeedb",
+            "format": "uuid",
+            "readOnly": true,
+            "type": "string"
+          },
+          "idp_name": {
+            "description": "The name of the identity provider",
+            "example": "example_idp_name",
+            "readOnly": true,
+            "type": "string"
+          },
+          "idp_type": {
+            "description": "The protocol type to be used for the external identity provider",
+            "enum": [
+              "OIDC",
+              "SAML"
+            ],
+            "example": "OIDC",
+            "readOnly": true,
+            "type": "string"
+          },
+          "directory_ids": {
+            "description": "The list of directory ids associated with this identity provider",
+            "example": [
+              "75bfbd1c-a5d4-4c68-8686-0c18aa95bdf1",
+              "31241929-38ca-4104-8dee-266b25adae85"
+            ],
+            "items": {
+              "description": "The list of directory ids associated with this identity provider",
+              "format": "uuid",
+              "readOnly": true,
+              "type": "string"
+            },
+            "readOnly": true,
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "SamlSpMetadataMedia": {
+        "description": "Represents the response information for Omnissa Identity Service SAML Service Provider metadata details.",
+        "properties": {
+          "acsUrl": {
+            "description": "Assertion Consumer Service / Single sign-on URL",
+            "example": "https://example.com/federation/auth/response/saml",
+            "readOnly": true,
+            "type": "string"
+          },
+          "acsBinding": {
+            "description": "Assertion Consumer Service (ACS) Binding",
+            "example": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST",
+            "readOnly": true,
+            "type": "string"
+          },
+          "entityId": {
+            "description": "The ID of the entity",
+            "example": "https://example.com/federation/saml-sp-metadata/xml",
+            "readOnly": true,
+            "type": "string"
+          },
+          "wantAssertionSigned": {
+            "description": "Whether SAML response assertion must be signed by identity provider",
+            "example": true,
+            "readOnly": true,
+            "type": "boolean"
+          },
+          "sloResponseUrl": {
+            "description": "URL where responses to single logout requests can be posted by identity provider",
+            "example": "https://example.com/federation/auth/slo/response/saml",
+            "readOnly": true,
+            "type": "string"
+          },
+          "certificates": {
+            "$ref": "#/components/schemas/SamlCertificates"
+          },
+          "_links": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "description": "The resource HATEOAS links. Usually includes a \"self\" link for this resource",
+            "example": {
+              "self": {
+                "href": "https://example.com/path-to-self"
+              }
+            },
+            "readOnly": true,
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "SamlCertificates": {
+        "description": "The certificates of a service provider",
+        "properties": {
+          "signing": {
+            "$ref": "#/components/schemas/SamlSpCertificateTO"
+          },
+          "encryption": {
+            "$ref": "#/components/schemas/SamlSpCertificateTO"
+          }
+        },
+        "readOnly": true,
+        "type": "object"
+      },
+      "SamlSpCertificateTO": {
+        "description": "Represents a certificate returned in SAML Service Provider metadata",
+        "properties": {
+          "certificate": {
+            "description": "The certificate in PEM format",
+            "example": "-----BEGIN CERTIFICATE-----\nMIICMzCCAZygAwIBAgIJALiPnVsvq8dsMA0GCSqGSIb3DQEBBQUAMFMxCzAJBgNV\nBAYTAlVTMQwwCgYDVQQIEwNmb28xDDAKBgNVBAcTA2ZvbzEMMAoGA1UEChMDZm9v\nMQwwCgYDVQQLEwNmb28xDDAKBgNVBAMTA2ZvbzAeFw0xMzAzMTkxNTQwMTlaFw0x\nODAzMTgxNTQwMTlaMFMxCzAJBgNVBAYTAlVTMQwwCgYDVQQIEwNmb28xDDAKBgNV\nBAcTA2ZvbzEMMAoGA1UEChMDZm9vMQwwCgYDVQQLEwNmb28xDDAKBgNVBAMTA2Zv\nbzCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAzdGfxi9CNbMf1UUcvDQh7MYB\nOveIHyc0E0KIbhjK5FkCBU4CiZrbfHagaW7ZEcN0tt3EvpbOMxxc/ZQU2WN/s/wP\nxph0pSfsfFsTKM4RhTWD2v4fgk+xZiKd1p0+L4hTtpwnEw0uXRVd0ki6muwV5y/P\n+5FHUeldq+pgTcgzuK8CAwEAAaMPMA0wCwYDVR0PBAQDAgLkMA0GCSqGSIb3DQEB\nBQUAA4GBAJiDAAtY0mQQeuxWdzLRzXmjvdSuL9GoyT3BF/jSnpxz5/58dba8pWen\nv3pj4P3w5DoOso0rzkZy2jEsEitlVM2mLSbQpMM+MUVQCQoiG6W9xuCFuxSrwPIS\npAqEAuV4DNoxQKKWmhVv+J0ptMWD25Pnpxeq5sXzghfJnslJlQND\n-----END CERTIFICATE-----",
+            "type": "string"
+          },
+          "issuer": {
+            "description": "Issuer information from the certificate",
+            "example": "C=US, O=myorg, CN=Example",
+            "readOnly": true,
+            "type": "string"
+          },
+          "subject": {
+            "description": "Subject information from the certificate",
+            "example": "C=US, O=myorg, CN=Example",
+            "readOnly": true,
+            "type": "string"
+          },
+          "expire_date": {
+            "description": "Expiration date on certificate in ISO 8601 date format",
+            "example": "2025-06-12",
+            "format": "date",
+            "readOnly": true,
+            "type": "string"
+          }
+        },
+        "readOnly": true,
+        "required": [
+          "certificate"
+        ],
+        "type": "object"
+      },
+      "BrokerDirectoryList": {
+        "description": "Represents a list of directories",
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/BrokerDirectoryMedia"
+            },
+            "type": "array"
+          },
+          "_links": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "description": "The resource HATEOAS links. Usually includes a \"self\" link for this resource",
+            "example": {
+              "self": {
+                "href": "https://example.com/path-to-self"
+              }
+            },
+            "readOnly": true,
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "BrokerDirectoryMedia": {
+        "description": "Represents a Omnissa Identity Service directory",
+        "properties": {
+          "attributes": {
+            "$ref": "#/components/schemas/DirectoryAttributesTO"
+          },
+          "_links": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "description": "The resource HATEOAS links. Usually includes a \"self\" link for this resource",
+            "example": {
+              "self": {
+                "href": "https://example.com/path-to-self"
+              }
+            },
+            "readOnly": true,
+            "type": "object"
+          },
+          "id": {
+            "description": "The unique identifier of the directory",
+            "format": "uuid",
+            "readOnly": true,
+            "type": "string"
+          },
+          "name": {
+            "description": "User provided directory name. This must be unique. The allowed symbols are letters in any language, digits (0-9), space and -_",
+            "example": "my_dir 1",
+            "maxLength": 128,
+            "type": "string",
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "false"
+            }
+          },
+          "domains": {
+            "description": "List of directory domain names",
+            "example": [
+              "domain1",
+              "domain2"
+            ],
+            "items": {
+              "description": "Directory domain names",
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true,
+            "x-patching": {
+              "patchable": "true",
+              "allow-empty": "false"
+            }
+          },
+          "default_domain": {
+            "description": "The default domain is required when users and groups are provisioned from an external directory without a domain. If the default domain is not set when the directory is created and the domain name is not synced from the external directory, user records in the directory will not have the domain attribute associated with the record and underlying services that rely on the domain attribute may fail. Must be one of the list of domain names. Note that the field is not returned in list directories API.",
+            "example": "domain1",
+            "maxLength": 100,
+            "type": "string",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "source": {
+            "description": "The type of the directory source",
+            "enum": [
+              "AZURE",
+              "PING",
+              "OKTA",
+              "ACCESS",
+              "GENERIC"
+            ],
+            "example": "AZURE",
+            "type": "string",
+            "x-patching": {
+              "patchable": "true"
+            }
+          },
+          "type": {
+            "description": "The type of the directory",
+            "enum": [
+              "PROVISIONED",
+              "JIT"
+            ],
+            "example": "PROVISIONED",
+            "type": "string"
+          },
+          "delete_in_progress": {
+            "description": "If true, the directory is marked for deletion and will be deleted soon.",
+            "readOnly": true,
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "DirectoryAttributesTO": {
+        "properties": {
+          "attemptDecodeExternalIdAsMSGuid": {
+            "title": "Attempt to convert the externalId attribute from Base64 encoded Object GUID, if it is not already formatted as a UUID.",
+            "type": "boolean"
+          }
+        },
+        "title": "Directory attributes",
+        "type": "object"
+      },
+      "BrokerSyncClientConfigurationMedia": {
+        "description": "Represents a Sync Client Configuration Media",
+        "properties": {
+          "_links": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "description": "The resource HATEOAS links. Usually includes a \"self\" link for this resource",
+            "example": {
+              "self": {
+                "href": "https://example.com/path-to-self"
+              }
+            },
+            "readOnly": true,
+            "type": "object"
+          },
+          "generate_token": {
+            "default": false,
+            "description": "Flag that identifies if the sync client requires an access token or a id/secret credentials. If true, an access token will be generated and the response will include 'access_token' and 'access_token_expiry'. If false, the response will include 'client_id' and 'client_secret' for the sync client. For an existing sync client, if no value is specified the previously saved value will be used.",
+            "example": true,
+            "type": "boolean"
+          },
+          "client_id": {
+            "description": "OAuth 2.0 Client identifier that the client uses to identify itself during the OAuth2 exchanges.The sync client identifier is auto-generated and returned when generate_token is set to false.",
+            "example": "syncClientIdUhYRj1PAqbYz15qrzam7G1W8rOm8kkPi",
+            "readOnly": true,
+            "type": "string"
+          },
+          "client_secret": {
+            "description": "OAuth 2.0 Client secret. The secret is auto-generated and returned when generate_token is set to false.For additional security, the secret will not be returned in Get API response.",
+            "example": "OlfgF3R9G2yJjOtzIrrwuH5AyOlUv0un",
+            "readOnly": true,
+            "type": "string"
+          },
+          "access_token": {
+            "description": "This token can be used to call Omnissa Identity Service APIs. The access token is a [JSON web token](\"https://jwt.io/\") (JWT).",
+            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9xxxxHVcA76zjsGN2w",
+            "readOnly": true,
+            "type": "string"
+          },
+          "access_token_expire_in": {
+            "description": "The time (in seconds) this token expires. If the return value is positive, the access token is going to expire in that many seconds. If the return value is 0, the access token already expired.",
+            "example": 21599,
+            "format": "int64",
+            "readOnly": true,
+            "type": "integer"
+          },
+          "token_ttl": {
+            "default": 262800,
+            "description": "How long in minutes new access tokens issued to this client should live. For an existing sync client, if no value is specified the previously saved value will be used.The default value is six months (in minutes).",
+            "example": 1800,
+            "format": "int32",
+            "maximum": 1051200,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "GroupListMedia": {
+        "description": "SCIM 2 Group list response",
+        "properties": {
+          "resources": {
+            "description": "A list of returned groups",
+            "items": {
+              "$ref": "#/components/schemas/GroupMedia"
+            },
+            "type": "array"
+          },
+          "totalResults": {
+            "description": "The total number of results returned by the list or query operation",
+            "format": "int32",
+            "type": "integer"
+          },
+          "itemsPerPage": {
+            "description": "The number of resources returned in a list  response page",
+            "format": "int32",
+            "type": "integer"
+          },
+          "startIndex": {
+            "description": "The 1-based index of the first result in the current set of list results",
+            "format": "int32",
+            "type": "integer"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MetaMedia"
+          },
+          "externalId": {
+            "description": "The SCIM resource external identifier",
+            "type": "string"
+          },
+          "id": {
+            "description": "The unique identifier of the SCIM resource",
+            "type": "string"
+          },
+          "schemas": {
+            "description": "The SCIM resource schema URIs",
+            "items": {
+              "description": "The SCIM resource schema URIs",
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "type": "object"
+      },
+      "GroupMedia": {
+        "description": "Represents a SCIM 2 Group resource",
+        "properties": {
+          "members": {
+            "description": "A list of members of the group",
+            "items": {
+              "$ref": "#/components/schemas/GroupMemberMedia"
+            },
+            "type": "array"
+          },
+          "displayName": {
+            "description": "A human-readable name for the group",
+            "example": "Example Group",
+            "type": "string"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MetaMedia"
+          },
+          "externalId": {
+            "description": "The SCIM resource external identifier",
+            "type": "string"
+          },
+          "id": {
+            "description": "The unique identifier of the SCIM resource",
+            "type": "string"
+          },
+          "schemas": {
+            "description": "The SCIM resource schema URIs",
+            "items": {
+              "description": "The SCIM resource schema URIs",
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "displayName"
+        ],
+        "type": "object"
+      },
+      "GroupMemberMedia": {
+        "description": "A member of a Group resource",
+        "properties": {
+          "display": {
+            "description": "A human readable name, primarily used for display purposes",
+            "example": "Example User",
+            "type": "string"
+          },
+          "value": {
+            "description": "The unique identifier of the group member",
+            "example": "42dc6b2c-4517-4e88-b1a7-79a1a1f88b5b",
+            "type": "string"
+          },
+          "$ref": {
+            "description": "The URI of the member resource",
+            "example": "https://example.com/v2/User/42dc6b2c-4517-4e88-b1a7-79a1a1f88b5b",
+            "format": "uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "$ref",
+          "value"
+        ],
+        "type": "object"
+      },
+      "MetaMedia": {
+        "description": "The meta information of the resource",
+        "properties": {
+          "resourceType": {
+            "description": "The type of the resource",
+            "readOnly": true,
+            "type": "string"
+          },
+          "location": {
+            "description": "The location (URI) of the resource",
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "version": {
+            "description": "The version of the resource",
+            "readOnly": true,
+            "type": "string"
+          },
+          "lastModified": {
+            "description": "The date and time the resource was last modified",
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          },
+          "created": {
+            "description": "The date and time the resource was created",
+            "format": "date-time",
+            "readOnly": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "PatchRequestMedia": {
+        "description": "Class representing a SCIM 2 patch request",
+        "properties": {
+          "Operations": {
+            "description": "Operations for SCIM 2 patch request",
+            "items": {
+              "$ref": "#/components/schemas/PatchOperationMedia"
+            },
+            "type": "array"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MetaMedia"
+          },
+          "externalId": {
+            "description": "The SCIM resource external identifier",
+            "type": "string"
+          },
+          "id": {
+            "description": "The unique identifier of the SCIM resource",
+            "type": "string"
+          },
+          "schemas": {
+            "description": "The SCIM resource schema URIs",
+            "items": {
+              "description": "The SCIM resource schema URIs",
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "Operations"
+        ],
+        "type": "object"
+      },
+      "PatchOperationMedia": {
+        "description": "Class representing a SCIM 2.0 patch operation.\n\nExamples:\n{\n    \"op\": \"add\",\n    \"value\": {\n        \"name\": {\n            \"givenName\": \"John\",\n            \"familyName\": \"Doe\"\n        }\n    }\n}\n\n{\n    \"op\": \"add\",\n    \"path\": \"name\",\n    \"value\": {\n        \"givenName\": \"John\",\n        \"familyName\": \"Smith\"\n    }\n}\n\n{\n    \"op\": \"add\",\n    \"path\": \"name.givenName\",\n    \"value\": \"John\"\n}\n\n{\n    \"op\": \"remove\",\n    \"path\": \"urn:ietf:params:scim:schemas:extension:enterprise:2.0:User:country\"\n}",
+        "properties": {
+          "value": {
+            "description": "The value that should be updated in Json format. Value can be a single string or a JSON structure for complex values. Value is required when op is 'add' or 'replace' (and it is not needed when op is 'remove').",
+            "example": "India",
+            "type": "string"
+          },
+          "path": {
+            "description": "Specify the attribute/sub-attribute that should be updated. Path is required when op is 'removed' and is optional when op is 'add' or 'replace'.",
+            "example": "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User:country",
+            "type": "string"
+          },
+          "op": {
+            "description": "The method that should be used in the operation.",
+            "enum": [
+              "add",
+              "replace",
+              "remove"
+            ],
+            "example": "add",
+            "type": "string"
+          }
+        },
+        "required": [
+          "op"
+        ],
+        "type": "object"
+      },
+      "SearchRequestMedia": {
+        "description": "Represents a SCIM 2 search request",
+        "properties": {
+          "sortOrder": {
+            "default": "ascending",
+            "description": "A string indicating the order in which the sortBy parameter is applied",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "example": "descending",
+            "type": "string"
+          },
+          "attributes": {
+            "description": "A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default",
+            "items": {
+              "description": "A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default",
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          },
+          "count": {
+            "description": "An integer indicating the desired maximum number of query results per page",
+            "example": 100,
+            "format": "int32",
+            "type": "integer"
+          },
+          "filter": {
+            "description": "The filter string used to request a subset of resources",
+            "type": "string"
+          },
+          "startIndex": {
+            "description": "An integer indicating the 1-based index of the first query result",
+            "example": 1,
+            "format": "int32",
+            "type": "integer"
+          },
+          "excludedAttributes": {
+            "description": "A multi-valued list of strings indicating the names of resource attributes to be removed from the default set of attributes to return",
+            "items": {
+              "description": "A multi-valued list of strings indicating the names of resource attributes to be removed from the default set of attributes to return",
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          },
+          "sortBy": {
+            "description": "A string indicating the attribute whose value shall be used to order the returned responses",
+            "type": "string"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MetaMedia"
+          },
+          "externalId": {
+            "description": "The SCIM resource external identifier",
+            "type": "string"
+          },
+          "id": {
+            "description": "The unique identifier of the SCIM resource",
+            "type": "string"
+          },
+          "schemas": {
+            "description": "The SCIM resource schema URIs",
+            "items": {
+              "description": "The SCIM resource schema URIs",
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "type": "object"
+      },
+      "UserMedia": {
+        "description": "Represents a SCIM 2 User resource",
+        "properties": {
+          "nickName": {
+            "description": "The casual way to address the user",
+            "example": "My Casual Name",
+            "type": "string"
+          },
+          "profileUrl": {
+            "description": "A fully qualified URL to a page representing the user's online profile",
+            "example": "https://example.com/usergroup/scim/v2/Users/da916af2-4c19-4ddb-89bd-363dbb79da29",
+            "format": "uri",
+            "type": "string"
+          },
+          "active": {
+            "description": "A Boolean value indicating the user's administrative status",
+            "example": true,
+            "type": "boolean"
+          },
+          "emails": {
+            "description": "The list of emails associated with the user",
+            "items": {
+              "$ref": "#/components/schemas/UserEmailMedia"
+            },
+            "type": "array"
+          },
+          "phoneNumbers": {
+            "description": "The phone numbers for the user",
+            "items": {
+              "$ref": "#/components/schemas/UserPhoneNumberMedia"
+            },
+            "type": "array"
+          },
+          "ims": {
+            "description": "The instant messaging addresses for the user",
+            "items": {
+              "$ref": "#/components/schemas/UserInstantMessagingAddressMedia"
+            },
+            "type": "array"
+          },
+          "photos": {
+            "description": "The URIs of photos of the user",
+            "items": {
+              "$ref": "#/components/schemas/UserPhoto"
+            },
+            "type": "array"
+          },
+          "addresses": {
+            "description": "The physical mailing addresses for this user",
+            "items": {
+              "$ref": "#/components/schemas/UserAddressMedia"
+            },
+            "type": "array"
+          },
+          "name": {
+            "$ref": "#/components/schemas/UserNameMedia"
+          },
+          "displayName": {
+            "description": "The name of the user, suitable for display to end-users",
+            "example": "My Display Name",
+            "type": "string"
+          },
+          "userName": {
+            "description": "The unique identifier of the user",
+            "example": "my_user_name",
+            "type": "string"
+          },
+          "groups": {
+            "description": "The list of groups that the user belongs to",
+            "items": {
+              "$ref": "#/components/schemas/UserGroupMedia"
+            },
+            "readOnly": true,
+            "type": "array"
+          },
+          "title": {
+            "description": "The title of the user",
+            "example": "Example title",
+            "type": "string"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MetaMedia"
+          },
+          "externalId": {
+            "description": "The SCIM resource external identifier",
+            "type": "string"
+          },
+          "id": {
+            "description": "The unique identifier of the SCIM resource",
+            "type": "string"
+          },
+          "schemas": {
+            "description": "The SCIM resource schema URIs",
+            "items": {
+              "description": "The SCIM resource schema URIs",
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "userName"
+        ],
+        "type": "object"
+      },
+      "UserEmailMedia": {
+        "description": "Represents an e-mail resource of the user",
+        "properties": {
+          "primary": {
+            "description": "A Boolean value indicating the 'primary' or preferred attribute value for this attribute. The primary attribute value 'true' MUST appear no more than once.",
+            "example": "true",
+            "type": "string"
+          },
+          "display": {
+            "description": "A human readable name, primarily used for display purposes",
+            "example": "my work email",
+            "type": "string"
+          },
+          "value": {
+            "description": "The full e-mail address value",
+            "example": "someone@my.host.com",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "UserPhoneNumberMedia": {
+        "description": "The phone number of the user",
+        "properties": {
+          "primary": {
+            "description": "A Boolean value indicating the 'primary' or preferred attribute value for this attribute. The primary attribute value 'true' MUST appear no more than once.",
+            "example": true,
+            "type": "boolean"
+          },
+          "value": {
+            "description": "The phone number of the user",
+            "example": "555-555-5555",
+            "type": "string"
+          },
+          "type": {
+            "description": "A label indicating the attribute's function",
+            "enum": [
+              "work",
+              "home",
+              "mobile",
+              "fax",
+              "pager",
+              "other"
+            ],
+            "example": "work",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "UserInstantMessagingAddressMedia": {
+        "description": "Instant messaging address for the user",
+        "properties": {
+          "primary": {
+            "description": "A Boolean value indicating the 'primary' or preferred attribute value for this attribute. The primary attribute value 'true' MUST appear no more than once.",
+            "example": true,
+            "type": "boolean"
+          },
+          "display": {
+            "description": "A human readable name, primarily used for display purposes",
+            "example": "ims_example",
+            "type": "string"
+          },
+          "value": {
+            "description": "Instant messaging address for the user",
+            "example": "example@skype.com",
+            "type": "string"
+          },
+          "type": {
+            "description": "A label indicating the attribute's function",
+            "enum": [
+              "aim",
+              "gtalk",
+              "icq",
+              "xmpp",
+              "msn",
+              "skype",
+              "qq",
+              "yahoo"
+            ],
+            "example": "skype",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "UserPhoto": {
+        "description": "The photo of the user",
+        "properties": {
+          "primary": {
+            "description": "A Boolean value indicating the 'primary' or preferred attribute value for this attribute. The primary attribute value 'true' MUST appear no more than once.",
+            "example": true,
+            "type": "boolean"
+          },
+          "display": {
+            "description": "A human readable name, primarily used for display purposes",
+            "example": "Example photo",
+            "type": "string"
+          },
+          "value": {
+            "description": "The URI of a photo of the user",
+            "example": "https://photos.example.com/profilephoto/72930000000Ccne/F",
+            "format": "uri",
+            "type": "string"
+          },
+          "type": {
+            "description": "A label indicating the attribute's function",
+            "enum": [
+              "photo",
+              "thumbnail"
+            ],
+            "example": "photo",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "UserAddressMedia": {
+        "description": "The full address of the user",
+        "properties": {
+          "primary": {
+            "description": "A Boolean value indicating the 'primary' or preferred attribute value for this attribute. The primary attribute value 'true' MUST appear no more than once.",
+            "example": true,
+            "type": "boolean"
+          },
+          "formatted": {
+            "description": "The full mailing address, formatted for display or use with a mailing label",
+            "example": "456 Hollywood Blvd\nHollywood, CA 91608 USA",
+            "type": "string"
+          },
+          "streetAddress": {
+            "description": "The full street address component, which may include house number, street name, P.O. box, and multi-line extended street address information",
+            "example": "456 Hollywood Blvd",
+            "type": "string"
+          },
+          "postalCode": {
+            "description": "The zip code or postal code component",
+            "example": "91608",
+            "type": "string"
+          },
+          "locality": {
+            "description": "The city or locality component",
+            "example": "Hollywood",
+            "type": "string"
+          },
+          "type": {
+            "description": "A label indicating the attribute's function; e.g., 'work' or 'home'",
+            "enum": [
+              "work",
+              "home",
+              "other"
+            ],
+            "example": "home",
+            "type": "string"
+          },
+          "region": {
+            "description": "The state or region component",
+            "example": "CA",
+            "type": "string"
+          },
+          "country": {
+            "description": "The country name component.When specified, the value MUST be in ISO 3166-1 \"alpha-2\" code format [ISO3166]; e.g., the United States and Sweden are \"US\" and \"SE\", respectively.",
+            "example": "USA",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "UserNameMedia": {
+        "description": "The name of the user",
+        "properties": {
+          "familyName": {
+            "description": "The family name of the user, or Last Name in most Western languages",
+            "example": "MyFamilyName",
+            "type": "string"
+          },
+          "middleName": {
+            "description": "The middle name(s) of the user",
+            "example": "MyMiddleName",
+            "type": "string"
+          },
+          "givenName": {
+            "description": "The given name of the user, or First Name in most Western languages",
+            "example": "MyGivenName",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "UserGroupMedia": {
+        "description": "Group membership for the user.",
+        "properties": {
+          "display": {
+            "description": "A human readable name, primarily used for display purposes.",
+            "example": "Example Group",
+            "readOnly": true,
+            "type": "string"
+          },
+          "value": {
+            "description": "The identifier of the User's group.",
+            "example": "e9e30dba-f08f-4109-8486-d5c6a331660a",
+            "readOnly": true,
+            "type": "string"
+          },
+          "$ref": {
+            "description": "The URI of the corresponding Group resource to which the user belongs",
+            "example": "https://example.com/v2/Groups/e9e30dba-f08f-4109-8486-d5c6a331660a",
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          }
+        },
+        "readOnly": true,
+        "type": "object"
+      },
+      "UserListMedia": {
+        "description": "SCIM 2 User list response",
+        "properties": {
+          "resources": {
+            "description": "A list of returned users",
+            "items": {
+              "$ref": "#/components/schemas/UserMedia"
+            },
+            "type": "array"
+          },
+          "totalResults": {
+            "description": "The total number of results returned by the list or query operation",
+            "format": "int32",
+            "type": "integer"
+          },
+          "itemsPerPage": {
+            "description": "The number of resources returned in a list  response page",
+            "format": "int32",
+            "type": "integer"
+          },
+          "startIndex": {
+            "description": "The 1-based index of the first result in the current set of list results",
+            "format": "int32",
+            "type": "integer"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MetaMedia"
+          },
+          "externalId": {
+            "description": "The SCIM resource external identifier",
+            "type": "string"
+          },
+          "id": {
+            "description": "The unique identifier of the SCIM resource",
+            "type": "string"
+          },
+          "schemas": {
+            "description": "The SCIM resource schema URIs",
+            "items": {
+              "description": "The SCIM resource schema URIs",
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "basic_auth": {
+        "description": "The HTTP Basic authentication scheme. The 'Authorization' header is formed using 'Basic ' + base64Encode(client_id + ':' + client_secret)",
+        "scheme": "basic",
+        "type": "http"
+      },
+      "admin": {
+        "bearerFormat": "JWT",
+        "description": "A Bearer token created from OAuth2 client having an admin scope",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "Omnissa Identity Service API endpoints used in authentication flows"
+    },
+    {
+      "name": "oauth2",
+      "description": "Endpoints defined by OAuth 2.0. For more information, check the specification: https://www.rfc-editor.org/rfc/rfc6749."
+    },
+    {
+      "name": "oidc",
+      "description": "OpenID Connect endpoints. For more information, check the specification: https://openid.net/specs/openid-connect-core-1_0.html."
+    },
+    {
+      "name": "administration",
+      "description": "Omnissa Identity Service API management endpoints"
+    },
+    {
+      "name": "oauth2Clients",
+      "description": "Endpoints for managing OAuth 2.0 clients"
+    },
+    {
+      "name": "identityProviders",
+      "description": "Endpoints for operations with identity providers"
+    },
+    {
+      "name": "samlSpMetadata",
+      "description": "Endpoints to fetch SAML metadata for a service provider (SP)"
+    },
+    {
+      "name": "directories",
+      "description": "Endpoints for managing directory configurations"
+    },
+    {
+      "name": "sync-client",
+      "description": "Endpoints for directory sync client operations"
+    },
+    {
+      "name": "scim2",
+      "description": "Omnissa Identity Service API Endpoints for SCIM 2.0 operations"
+    },
+    {
+      "name": "groups",
+      "description": "Endpoints for Group SCIM operations based on the SCIM specification: https://www.rfc-editor.org/rfc/rfc7644"
+    },
+    {
+      "name": "me",
+      "description": "Endpoints for Me SCIM operations based on the SCIM specification: https://www.rfc-editor.org/rfc/rfc7644"
+    },
+    {
+      "name": "users",
+      "description": "Endpoints for User SCIM operations based on the SCIM specification: https://www.rfc-editor.org/rfc/rfc7644"
+    }
+  ]
+}
