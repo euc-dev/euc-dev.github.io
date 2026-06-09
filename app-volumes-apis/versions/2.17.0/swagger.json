@@ -1,0 +1,2139 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2.17.0",
+    "title": "App Volumes API"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "Sessions",
+      "description": "Manage authorized API sessions"
+    },
+    {
+      "name": "AppStacks",
+      "description": "Perform various operations on AppStacks"
+    },
+    {
+      "name": "Writable Volumes",
+      "description": "Perform various operations on Writable Volumes"
+    },
+    {
+      "name": "Operating Systems",
+      "description": "Retrieve supported operating systems"
+    },
+    {
+      "name": "System Activity",
+      "description": "Retrieve the activity logs to view system activity"
+    },
+    {
+      "name": "Version",
+      "description": "Retrieve version of App Volumes Manager"
+    }
+  ],
+  "definitions": {
+    "ServerError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "description": "Server Error.",
+          "example": "Server Error"
+        },
+        "detail": {
+          "type": "string",
+          "description": "Details of error. Exact error format subject to change depending on type of error.",
+          "example": "Unexpected server error."
+        }
+      }
+    },
+    "UnauthorizedError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "description": "Session expired. Create a session using and make the request with the _session_id cookie.",
+          "example": "Session expired. Please login again."
+        }
+      }
+    },
+    "ActivityRecord": {
+      "type": "object",
+      "properties": {
+        "source_id": {
+          "type": "integer",
+          "description": "The source record ID."
+        },
+        "source_type": {
+          "type": "string",
+          "description": "Type of the source record.",
+          "example": "User"
+        },
+        "source_url": {
+          "type": "string",
+          "description": "When available, URL to the source record in App Volumes Manager UI.",
+          "example": "/directory#/Users/1"
+        },
+        "source_name": {
+          "type": "string",
+          "description": "Intended as human readable name for the source record.",
+          "example": "Administrator"
+        },
+        "target_id": {
+          "type": "integer",
+          "description": "The target record ID."
+        },
+        "target_type": {
+          "type": "string",
+          "description": "Type of the target record.",
+          "example": "Snapvol"
+        },
+        "target_url": {
+          "type": "string",
+          "description": "When available, URL to the target record in App Volumes Manager UI.",
+          "example": "/directory#/Users/1"
+        },
+        "target_name": {
+          "type": "string",
+          "description": "Intended as human readable name for the target record.",
+          "example": "Administrator"
+        },
+        "target_description": {
+          "type": "string",
+          "description": "Descriptive text for the target record.",
+          "example": "Administrator"
+        },
+        "action": {
+          "type": "string",
+          "description": "Description of the event.",
+          "example": "Assign"
+        },
+        "log": {
+          "type": "string",
+          "description": "Event result.",
+          "example": "Success"
+        },
+        "event_time": {
+          "type": "string",
+          "description": "When did the event happened.",
+          "example": "2000-01-01 12:00:00 -0700"
+        },
+        "event_time_human": {
+          "type": "string",
+          "description": "Event timestamp human readable format.",
+          "example": "January 1, 2000 12:00PM"
+        },
+        "admin_user_upn": {
+          "type": "string",
+          "description": "Down-level login name of the admin user.",
+          "example": "DOMAIN\\Administrator"
+        },
+        "admin_user_name": {
+          "type": "string",
+          "description": "Name the admin user.",
+          "example": "Administrator"
+        },
+        "admin_user_url": {
+          "type": "string",
+          "description": "When available, URL to the admin user record in App Volumes Manager UI.",
+          "example": "/directory#/Users/2"
+        }
+      }
+    },
+    "ActivityRecords": {
+      "description": "A collection of audit records.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ActivityRecord"
+      }
+    },
+    "AssignmentsArray": {
+      "type": "object",
+      "properties": {
+        "entity_type": {
+          "type": "string",
+          "enum": [
+            "OrgUnit",
+            "Group",
+            "User",
+            "Computer"
+          ],
+          "description": "Type of the entity can be either organizational unit, group, user or computer.",
+          "example": "Group"
+        },
+        "path": {
+          "type": "string",
+          "description": "Active Directory path of the entity.",
+          "example": "CN=test1,CN=Users,DC=test,DC=local"
+        }
+      }
+    },
+    "AppstacksAssignment": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the target as HTML link.",
+          "example": "<a href=\"/directory#/Users/1\" title=\"DOMAIN\\jdoe\">DOMAIN\\jdoe</a>"
+        },
+        "entity_type": {
+          "type": "string",
+          "description": "Type of target.",
+          "example": "user"
+        },
+        "mount_prefix": {
+          "type": "string",
+          "description": "Mount prefix for the assignment.",
+          "example": "compu"
+        },
+        "unmount_computer_assignments": {
+          "type": "string",
+          "description": "Unmount computer assignments.",
+          "example": true
+        }
+      }
+    },
+    "AppstacksAssignments": {
+      "title": "AppStackAssignments",
+      "description": "A collection of assignments for an AppStack.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/AppstacksAssignment"
+      }
+    },
+    "AppStacks": {
+      "title": "AppStacks",
+      "description": "A collection of AppStacks.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/AppStackForIndex"
+      }
+    },
+    "AppStackForIndex": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The AppStack ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The AppStack name.",
+          "example": "zippertool"
+        },
+        "name_html": {
+          "type": "string",
+          "description": "HTML safe version of name.",
+          "example": "zippertool"
+        },
+        "path": {
+          "type": "string",
+          "description": "The AppStack path.",
+          "example": "cloudvolumes/apps"
+        },
+        "datastore_name": {
+          "type": "string",
+          "description": "Datastore name of the AppStack.",
+          "example": "data.1"
+        },
+        "status": {
+          "type": "string",
+          "description": "The AppStack status.",
+          "example": "enabled"
+        },
+        "created_at": {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        "created_at_human": {
+          "$ref": "#/definitions/CreatedAtHuman"
+        },
+        "mounted_at": {
+          "$ref": "#/definitions/AppStackMountedAt"
+        },
+        "mounted_at_human": {
+          "$ref": "#/definitions/AppStackMountedAtHuman"
+        },
+        "mount_count": {
+          "$ref": "#/definitions/AppStackMountCount"
+        },
+        "size_mb": {
+          "type": "integer",
+          "description": "The AppStack size.",
+          "example": 78
+        },
+        "template_version": {
+          "type": "string",
+          "description": "The AppStack template version.",
+          "example": "2.10.0.709"
+        },
+        "assignments_total": {
+          "type": "integer",
+          "description": "The number of assignments for the AppStack.",
+          "example": 1
+        },
+        "attachments_total": {
+          "type": "integer",
+          "description": "The number of times the AppStack was attached.",
+          "example": 1
+        },
+        "attachment_limit": {
+          "type": "integer",
+          "description": "The attachment limit of the AppStack.",
+          "example": 10
+        }
+      }
+    },
+    "AppStack": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "name_html",
+        "path",
+        "datastore_name",
+        "filename",
+        "file_location",
+        "description",
+        "status",
+        "created_at",
+        "created_at_human",
+        "mounted_at",
+        "mounted_at_human",
+        "size_mb",
+        "template_version",
+        "mount_count",
+        "assignments_total",
+        "attachments_total",
+        "location_count",
+        "application_count",
+        "application_icons",
+        "volume_guid",
+        "template_file_name",
+        "agent_version",
+        "capture_version",
+        "primordial_os_id",
+        "primordial_os_name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The AppStack ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The AppStack name.",
+          "example": "zippertool"
+        },
+        "name_html": {
+          "type": "string",
+          "description": "HTML safe version of name.",
+          "example": "zippertool"
+        },
+        "path": {
+          "type": "string",
+          "description": "The AppStack path.",
+          "example": "cloudvolumes/apps"
+        },
+        "datastore_name": {
+          "type": "string",
+          "description": "Datastore name of the AppStack.",
+          "example": "data.1"
+        },
+        "filename": {
+          "type": "string",
+          "description": "Filename of the AppStack.",
+          "example": "zippertool.vmdk"
+        },
+        "file_location": {
+          "type": "string",
+          "description": "File location of the AppStack.",
+          "example": "[data.1] cloudvolumes/apps/zippertool.vmdk"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the AppStack.",
+          "example": "Archive tool"
+        },
+        "status": {
+          "type": "string",
+          "description": "The AppStack status.",
+          "example": "enabled"
+        },
+        "created_at": {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        "created_at_human": {
+          "$ref": "#/definitions/CreatedAtHuman"
+        },
+        "mounted_at": {
+          "$ref": "#/definitions/AppStackMountedAt"
+        },
+        "mounted_at_human": {
+          "$ref": "#/definitions/AppStackMountedAtHuman"
+        },
+        "mount_count": {
+          "$ref": "#/definitions/AppStackMountCount"
+        },
+        "size_mb": {
+          "type": "integer",
+          "description": "The AppStack size.",
+          "example": 78
+        },
+        "template_version": {
+          "type": "string",
+          "description": "The AppStack template version.",
+          "example": "2.10.0.709"
+        },
+        "assignments_total": {
+          "type": "integer",
+          "description": "The number of assignments for the AppStack.",
+          "example": 1
+        },
+        "attachments_total": {
+          "type": "integer",
+          "description": "The number of times the AppStack was attached.",
+          "example": 1
+        },
+        "attachment_limit": {
+          "type": "integer",
+          "description": "The attachment limit for the AppStack.",
+          "example": 10
+        },
+        "location_count": {
+          "type": "integer",
+          "description": "The number of locations where the AppStack is replicated.",
+          "example": 1
+        },
+        "application_count": {
+          "type": "integer",
+          "description": "The number of applications in the AppStack.",
+          "example": 1
+        },
+        "application_icons": {
+          "type": "array",
+          "description": "The applications icons of the AppStack.",
+          "items": {
+            "type": "string",
+            "description": "Path to icon.",
+            "example": "/snapvols/9/zippertool.ico"
+          }
+        },
+        "volume_guid": {
+          "type": "string",
+          "description": "The volume GUID of the AppStack.",
+          "example": "{9b1b40b0-e2f8-4fe6-b743-c55be9c2e000}"
+        },
+        "template_file_name": {
+          "type": "string",
+          "description": "The template file name of the AppStack.",
+          "example": "[data.1] cloudvolumes/app_templates/template.vmdk"
+        },
+        "agent_version": {
+          "type": "string",
+          "description": "The agent version of the AppStack.",
+          "example": "2.14.0.0"
+        },
+        "capture_version": {
+          "type": "string",
+          "description": "The capture version of the AppStack.",
+          "example": "2.10.0.0"
+        },
+        "primordial_os_id": {
+          "type": "integer",
+          "description": "The operating system id of the AppStack.",
+          "example": 4
+        },
+        "primordial_os_name": {
+          "type": "string",
+          "description": "The operating system name of the AppStack.",
+          "example": "Windows 8.1 (x64)"
+        },
+        "oses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OperatingSystem"
+          },
+          "description": "List of operating systems compatible with the AppStack."
+        },
+        "parent_snapvol": {
+          "type": "string",
+          "description": "The parent snapvol of the AppStack as HTML link.",
+          "example": "<a href=\"/volumes#/AppStacks/1\" title=\"\">zippertool</a>"
+        },
+        "provisioning_duration": {
+          "type": "string",
+          "description": "The provisioning duration of the AppStack.",
+          "example": "3 minutes"
+        },
+        "provisioning_since": {
+          "type": "string",
+          "description": "The time elapsed since provisioning started for the AppStack.",
+          "example": "Mar 06 2018"
+        },
+        "provisioning_computer": {
+          "type": "string",
+          "description": "The provisioning computer for the AppStack as HTML link.",
+          "example": "<a href=\"/directory#/Computers/1\" title=\"Compu1\">DOMAIN\\Compu1</a>"
+        }
+      }
+    },
+    "WritableVolumeForIndex": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "name_html",
+        "title",
+        "title_html",
+        "owner",
+        "link",
+        "owner_name",
+        "owner_type",
+        "owner_upn",
+        "owner_upn_html",
+        "owner_object_guid",
+        "created_at",
+        "created_at_human",
+        "updated_at",
+        "updated_at_human",
+        "mounted_at",
+        "mounted_at_human",
+        "mount_count",
+        "attached",
+        "status",
+        "size_mb",
+        "free_mb",
+        "total_mb",
+        "percent_available",
+        "template_version",
+        "filename",
+        "path",
+        "datastore_name",
+        "volume_guid",
+        "datastore_host",
+        "error_action",
+        "busy",
+        "state"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string",
+          "example": "SNAPVOLUMES\test_user",
+          "description": "Name of the Writable Volume."
+        },
+        "name_html": {
+          "type": "string",
+          "example": "SNAPVOLUMES\test_user",
+          "description": "HTML escaped name of the Writable Volume."
+        },
+        "title": {
+          "type": "string",
+          "example": "SNAPVOLUMES\test_user",
+          "description": "Alternative name derived from entity that owns the Writable Volume."
+        },
+        "title_html": {
+          "type": "string",
+          "example": "SNAPVOLUMES\test_user",
+          "description": "HTML escaped alternative name of the Writable Volume."
+        },
+        "owner": {
+          "type": "string",
+          "description": "HTML hyperlink to owner entity.",
+          "example": "<a href=\\\"/directory#/Users/2\\\" title=\\\"test_user\\\">TESTDOMAIN\\\\test_user</a>"
+        },
+        "link": {
+          "type": "string",
+          "example": "/directory#/Users/2",
+          "description": "URL to owner entity HTML resource."
+        },
+        "owner_name": {
+          "type": "string",
+          "example": "TestUser",
+          "description": "Owner of Writable Volume."
+        },
+        "owner_type": {
+          "type": "string",
+          "example": "User",
+          "description": "Entity type of the Writable Volume owner."
+        },
+        "owner_upn": {
+          "type": "string",
+          "example": "SNAPVOLUMES\test_user",
+          "description": "Down-level login name of the Writable Volume owner."
+        },
+        "owner_upn_html": {
+          "type": "string",
+          "example": "SNAPVOLUMES\test_user",
+          "description": "HTML escaped down-level login name of the Writable Volume owner."
+        },
+        "owner_object_guid": {
+          "type": "string",
+          "example": "8da04bfa-bbbe-45c3-9cbf-2d3d03897b84",
+          "description": "Object-Guid of the Writable Volume owner."
+        },
+        "created_at": {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        "created_at_human": {
+          "$ref": "#/definitions/CreatedAtHuman"
+        },
+        "updated_at": {
+          "$ref": "#/definitions/UpdatedAt"
+        },
+        "updated_at_human": {
+          "$ref": "#/definitions/UpdatedAtHuman"
+        },
+        "mounted_at": {
+          "$ref": "#/definitions/WritableMountedAt"
+        },
+        "mounted_at_human": {
+          "$ref": "#/definitions/WritableMountedAtHuman"
+        },
+        "mount_count": {
+          "$ref": "#/definitions/WritableMountCount"
+        },
+        "attached": {
+          "type": "string",
+          "enum": [
+            "Attached",
+            "Detached"
+          ],
+          "description": "Whether the Writable Volume is currently attached."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "missing",
+            "unprovisioned",
+            "provisioning",
+            "reserved",
+            "orphaned",
+            "legacy",
+            "limit_reached",
+            "enabled",
+            "failed",
+            "creating",
+            "canceled",
+            "disabled",
+            "unreachable"
+          ],
+          "description": "Status of the Writable Volume."
+        },
+        "size_mb": {
+          "type": "integer",
+          "description": "Specified size of the Writable Volume.",
+          "example": 312
+        },
+        "free_mb": {
+          "type": "integer",
+          "example": 0,
+          "description": "Actual free space on the Writable Volume."
+        },
+        "total_mb": {
+          "type": "integer",
+          "example": 0,
+          "description": "Actual total space on the Writable Volume - can differ from size_mb due to datastore file formatting and growth operations."
+        },
+        "percent_available": {
+          "type": "string",
+          "description": "Percent of available space on the Writable Volume.",
+          "example": "Unknown"
+        },
+        "template_version": {
+          "type": "string",
+          "description": "Version of Writable Template used to create the Writable Volume.",
+          "example": "2.10.0.709"
+        },
+        "filename": {
+          "type": "string",
+          "example": "snapvolumes_test_user_15.vmdk",
+          "description": "Filename of the Writable Volume."
+        },
+        "path": {
+          "type": "string",
+          "example": "cloudvolumes/writable",
+          "description": "Path to the Writable Volume file."
+        },
+        "datastore_name": {
+          "type": "string",
+          "example": "SSD Disk Array RAID8",
+          "description": "Datastore the Writable Volume resides on."
+        },
+        "volume_guid": {
+          "type": "string",
+          "example": "volumeguid-8-volumeguid",
+          "description": "GUID assigned to the Writable Volume on the datastore."
+        },
+        "datastore_host": {
+          "type": "string",
+          "description": "Datastore host that the Writable Volume resides on.",
+          "example": "null"
+        },
+        "error_action": {
+          "type": "string",
+          "description": "Whether failures related to the Writable Volume will prevent application related attachments and whether they alert the user."
+        },
+        "busy": {
+          "$ref": "#/definitions/WritableBusy"
+        },
+        "state": {
+          "$ref": "#/definitions/WritableState"
+        }
+      }
+    },
+    "WritableVolume": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "name_html",
+        "title",
+        "title_html",
+        "owner",
+        "link",
+        "owner_name",
+        "owner_type",
+        "owner_upn",
+        "owner_upn_html",
+        "description",
+        "created_at",
+        "created_at_human",
+        "updated_at",
+        "updated_at_human",
+        "mounted_at",
+        "mounted_at_human",
+        "mounted_on",
+        "attached",
+        "status",
+        "block_login",
+        "mount_prefix",
+        "defer_create",
+        "size_mb",
+        "template_version",
+        "datastore_name",
+        "machine_manager_host",
+        "machine_manager_type",
+        "path",
+        "filename",
+        "file_location",
+        "mount_count",
+        "template_file_name",
+        "protected",
+        "free_mb",
+        "total_mb",
+        "percent_available",
+        "can_expand",
+        "primordial_os_id",
+        "primordial_os_name",
+        "oses",
+        "busy",
+        "state"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the Writable Volume.",
+          "example": "SNAPVOLUMES\test_user"
+        },
+        "name_html": {
+          "type": "string",
+          "description": "HTML escaped name of the Writable Volume.",
+          "example": "SNAPVOLUMES\test_user"
+        },
+        "title": {
+          "type": "string",
+          "description": "Alternative name derived from entity that owns the Writable Volume.",
+          "example": "SNAPVOLUMES\test_user"
+        },
+        "title_html": {
+          "type": "string",
+          "description": "HTML escaped alternative name of the Writable Volume.",
+          "example": "SNAPVOLUMES\test_user"
+        },
+        "owner": {
+          "type": "string",
+          "description": "HTML hyperlink to owner entity in.",
+          "example": "<a href=\\\"/directory#/Users/2\\\" title=\\\"test_user\\\">TESTDOMAIN\\\\test_user</a>"
+        },
+        "link": {
+          "type": "string",
+          "description": "URL to owner entity HTML resource.",
+          "example": "/directory#/Users/2"
+        },
+        "owner_name": {
+          "type": "string",
+          "example": "TestUser",
+          "description": "Owner name of the Writable Volume."
+        },
+        "owner_type": {
+          "type": "string",
+          "example": "User",
+          "description": "Entity type of the owner of the Writable Volume."
+        },
+        "owner_upn": {
+          "type": "string",
+          "description": "Down-level login name of owner of the Writable Volume.",
+          "example": "SNAPVOLUMES\test_user"
+        },
+        "owner_upn_html": {
+          "type": "string",
+          "description": "HTML escaped down-level login name of owner of the Writable Volume.",
+          "example": "SNAPVOLUMES\test_user"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description text for the Writable Volume.",
+          "example": "My writable volume"
+        },
+        "created_at": {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        "created_at_human": {
+          "$ref": "#/definitions/CreatedAtHuman"
+        },
+        "updated_at": {
+          "$ref": "#/definitions/UpdatedAt"
+        },
+        "updated_at_human": {
+          "$ref": "#/definitions/UpdatedAtHuman"
+        },
+        "mounted_at": {
+          "$ref": "#/definitions/WritableMountedAt"
+        },
+        "mounted_at_human": {
+          "$ref": "#/definitions/WritableMountedAtHuman"
+        },
+        "mounted_on": {
+          "type": "string",
+          "description": "Machine that the Writable Volume is currently mounted to.",
+          "example": "Machine <DESKTOP-VM123> (#{1234567812345678})"
+        },
+        "mount_count": {
+          "$ref": "#/definitions/WritableMountCount"
+        },
+        "attached": {
+          "type": "string",
+          "enum": [
+            "Attached",
+            "Detached"
+          ],
+          "description": "Whether the Writable Volume is currently attached."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "missing",
+            "unprovisioned",
+            "provisioning",
+            "reserved",
+            "orphaned",
+            "legacy",
+            "limit_reached",
+            "enabled",
+            "failed",
+            "creating",
+            "canceled",
+            "disabled",
+            "unreachable"
+          ],
+          "description": "Status of the Writable Volume.",
+          "example": "enabled"
+        },
+        "block_login": {
+          "type": "boolean",
+          "description": "Whether failures related to the Writable Volume will prevent User login.",
+          "example": true
+        },
+        "error_action": {
+          "type": "string",
+          "enum": [
+            "",
+            "continue_silently",
+            "continue_alert",
+            "disable_and_alert",
+            "disable_and_alert_on_error"
+          ],
+          "description": "Whether failures related to the Writable Volume will prevent application related attachments and whether they alert the user. Must be blank if block_login=1."
+        },
+        "mount_prefix": {
+          "type": "string",
+          "description": "The Writable Volume will mount only on computers whose name begins with the mount prefix.",
+          "example": "DESKTOP"
+        },
+        "defer_create": {
+          "type": "boolean",
+          "description": "Whether the Writable Volume was created with it's associated disk being created immediately or with background job.",
+          "example": true
+        },
+        "size_mb": {
+          "type": "integer",
+          "description": "Specified size of the Writable Volume."
+        },
+        "template_version": {
+          "type": "string",
+          "description": "Version of Writable Template used to create the Writable Volume.",
+          "example": "2.10.0.709"
+        },
+        "datastore_name": {
+          "type": "string",
+          "description": "Datastore the Writable Volume resides on.",
+          "example": "SSD Disk Array RAID8"
+        },
+        "machine_manager_host": {
+          "type": "string",
+          "description": "Hypervisor host associated with the Writable Volume.",
+          "example": "0.0.0.0"
+        },
+        "machine_manager_type": {
+          "type": "string",
+          "description": "Type of hypervisor associated with the Writable Volume.",
+          "example": "Machine Manager"
+        },
+        "path": {
+          "type": "string",
+          "description": "Path to the Writable Volume file.",
+          "example": "cloudvolumes/writable"
+        },
+        "filename": {
+          "type": "string",
+          "description": "Filename of the Writable Volume.",
+          "example": "snapvolumes_test_user_15.vmdk"
+        },
+        "file_location": {
+          "type": "string",
+          "description": "Formatted display of the Writable Volume's location.",
+          "example": "[SSD Disk Array RAID8] cloudvolumes/writable/snapvolumes_test_user_15.vmdk"
+        },
+        "template_file_name": {
+          "type": "string",
+          "description": "File used to generate the Writable Volume.",
+          "example": "[SSD Disk Array RAID8] cloudvolumes/writable_templates/template_uia_only_persistent.vmdk"
+        },
+        "protected": {
+          "type": "boolean",
+          "description": "Whether the Writable Volume is has delete protection set on datastore.",
+          "example": true
+        },
+        "free_mb": {
+          "type": "integer",
+          "description": "Actual free space on the Writable Volume.",
+          "example": 0
+        },
+        "total_mb": {
+          "type": "integer",
+          "description": "Actual total space on the Writable Volume; can differ from size_mb due to datastore file formatting and growth operations.",
+          "example": 0
+        },
+        "percent_available": {
+          "type": "string",
+          "description": "Percent of available space on Writable Volume.",
+          "example": "Unknown"
+        },
+        "can_expand": {
+          "type": "boolean",
+          "description": "Whether the Writable Volume is eligible for growth operations.",
+          "example": true
+        },
+        "storage_group": {
+          "type": "string",
+          "description": "Storage Group of the Writable Volume if it belongs to one.",
+          "example": "Storage group 1"
+        },
+        "storage_group_members": {
+          "type": "string",
+          "description": "Number of members in the Storage Group of the Writable Volume if it belongs to one.",
+          "example": 2
+        },
+        "primordial_os_id": {
+          "type": "integer",
+          "description": "ID of the base operating system.",
+          "example": 15
+        },
+        "primordial_os_name": {
+          "type": "string",
+          "description": "Name of the base operating system.",
+          "example": "Windows 8.1 (x64)"
+        },
+        "oses": {
+          "title": "WritableOperatingSystems",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OperatingSystem"
+          },
+          "description": "List of operating systems compatible with the Writable Volume.",
+          "minItems": 1
+        },
+        "busy": {
+          "$ref": "#/definitions/WritableBusy"
+        },
+        "state": {
+          "$ref": "#/definitions/WritableState"
+        }
+      }
+    },
+    "OperatingSystem": {
+      "description": "Operating system record.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "ID of the operating system."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the operating system.",
+          "example": "Windows 8.1 (x64)"
+        }
+      }
+    },
+    "OperatingSystemRecord": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID of the record."
+        },
+        "major_version": {
+          "type": "string",
+          "description": "Major version of operating system.",
+          "example": "10"
+        },
+        "minor_version": {
+          "type": "string",
+          "description": "Minor version of operating system.",
+          "example": "0"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the operating system.",
+          "example": "Windows 10 (x64)"
+        },
+        "proc_arch": {
+          "type": "string",
+          "description": "Process architecture.",
+          "example": "9"
+        },
+        "product_type": {
+          "type": "string",
+          "description": "Product type.",
+          "example": "1"
+        },
+        "created_at": {
+          "type": "string",
+          "description": "Creation time of the operating system record.",
+          "example": "2018-03-29T23:47:32Z"
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "Last update time of the operating system record.",
+          "example": "2018-03-29T23:47:32Z"
+        }
+      }
+    },
+    "OperatingSystemRecords": {
+      "description": "A collection of operating system records.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/OperatingSystemRecord"
+      }
+    },
+    "VersionRecord": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "The full product version of App Volumes Manager.",
+          "example": "2.17.0 (development)"
+        },
+        "internal": {
+          "type": "string",
+          "description": "version",
+          "example": "2.17.0"
+        },
+        "copyright": {
+          "type": "string",
+          "description": "Product copyright year",
+          "example": "Copyright 2011-2019"
+        },
+        "configured": {
+          "type": "boolean",
+          "description": "Tells if App Volumes Manager is configured or not."
+        },
+        "uptime": {
+          "type": "string",
+          "description": "The time since when App Volumes Manager service is running.",
+          "example": "less than a minute"
+        },
+        "database_uuid": {
+          "type": "string",
+          "description": "The database identifier",
+          "example": "654723bc-09de-4d9b-806c-9cd1d231a0de"
+        }
+      }
+    },
+    "CreatedAt": {
+      "type": "string",
+      "description": "Creation timestamp.",
+      "example": "2016-11-23 13:10:13 -0800"
+    },
+    "CreatedAtHuman": {
+      "type": "string",
+      "description": "Creation timestamp in human readable format.",
+      "example": "Nov 23 2016"
+    },
+    "UpdatedAt": {
+      "type": "string",
+      "description": "Timestamp of last update.",
+      "example": "2016-11-23 13:10:13 -0800"
+    },
+    "UpdatedAtHuman": {
+      "type": "string",
+      "description": "Timestamp of last update in human readable format.",
+      "example": "Nov 23 2016"
+    },
+    "AppStackMountedAt": {
+      "type": "string",
+      "description": "Timestamp of the most recent AppStack mount.",
+      "example": "2016-11-23 13:10:13 -0800"
+    },
+    "AppStackMountedAtHuman": {
+      "type": "string",
+      "description": "Timestamp of the most recent AppStack mount in human readable format.",
+      "example": "Nov 23 2016"
+    },
+    "AppStackMountCount": {
+      "type": "integer",
+      "description": "The number of computers where the AppStack is currently mounted.",
+      "example": 0
+    },
+    "WritableBusy": {
+      "type": "boolean",
+      "description": "Whether the Writable is busy with a current backup operation.",
+      "example": false
+    },
+    "WritableMountedAt": {
+      "type": "string",
+      "description": "Timestamp of when the Writable Volume was mounted.",
+      "example": "2016-11-23 13:10:13 -0800"
+    },
+    "WritableMountedAtHuman": {
+      "type": "string",
+      "description": "Timestamp of when the Writable Volume was mounted in human readable format.",
+      "example": "Nov 23 2016"
+    },
+    "WritableMountCount": {
+      "type": "integer",
+      "description": "The number of computers where the AppStack is currently mounted.",
+      "example": 0
+    },
+    "WritableState": {
+      "type": "string",
+      "description": "The current backup operation state if present.",
+      "enum": [
+        "Moving",
+        "Backing Up",
+        "Restoring"
+      ],
+      "example": "Moving"
+    }
+  },
+  "parameters": {
+    "AppStackID": {
+      "name": "id",
+      "description": "AppStack ID.",
+      "in": "path",
+      "type": "integer",
+      "required": true,
+      "format": "int64"
+    },
+    "WritableVolumeID": {
+      "name": "id",
+      "description": "Writable Volume ID.",
+      "in": "path",
+      "type": "integer",
+      "required": true,
+      "format": "int64"
+    }
+  },
+  "paths": {
+    "/cv_api/activity_logs": {
+      "get": {
+        "summary": "Get activity logs",
+        "tags": [
+          "System Activity"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "admin_upn",
+            "description": "The down-level login name of the user that performed the activity.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of activity logs.",
+            "schema": {
+              "title": "GetActivitiesSuccess",
+              "type": "object",
+              "properties": {
+                "actlogs": {
+                  "title": "ActivityLog",
+                  "type": "object",
+                  "properties": {
+                    "logs": {
+                      "$ref": "#/definitions/ActivityRecords"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/cv_api/appstacks": {
+      "get": {
+        "summary": "Get AppStacks",
+        "tags": [
+          "AppStacks"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "operating_system_id",
+            "description": "The ID of an operating system to filter with.",
+            "type": "integer",
+            "required": false
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of AppStacks.",
+            "schema": {
+              "$ref": "#/definitions/AppStacks"
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/cv_api/appstacks/{id}": {
+      "get": {
+        "summary": "Get the details of an AppStack",
+        "tags": [
+          "AppStacks"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/AppStackID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "AppStack details.",
+            "schema": {
+              "title": "GetAppStackSuccess",
+              "type": "object",
+              "properties": {
+                "appstack": {
+                  "$ref": "#/definitions/AppStack"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "AppStack not found.",
+            "schema": {
+              "title": "GetAppStackNotFoundError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Unable to locate the Volume ID 5"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/cv_api/appstacks/{id}/assignments": {
+      "get": {
+        "summary": "Get AppStack assignments",
+        "tags": [
+          "AppStacks"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/AppStackID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The AppStack and assignment details.",
+            "schema": {
+              "$ref": "#/definitions/AppstacksAssignments"
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "AppStack not found."
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/cv_api/assignments": {
+      "post": {
+        "summary": "Assign or unassign AppStacks to a target",
+        "tags": [
+          "AppStacks"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "title": "AssignmentRequestBody",
+              "required": [
+                "id",
+                "assignments",
+                "action_type"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "The ID of the AppStack to assign or unassign."
+                },
+                "action_type": {
+                  "type": "string",
+                  "enum": [
+                    "assign",
+                    "unassign"
+                  ],
+                  "description": "Specifies whether to assign or unassign the assignment entities.",
+                  "example": "unassign"
+                },
+                "assignments": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/AssignmentsArray"
+                  }
+                },
+                "mount_prefix": {
+                  "type": "string",
+                  "description": "Prefix for computer names. Assignments only apply to computers whose name begins with the prefix.",
+                  "example": "DESK"
+                },
+                "rtime": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Whether to perform the operation in real-time. Users must be logged into a VM to have AppStacks assigned immediately. Unassigning an AppStack while it is in use is not recommended, please ensure the AppStack is no longer in use.",
+                  "example": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Result of assignment/unassignment. Ignored assignments/unassignments are indicated as warnings.",
+            "schema": {
+              "title": "AssignmentSuccess",
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "string",
+                  "example": "Unassigned 1 AppStack(s)"
+                },
+                "successes": {
+                  "type": "array",
+                  "example": [
+                    "Unassigned 1 AppStack(s)",
+                    "Unassigned AppStack"
+                  ]
+                },
+                "warning": {
+                  "type": "string",
+                  "example": "Unable to find 2 AppStacks"
+                },
+                "warnings": {
+                  "type": "array",
+                  "example": [
+                    "Unable to find AppStacks",
+                    "Unable to find AppStacks"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to assign/unassign due to invalid parameters.",
+            "schema": {
+              "title": "AssignmentBadRequestError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "No entities provided"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "Unexpected failure.",
+            "schema": {
+              "title": "AssignmentServerError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Assigned AppStacks failed"
+                },
+                "errors": {
+                  "type": "array",
+                  "example": [
+                    "Unable to save assignment of \"User <SNAPVOLUMES\\test_user-45>\" to \"Volume-55\"",
+                    "Unable to save assignment of \"User <SNAPVOLUMES\\test_user-46>\" to \"Volume-56\""
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cv_api/operating_systems": {
+      "get": {
+        "summary": "Get supported operating systems",
+        "tags": [
+          "Operating Systems"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of supported operating systems.",
+            "schema": {
+              "$ref": "#/definitions/OperatingSystemRecords"
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/cv_api/sessions": {
+      "post": {
+        "summary": "Creates an authorized API session",
+        "tags": [
+          "Sessions"
+        ],
+        "description": "Creates an authorized API session. Returns session cookie in the response header.",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "credentials",
+            "description": "Username and password for session to create.",
+            "schema": {
+              "title": "CreateSessionRequestBody",
+              "type": "object",
+              "required": [
+                "username",
+                "password"
+              ],
+              "properties": {
+                "username": {
+                  "description": "Username in down-level login name format of user that is member of configured admin group.",
+                  "type": "string",
+                  "example": "username"
+                },
+                "password": {
+                  "description": "Password corresponding to the username parameter.",
+                  "type": "string",
+                  "example": "goodcomplexpassword"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Session was created.",
+            "headers": {
+              "Set-Cookie": {
+                "type": "string",
+                "description": "Session cookie."
+              }
+            },
+            "schema": {
+              "title": "CreateSessionSuccess",
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "string",
+                  "example": "Ok",
+                  "description": "Result."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad session parameters.",
+            "schema": {
+              "title": "CreateSessionBadRequestError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "User name is required"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes an authorized API session",
+        "tags": [
+          "Sessions"
+        ],
+        "responses": {
+          "200": {
+            "description": "Session was destroyed or does not exist.",
+            "headers": {
+              "Set-Cookie": {
+                "type": "string",
+                "description": "Session cookie."
+              }
+            },
+            "schema": {
+              "title": "DeleteSessionSuccess",
+              "type": "object",
+              "example": {
+                "success": "Destroying session for \"USERNAME\""
+              },
+              "properties": {
+                "success": {
+                  "type": "string",
+                  "example": "Destroying session for \"USERNAME\"",
+                  "description": "Only present if successfully deleted authorized session."
+                },
+                "warning": {
+                  "type": "string",
+                  "example": "No valid session to remove",
+                  "description": "Only present if no authorized session to delete."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/cv_api/version": {
+      "get": {
+        "summary": "Get version details of App Volumes Manager",
+        "tags": [
+          "Version"
+        ],
+        "responses": {
+          "200": {
+            "description": "Get version details.",
+            "schema": {
+              "title": "GetVersionSuccess",
+              "type": "object",
+              "properties": {
+                "version": {
+                  "$ref": "#/definitions/VersionRecord"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/cv_api/writables": {
+      "get": {
+        "summary": "Get Writable Volumes",
+        "tags": [
+          "Writable Volumes"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "volume_guid",
+            "description": "Writable Volume's GUID.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "user_guid",
+            "description": "Writable Volume's owner's Active Directory Object-Guid.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "created_after",
+            "description": "DateTime in ISO 8601 format.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "updated_after",
+            "description": "DateTime in ISO 8601 format.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "min_capacity",
+            "description": "Minimum capacity to filter in MB.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "max_capacity",
+            "description": "Maximum capacity to filter in MB.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "count",
+            "description": "Number of Writable Volumes to limit to in response.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Writable Volumes along with relevant datastore details.",
+            "schema": {
+              "title": "GetWritablesSuccess",
+              "type": "object",
+              "properties": {
+                "datastores": {
+                  "title": "Datastores",
+                  "type": "object",
+                  "properties": {
+                    "total_count": {
+                      "type": "integer",
+                      "description": "Number of Writable Volumes in response.",
+                      "example": 1
+                    },
+                    "warning_count": {
+                      "type": "integer",
+                      "example": 0,
+                      "description": "Number of Writable Volumes with capacity warning."
+                    },
+                    "critical_count": {
+                      "type": "integer",
+                      "example": 0,
+                      "description": "Number of Writable Volumes at critical capacity."
+                    },
+                    "writable": {
+                      "title": "WritableSettings",
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "SSD Disk Array RAID0",
+                          "description": "The configured Writable Volume datastore."
+                        },
+                        "datacenter": {
+                          "type": "string",
+                          "example": "DataCenterAPJ",
+                          "description": "The configured Writable Volume datacenter."
+                        },
+                        "path": {
+                          "type": "string",
+                          "example": "cloudvolumes/writable",
+                          "description": "The configured Writable Volume storage path."
+                        },
+                        "current": {
+                          "type": "string",
+                          "example": "true"
+                        }
+                      }
+                    },
+                    "writable_volumes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/WritableVolumeForIndex"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/cv_api/writables/grow": {
+      "post": {
+        "summary": "Increase size of a given Writable Volume",
+        "tags": [
+          "Writable Volumes"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "plain/text",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Growth settings",
+            "schema": {
+              "title": "GrowWritableRequestBody",
+              "type": "object",
+              "properties": {
+                "size_mb": {
+                  "type": "integer",
+                  "description": "Target size in MB."
+                },
+                "volumes": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "minItems": 1,
+                  "description": "IDs of Writable Volumes to increase size for."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Increase in size successfully requested.",
+            "schema": {
+              "title": "GrowWritableSuccess",
+              "type": "object",
+              "properties": {
+                "successes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": "Successfully expanded Writable Volume XYZ to size 5000MB"
+                  },
+                  "description": "Details for successfully provisioned volumes."
+                },
+                "warnings": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": "Writable Volume XYZ is attached. Make sure you shut down/logoff XYZ."
+                  },
+                  "description": "Details for volumes with warnings."
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": "Error expanding Writable Volume XYZ"
+                  },
+                  "description": "Details for volumes with errors."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request is missing parameters or App Volumes Manager is not properly configured and licensed."
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/cv_api/writables/{id}": {
+      "get": {
+        "produces": [
+          "application/json",
+          "text/plain"
+        ],
+        "summary": "Get a Writable Volume by ID",
+        "tags": [
+          "Writable Volumes"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/WritableVolumeID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the Writable Volume.",
+            "schema": {
+              "title": "GetWritableSuccess",
+              "type": "object",
+              "properties": {
+                "writable": {
+                  "$ref": "#/definitions/WritableVolume"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID missing from request.",
+            "schema": {
+              "title": "GetWritableBadRequestError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Missing parameters",
+                  "description": "Failure details."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Writable Volume was not found."
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Writable Volume",
+        "tags": [
+          "Writable Volumes"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/WritableVolumeID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted the Writable Volume.",
+            "schema": {
+              "title": "DeleteWritableSuccess",
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "string",
+                  "example": "Deleted 1 volume",
+                  "description": "Success details."
+                },
+                "error": {
+                  "type": "string",
+                  "example": "Unable to delete 1 volume",
+                  "description": "Failure details."
+                },
+                "snapvols": {
+                  "title": "WritableVolumeDeleteResults",
+                  "type": "object",
+                  "properties": {
+                    "not_found": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/WritableVolume"
+                      },
+                      "description": "Writable Volumes that were not found."
+                    },
+                    "success": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/WritableVolume"
+                      },
+                      "description": "Writable Volumes that were deleted."
+                    },
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/WritableVolume"
+                      },
+                      "description": "Writable Volumes with errors during deletion attempt."
+                    },
+                    "scheduled": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/WritableVolume"
+                      },
+                      "description": "Writable Volumes that were scheduled for deletion in background."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID missing from request.",
+            "schema": {
+              "title": "DeleteWritableBadRequestError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Missing parameters",
+                  "description": "Failure details."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "put": {
+        "produces": [
+          "text/plain"
+        ],
+        "summary": "Update a Writable Volume by ID",
+        "tags": [
+          "Writable Volumes"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/WritableVolumeID"
+          },
+          {
+            "in": "body",
+            "name": "Update properties",
+            "schema": {
+              "title": "UpdateWritableRequestBody",
+              "type": "object",
+              "required": [
+                "description",
+                "block_login",
+                "mount_prefix",
+                "error_action"
+              ],
+              "properties": {
+                "description": {
+                  "type": "string",
+                  "description": "Description for the Writable Volume.",
+                  "example": "Writable Volume for Administrator"
+                },
+                "error_action": {
+                  "type": "string",
+                  "enum": [
+                    "",
+                    "continue_silently",
+                    "continue_alert",
+                    "disable_and_alert",
+                    "disable_and_alert_on_error"
+                  ],
+                  "description": "Whether failures related to the Writable Volume will prevent application related attachments. Setting \"continue_silently\" will skip attachments and not alert the user. Setting \"continue_alert\" will alert the end user that the writable was not attached. Setting \"disable_and_alert\" will disable all virtualization and display an alert. Setting \"disable_and_alert_on_error\" will disable all virtualization and display an alert only for error cases (conflicts due to multiple logins are not considered an error). Must set as \"\" if a) owner_type is \"Computer\" or b) block_login parameter is set to \"1\"."
+                },
+                "block_login": {
+                  "type": "integer",
+                  "enum": [
+                    0,
+                    1
+                  ],
+                  "description": "Whether failures related to the Writable Volume will prevent User login."
+                },
+                "mount_prefix": {
+                  "type": "string",
+                  "description": "Prefix used to determine whether the Writable Volume should mount to a particular Computer.",
+                  "example": "DESKTOP"
+                },
+                "oses": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "IDs of operating systems the Writable Volume is allowed to mount to."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated the Writable Volume."
+          },
+          "400": {
+            "description": "ID missing from request.",
+            "schema": {
+              "title": "UpdateWritableBadRequestError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Missing parameters",
+                  "description": "Failure details."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Writable Volume was not found."
+          },
+          "500": {
+            "description": "Failed to update the Writable Volume.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    }
+  }
+}

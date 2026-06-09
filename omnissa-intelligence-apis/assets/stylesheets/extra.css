@@ -1,0 +1,65 @@
+/* Theme extras (stub for local builds when repo assets are incomplete). */
+
+.swagger-token-bridge {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border: 1px solid rgba(127, 127, 127, 0.25);
+  border-radius: 0.5rem;
+  background: rgba(127, 127, 127, 0.06);
+}
+
+.swagger-token-bridge > :first-child {
+  margin-top: 0;
+}
+
+.swagger-token-bridge__form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.swagger-token-bridge__field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.swagger-token-bridge__field input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(127, 127, 127, 0.35);
+  border-radius: 0.35rem;
+  background: var(--md-default-bg-color, #fff);
+  color: inherit;
+}
+
+.swagger-token-bridge__actions {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.swagger-token-bridge__actions button {
+  justify-self: start;
+  padding: 0.65rem 1rem;
+  border: 0;
+  border-radius: 0.35rem;
+  background: var(--md-primary-fg-color, #005eb8);
+  color: var(--md-primary-bg-color, #fff);
+  cursor: pointer;
+}
+
+.swagger-token-bridge__actions button:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.swagger-token-bridge__hint,
+.swagger-token-bridge__status {
+  margin: 0;
+}
+
+.swagger-token-bridge__status[data-state="success"] {
+  color: #0f7b0f;
+}
+
+.swagger-token-bridge__status[data-state="error"] {
+  color: #b42318;
+}

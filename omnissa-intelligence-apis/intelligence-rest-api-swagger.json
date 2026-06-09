@@ -1,0 +1,3579 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Omnissa Intelligence REST API",
+    "description": "The Omnissa Intelligence (formerly Workspace ONE Intelligence) V2 API documentation describes how to query and extract data for use in other business intelligence tools. It also helps with building General Data Protection Regulation (GDPR) compliant tools and applications with REST APIs.\n\nA limitation of V1 APIs was they didn't support joining multiple entities. V2 APIs for reports now support JOINS. Attribute names in V2 endpoint requests and responses are fully qualified and are in the format <integration>.<entity>.<attribute_name>. For example: airwatch.application.app_name.",
+    "version": "2.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.{region}.data.workspaceone.com",
+      "variables": {
+        "region": {
+          "default": "sandbox",
+          "description": "As a customer you will need to substitute the host name specific to the region in which your data resides."
+        }
+      }
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "Obtain a JSON Web Token (JWT) using OAuth 2.0 client credentials."
+    },
+    {
+      "name": "Metadata",
+      "description": "Omnissa Intelligence metadata APIs for supported integrations."
+    },
+    {
+      "name": "Metrics",
+      "description": "Omnissa Intelligence metrics APIs for supported integrations."
+    },
+    {
+      "name": "Reports — metadata",
+      "description": "Report Metadata API"
+    },
+    {
+      "name": "Reports",
+      "description": "Omnissa Intelligence Reports APIs"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/oauth/token": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Obtain access token",
+        "description": "Obtain a JSON Web Token using OAuth 2.0 client credentials.\n\nUse the token endpoint from the downloaded service account JSON. The documented flow uses `grant_type` in the query string and Basic authentication, where the username is the clientId and the password is the clientSecret. On the REST APIs page, use the token panel above Swagger UI to enter those service account credentials and automatically populate Bearer auth for the Intelligence APIs. This operation remains documented so the token exchange is visible in the OpenAPI definition. This API call uses the `auth` prefix on the URI; other Intelligence APIs use the `api` prefix.",
+        "operationId": "postOauthToken",
+        "servers": [
+          {
+            "url": "https://auth.{region}.data.workspaceone.com",
+            "variables": {
+              "region": {
+                "default": "sandbox",
+                "description": "Use the host name specific to the region or environment in which your data resides."
+              }
+            }
+          }
+        ],
+        "security": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "HTTP Basic authentication header containing Base64(`clientId:clientSecret`)."
+          },
+          {
+            "name": "grant_type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "client_credentials"
+              ]
+            },
+            "description": "OAuth 2.0 grant type."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Access token response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample Response",
+                    "value": {
+                      "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.<payload-and-signature-truncated>",
+                      "expires_in": 3599,
+                      "iss": "https://auth.{your-environment}",
+                      "jti": "a3a990fb-b5f8-4ed9-afc0-4a671dd5758b",
+                      "nbf": 1559613306,
+                      "scope": "dpa.example.scope.one dpa.example.scope.two",
+                      "token_type": "bearer",
+                      "dpa.org_id": "538f619e-2db4-4f07-974b-efb3e5326116"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/metadata/entities": {
+      "post": {
+        "tags": [
+          "Metadata"
+        ],
+        "summary": "Entities API",
+        "description": "Entities API returns list of all entities . A search-term can be used to filter the entities.",
+        "operationId": "postMetadataEntities",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntitiesQueryRequest"
+              },
+              "examples": {
+                "sample": {
+                  "summary": "Sample Request",
+                  "value": {
+                    "offset": 0,
+                    "page_size": 5,
+                    "search_terms": [
+                      {
+                        "value": "air",
+                        "fields": [
+                          "name"
+                        ],
+                        "operator": "CONTAINS"
+                      }
+                    ],
+                    "sort_ons": [
+                      {
+                        "field": "name",
+                        "order": "ASC"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response includes pagination details and list of entities. Pagination details in response can be referred in [Paging](#/components/schemas/PagingOnlyBody).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedEntityResultsWrapper"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample Response",
+                    "value": {
+                      "data": {
+                        "page_size": 5,
+                        "offset": 0,
+                        "total_count": 25,
+                        "results": [
+                          {
+                            "name": "airwatch.userriskscore",
+                            "label": "User Risk Score",
+                            "description": ""
+                          },
+                          {
+                            "name": "airwatch.userriskscore_timeseries",
+                            "label": "User Risk Score For Timeseries data",
+                            "description": ""
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/v2/metadata/entity/{name}/attributes": {
+      "post": {
+        "tags": [
+          "Metadata"
+        ],
+        "summary": "Attributes API",
+        "description": "\"name\" is \"entity_name\" that can be learned from Entities API which is a required field. If not provided will result in validation error response. ",
+        "operationId": "postMetadataEntityAttributes",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "airwatch.device",
+            "description": "\"name\" is \"entity_name\" that can be learned from Entities API."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttributesQueryRequest"
+              },
+              "examples": {
+                "sample": {
+                  "summary": "Sample Request",
+                  "value": {
+                    "page_size": 5,
+                    "offset": 0,
+                    "sort_ons": [
+                      {
+                        "field": "name",
+                        "order": "ASC"
+                      }
+                    ],
+                    "ignore_case": true,
+                    "entities_by_integration": {},
+                    "join_entities_by_integration": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The response has the list of attributes along with entity name and pagination values as follows:",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedAttributeResultsWrapper"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample Response",
+                    "value": {
+                      "data": {
+                        "page_size": 2,
+                        "offset": 0,
+                        "total_count": 189,
+                        "results": [
+                          {
+                            "name": "airwatch.device._airwatch_device_guid",
+                            "label": "Workspace ONE UEM Device GUID",
+                            "description": "Workspace ONE UEM Device GUID",
+                            "data_type": "STRING",
+                            "bucketing_allowed": true
+                          },
+                          {
+                            "name": "airwatch.device._city",
+                            "label": "City",
+                            "description": "City",
+                            "data_type": "STRING",
+                            "bucketing_allowed": false
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/v2/metrics/entity/simple_timerange": {
+      "post": {
+        "tags": [
+          "Metrics"
+        ],
+        "summary": "Requests With Simple Time Window",
+        "operationId": "postMetricsSimpleTimerange",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimpleTimerangeMetricsRequestWrapper"
+              },
+              "examples": {
+                "sample": {
+                  "summary": "Sample Request",
+                  "value": {
+                    "data": {
+                      "entity": "apteligent.net_event",
+                      "time_window": {
+                        "timespan": {
+                          "duration": 59,
+                          "unit": "DAYS"
+                        }
+                      },
+                      "metrics": [
+                        {
+                          "name": "apteligent.net_event.bytes_sent",
+                          "function": "AVG"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sample Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsResultEnvelope"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample Response",
+                    "value": {
+                      "data": {
+                        "entity": "apteligent.net_event",
+                        "result_type": "SIMPLE_TIMERANGE",
+                        "metadata": {
+                          "date_attribute_name": "apteligent.net_event.event_timestamp",
+                          "attributes": {
+                            "apteligent.net_event.bytes_sent": {
+                              "label": "Data Out",
+                              "data_type": "LONG"
+                            }
+                          }
+                        },
+                        "result": [
+                          {
+                            "start_time": "2022-12-24T00:00:00Z",
+                            "end_time": "2023-02-21T23:57:29.568Z",
+                            "metrics_values": [
+                              {
+                                "name": "apteligent.net_event.bytes_sent",
+                                "function": "AVG",
+                                "value": 567.833333333334
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "description": "This end point does not have any additional request fields and uses the fields defined for the Entity Metrics API.\n\nsimple_timerange end point takes the time window and returns result over the time range. If the entity has non time-series data the metrics will be calculated over the entire data and not for the time window. \"start_time\" and \"end_time\" will be set to current time in results for non timeseries/snapshot requests."
+      }
+    },
+    "/v2/metrics/entity/histogram": {
+      "post": {
+        "tags": [
+          "Metrics"
+        ],
+        "summary": "Histogram Requests",
+        "description": "The histogram option return metrics for each sampling interval size within the specified time window.",
+        "operationId": "postMetricsHistogram",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HistogramMetricsRequestWrapper"
+              },
+              "examples": {
+                "sample": {
+                  "summary": "Sample Request",
+                  "value": {
+                    "data": {
+                      "entity": "apteligent.crash_ios",
+                      "time_window": {
+                        "timespan": {
+                          "duration": 2,
+                          "unit": "DAYS"
+                        }
+                      },
+                      "sampling_interval": {
+                        "duration": 1,
+                        "unit": "DAYS"
+                      },
+                      "date_attribute_name": "apteligent.crash_ios.adp_modified_at",
+                      "metrics": [
+                        {
+                          "name": "apteligent.crash_ios.device_model",
+                          "function": "COUNT"
+                        }
+                      ],
+                      "num_results_per_bucketing_attribute": 10
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sample Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsResultEnvelope"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample Response",
+                    "value": {
+                      "data": {
+                        "entity": "apteligent.crash_ios",
+                        "result_type": "HISTOGRAM",
+                        "metadata": {
+                          "date_attribute_name": "apteligent.crash_ios.adp_modified_at",
+                          "attributes": {
+                            "apteligent.crash_ios.device_model": {
+                              "label": "Device Model",
+                              "data_type": "STRING"
+                            }
+                          }
+                        },
+                        "result": [
+                          {
+                            "start_time": "2023-02-20T00:00:00Z",
+                            "end_time": "2023-02-21T00:00:00Z",
+                            "metrics_values": [
+                              {
+                                "name": "apteligent.crash_ios.device_model",
+                                "function": "COUNT",
+                                "value": 0
+                              }
+                            ]
+                          },
+                          {
+                            "start_time": "2023-02-21T00:00:00Z",
+                            "end_time": "2023-02-22T00:00:00Z",
+                            "metrics_values": [
+                              {
+                                "name": "apteligent.crash_ios.device_model",
+                                "function": "COUNT",
+                                "value": 256
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/v2/metrics/entity/rolling_window": {
+      "post": {
+        "tags": [
+          "Metrics"
+        ],
+        "summary": "Rolling Window Requests",
+        "description": "Rolling window is a specialized variation of histogram requests. Rolling window will calculate metrics using the interval and the rolling window size. For each interval within the requested time range, metrics will be calculated for rolling window size.\n\nNote : Rolling window supports only \"COUNT_DISTICT\" aggregation function.\n\nNote : \"bucketing_attributes\" is currently not supported for rolling window requests and will be ignored if present in the request .",
+        "operationId": "postMetricsRollingWindow",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RollingWindowMetricsRequestWrapper"
+              },
+              "examples": {
+                "sample": {
+                  "summary": "Sample Request",
+                  "value": {
+                    "entity": "apteligent.net_error",
+                    "time_window": {
+                      "timespan": {
+                        "duration": 2,
+                        "unit": "DAYS"
+                      }
+                    },
+                    "sampling_interval": {
+                      "duration": 1,
+                      "unit": "DAYS"
+                    },
+                    "window_size": {
+                      "duration": 7,
+                      "unit": "DAYS"
+                    },
+                    "metrics": [
+                      {
+                        "name": "apteligent.net_error.bytes_sent",
+                        "function": "COUNT_DISTINCT"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sample Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RollingWindowMetricsResultEnvelope"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample Response",
+                    "value": {
+                      "data": {
+                        "entity": "apteligent.net_error",
+                        "result_type": "ROLLING_WINDOW",
+                        "metadata": {
+                          "date_attribute_name": "apteligent.net_error.adp_modified_at",
+                          "attributes": {
+                            "apteligent.net_error.bytes_sent": {
+                              "label": "Data Out",
+                              "data_type": "LONG"
+                            }
+                          }
+                        },
+                        "result": [
+                          {
+                            "start_time": "2023-02-14T00:00:00Z",
+                            "end_time": "2023-02-21T00:00:00Z",
+                            "metrics_values": {
+                              "name": "apteligent.net_error.bytes_sent",
+                              "function": "COUNT_DISTINCT",
+                              "value": 0
+                            }
+                          },
+                          {
+                            "start_time": "2023-02-15T00:00:00Z",
+                            "end_time": "2023-02-22T00:00:00Z",
+                            "metrics_values": {
+                              "name": "apteligent.net_error.bytes_sent",
+                              "function": "COUNT_DISTINCT",
+                              "value": 400
+                            }
+                          },
+                          {
+                            "start_time": "2023-02-15T17:00:34.851Z",
+                            "end_time": "2023-02-22T17:00:34.851Z",
+                            "metrics_values": {
+                              "name": "apteligent.net_error.bytes_sent",
+                              "function": "COUNT_DISTINCT",
+                              "value": 0
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/v2/meta/integration/{integration}/entity/{entity}/attributes": {
+      "get": {
+        "tags": [
+          "Reports — metadata"
+        ],
+        "summary": "Report Metadata API",
+        "description": "A meta-data API is available to show which attributes are available for a particular entity. The general form of this query is:\n\nThe following example shows how to retrieve attribute information for integration airwatch and entity user.",
+        "operationId": "getReportAttributeMetadata",
+        "parameters": [
+          {
+            "name": "integration",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "airwatch",
+            "description": "Identifies the integration from which the data will be sourced."
+          },
+          {
+            "name": "entity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "user",
+            "description": "Identifies the entity from which the data will be sourced."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attribute metadata for the integration and entity (for example integration airwatch and entity user).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportAttributeMetadataResponse"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample Response",
+                    "value": {
+                      "data": [
+                        {
+                          "classification": {
+                            "label": "User",
+                            "name": "USER"
+                          },
+                          "data_type": "DATETIME",
+                          "entity": "user",
+                          "integration": "airwatch",
+                          "attribute": "airwatch.user.user_last_message_sent_date",
+                          "source_attribute": "airwatch.user.user_last_message_sent_date",
+                          "path": "user_last_message_sent_date",
+                          "label": "Last Message Sent Date",
+                          "description": "Last Message Sent Date",
+                          "metadata": false,
+                          "hidden_in_uifilter": false,
+                          "hidden_in_uiselect": false,
+                          "sorting_supported": true,
+                          "suggestion_supported": false,
+                          "supported_operators": [
+                            {
+                              "name": "BEFORE",
+                              "label": "Before",
+                              "description": "Before",
+                              "value": "<",
+                              "single": true,
+                              "value_required": true,
+                              "min_length": -1
+                            },
+                            {
+                              "name": "AFTER",
+                              "label": "After",
+                              "description": "After",
+                              "value": ">",
+                              "single": true,
+                              "value_required": true,
+                              "min_length": -1
+                            },
+                            {
+                              "name": "BETWEEN",
+                              "label": "Between",
+                              "description": "Between",
+                              "value": "BETWEEN",
+                              "single": false,
+                              "value_required": true,
+                              "min_length": -1
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/v2/reports": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Create Reports API",
+        "operationId": "postReports",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReportRequest"
+              },
+              "examples": {
+                "historical": {
+                  "summary": "9.2.1. Request - Historical Report",
+                  "value": {
+                    "name": "API Test Report - 5f5abb88-ea63-43bf-8738-ed0c6a7b345a",
+                    "description": "Sample report description",
+                    "integration": "airwatch",
+                    "entity": "application",
+                    "column_names": [
+                      "airwatch.application.app_name"
+                    ],
+                    "filter": "airwatch.application.app_dynamic_size_bytes > 5000000",
+                    "report_type": "HISTORICAL",
+                    "report_format": "CSV",
+                    "date_range": {
+                      "start_date_millis": 1627756241000,
+                      "end_date_millis": 1628274581000
+                    },
+                    "join_entities_by_integration": {
+                      "airwatch": [
+                        "application"
+                      ]
+                    }
+                  }
+                },
+                "historicalLast12Hours": {
+                  "summary": "Date Range - Last 12 hours",
+                  "value": {
+                    "name": "API Test Report - 5f5abb88-ea63-43bf-8738-ed0c6a7b345a",
+                    "description": "Sample report description",
+                    "integration": "airwatch",
+                    "entity": "application",
+                    "column_names": [
+                      "airwatch.application.app_name"
+                    ],
+                    "filter": "airwatch.application.app_dynamic_size_bytes > 5000000",
+                    "report_type": "HISTORICAL",
+                    "report_format": "CSV",
+                    "date_range": {
+                      "time_span": {
+                        "duration": 12,
+                        "unit": "HOURS"
+                      }
+                    },
+                    "join_entities_by_integration": {
+                      "airwatch": [
+                        "application"
+                      ]
+                    }
+                  }
+                },
+                "historicalLast7Days": {
+                  "summary": "Date Range - Last 7 days",
+                  "value": {
+                    "name": "API Test Report - 5f5abb88-ea63-43bf-8738-ed0c6a7b345a",
+                    "description": "Sample report description",
+                    "integration": "airwatch",
+                    "entity": "application",
+                    "column_names": [
+                      "airwatch.application.app_name"
+                    ],
+                    "filter": "airwatch.application.app_dynamic_size_bytes > 5000000",
+                    "report_type": "HISTORICAL",
+                    "report_format": "CSV",
+                    "date_range": {
+                      "time_span": {
+                        "duration": 7,
+                        "unit": "DAYS"
+                      }
+                    },
+                    "join_entities_by_integration": {
+                      "airwatch": [
+                        "application"
+                      ]
+                    }
+                  }
+                },
+                "snapshot": {
+                  "summary": "9.2.3. Request - Snapshot Report",
+                  "value": {
+                    "name": "Test Report - V2 Joins",
+                    "description": "All managed and un-managed apps on devices with good antivirus status and half battery level",
+                    "filter": " airwatch.device.device_enrollment_status = 'Enrolled' AND airwatch.device._device_antivirus_status IN ( 'Pass' ) AND airwatch.device.device_battery_percent = 50 ",
+                    "report_type": "SNAPSHOT",
+                    "report_format": "CSV",
+                    "integration": "airwatch",
+                    "entity": "application",
+                    "join_entities_by_integration": {
+                      "airwatch": [
+                        "application",
+                        "device"
+                      ]
+                    },
+                    "column_names": [
+                      "airwatch.application.app_name",
+                      "airwatch.device.device_friendly_name",
+                      "airwatch.device.device_platform",
+                      "airwatch.device.device_os_version",
+                      "airwatch.application.app_version",
+                      "airwatch.application.app_package_id",
+                      "airwatch.application.app_install_status",
+                      "airwatch.application.app_install_status_reason",
+                      "airwatch.device.device_app_sample_last_seen",
+                      "airwatch.application.app_last_seen",
+                      "airwatch.device.device_last_seen",
+                      "airwatch.application.app_is_managed",
+                      "airwatch.device.device_location_group_name",
+                      "airwatch.application.app_type",
+                      "airwatch.device.device_enrollment_status",
+                      "airwatch.application.app_bundle_size_bytes",
+                      "airwatch.application.app_is_installed"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created report. The important part of the JSON response is the \"id\" ($.data.id) returned by the system. This report identifier is used in subsequent API calls to setup schedules, run the report, and download the results.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportDetailWrapper"
+                },
+                "examples": {
+                  "historicalResponse": {
+                    "summary": "9.2.2. Response",
+                    "value": {
+                      "data": {
+                        "id": "20602124-f68b-4dd5-949a-0e45b3d265b0",
+                        "name": "API Test Report - 5f5abb88-ea63-43bf-8738-ed0c6a7b345a",
+                        "description": "Sample report description",
+                        "integration": "airwatch",
+                        "entity": "application",
+                        "filter": "airwatch.application.app_dynamic_size_bytes > 5000000",
+                        "report_type": "HISTORICAL",
+                        "report_format": "CSV",
+                        "date_range": {
+                          "start_date_millis": 1627756241000,
+                          "end_date_millis": 1628274581000
+                        },
+                        "join_entities_by_integration": {
+                          "airwatch": [
+                            "application"
+                          ]
+                        },
+                        "created_at": "2022-05-24T06:45:42.785Z",
+                        "created_by": "22345678-0000-0000-0000-100000000000",
+                        "modified_at": "2022-05-24T06:45:42.785Z",
+                        "entity_label": "Apps",
+                        "column_names": [
+                          "airwatch.application.app_name"
+                        ],
+                        "total_schedules": 0,
+                        "total_downloads": 0,
+                        "total_recipients": 0,
+                        "created_by_details": {
+                          "id": "22345678-0000-0000-0000-100000000000",
+                          "display_name": "display-name-1-0",
+                          "UserName": "display-name-1-0"
+                        },
+                        "shared_report": false,
+                        "share_count": 0,
+                        "account_access_level": "FULL",
+                        "owner": true,
+                        "orphaned": false,
+                        "filter_condition": {
+                          "parenthesized": false,
+                          "nested_attribute": false,
+                          "custom_attribute": false,
+                          "attribute": "airwatch.application.app_dynamic_size_bytes",
+                          "operator": ">",
+                          "operands": [
+                            {
+                              "operand_type": "BasicOperand",
+                              "data_type": "LONG",
+                              "value": 5000000
+                            }
+                          ],
+                          "operand_collection_present": false
+                        },
+                        "filter_condition_nested_rules": {
+                          "type": "RuleSet",
+                          "rules": [
+                            {
+                              "type": "Rule",
+                              "nested_attribute": false,
+                              "custom_attribute": false,
+                              "attribute": "airwatch.application.app_dynamic_size_bytes",
+                              "operator": ">",
+                              "operands": [
+                                {
+                                  "operand_type": "BasicOperand",
+                                  "data_type": "LONG",
+                                  "value": 5000000
+                                }
+                              ],
+                              "operand_collection_present": false
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "snapshotResponse": {
+                    "summary": "9.2.4. Response",
+                    "value": {
+                      "data": {
+                        "id": "124985bb-e0fa-40d1-b2fb-de2f8e915e38",
+                        "name": "Test Report - V2 Joins",
+                        "description": "All managed and un-managed apps on devices with good antivirus status and half battery level",
+                        "integration": "airwatch",
+                        "entity": "application",
+                        "filter": " airwatch.device.device_enrollment_status = 'Enrolled' AND airwatch.device._device_antivirus_status IN ( 'Pass' ) AND airwatch.device.device_battery_percent = 50 ",
+                        "report_type": "SNAPSHOT",
+                        "report_format": "CSV",
+                        "join_entities_by_integration": {
+                          "airwatch": [
+                            "application",
+                            "device"
+                          ]
+                        },
+                        "created_at": "2022-06-28T19:48:04.590Z",
+                        "created_by": "26f5d3cb-7f76-4c5e-aa20-57264ac17280",
+                        "modified_at": "2022-06-28T19:48:04.590Z",
+                        "entity_label": "Apps",
+                        "column_names": [
+                          "airwatch.application.app_name",
+                          "airwatch.device.device_friendly_name",
+                          "airwatch.device.device_platform",
+                          "airwatch.device.device_os_version",
+                          "airwatch.application.app_version",
+                          "airwatch.application.app_package_id",
+                          "airwatch.application.app_install_status",
+                          "airwatch.application.app_install_status_reason",
+                          "airwatch.device.device_app_sample_last_seen",
+                          "airwatch.application.app_last_seen",
+                          "airwatch.device.device_last_seen",
+                          "airwatch.application.app_is_managed",
+                          "airwatch.device.device_location_group_name",
+                          "airwatch.application.app_type",
+                          "airwatch.device.device_enrollment_status",
+                          "airwatch.application.app_bundle_size_bytes",
+                          "airwatch.application.app_is_installed"
+                        ],
+                        "total_schedules": 0,
+                        "total_downloads": 0,
+                        "total_recipients": 0,
+                        "created_by_details": {
+                          "id": "26f5d3cb-7f76-4c5e-aa20-57264ac17280",
+                          "display_name": "test15@xxx.com",
+                          "UserName": "test15@xxx.com"
+                        },
+                        "shared_report": false,
+                        "share_count": 0,
+                        "account_access_level": "FULL",
+                        "owner": true,
+                        "orphaned": false,
+                        "filter_condition": {
+                          "parenthesized": false,
+                          "nested_attribute": false,
+                          "custom_attribute": false,
+                          "operand_collection_present": false,
+                          "logical_operator": "AND",
+                          "lhs": {
+                            "parenthesized": false,
+                            "nested_attribute": false,
+                            "custom_attribute": false,
+                            "operand_collection_present": false,
+                            "logical_operator": "AND",
+                            "lhs": {
+                              "parenthesized": false,
+                              "nested_attribute": false,
+                              "custom_attribute": false,
+                              "attribute": "airwatch.device.device_enrollment_status",
+                              "operator": "=",
+                              "operands": [
+                                {
+                                  "operand_type": "BasicOperand",
+                                  "data_type": "STRING",
+                                  "value": "Enrolled"
+                                }
+                              ],
+                              "operand_collection_present": false
+                            },
+                            "rhs": {
+                              "parenthesized": false,
+                              "nested_attribute": false,
+                              "custom_attribute": false,
+                              "attribute": "airwatch.device._device_antivirus_status",
+                              "operator": "IN",
+                              "operands": [
+                                {
+                                  "operand_type": "BasicOperand",
+                                  "data_type": "STRING",
+                                  "value": "Pass"
+                                }
+                              ],
+                              "operand_collection_present": true
+                            }
+                          },
+                          "rhs": {
+                            "parenthesized": false,
+                            "nested_attribute": false,
+                            "custom_attribute": false,
+                            "attribute": "airwatch.device.device_battery_percent",
+                            "operator": "=",
+                            "operands": [
+                              {
+                                "operand_type": "BasicOperand",
+                                "data_type": "LONG",
+                                "value": 50
+                              }
+                            ],
+                            "operand_collection_present": false
+                          }
+                        },
+                        "filter_condition_nested_rules": {
+                          "type": "RuleSet",
+                          "logical_operator": "AND",
+                          "rules": [
+                            {
+                              "type": "Rule",
+                              "nested_attribute": false,
+                              "custom_attribute": false,
+                              "attribute": "airwatch.device.device_enrollment_status",
+                              "operator": "=",
+                              "operands": [
+                                {
+                                  "operand_type": "BasicOperand",
+                                  "data_type": "STRING",
+                                  "value": "Enrolled"
+                                }
+                              ],
+                              "operand_collection_present": false
+                            },
+                            {
+                              "type": "Rule",
+                              "nested_attribute": false,
+                              "custom_attribute": false,
+                              "attribute": "airwatch.device._device_antivirus_status",
+                              "operator": "IN",
+                              "operands": [
+                                {
+                                  "operand_type": "BasicOperand",
+                                  "data_type": "STRING",
+                                  "value": "Pass"
+                                }
+                              ],
+                              "operand_collection_present": true
+                            },
+                            {
+                              "type": "Rule",
+                              "nested_attribute": false,
+                              "custom_attribute": false,
+                              "attribute": "airwatch.device.device_battery_percent",
+                              "operator": "=",
+                              "operands": [
+                                {
+                                  "operand_type": "BasicOperand",
+                                  "data_type": "LONG",
+                                  "value": 50
+                                }
+                              ],
+                              "operand_collection_present": false
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "description": "Report creation requires the following information get encoded in a JSON request body:\n\nNote: Column names are expected to be fully qualified.\n\nOnce a report has been created, you may run the report any time or schedule the report to execute periodically. The important part of the JSON response is the \"id\" ($.data.id) returned by the system."
+      }
+    },
+    "/v2/reports/{report_id}/run": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Run Reports API",
+        "operationId": "postReportRun",
+        "parameters": [
+          {
+            "name": "report_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The report identifier obtained via the Create Report API.",
+            "example": "20602124-f68b-4dd5-949a-0e45b3d265b0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Run report response (includes schedule-related fields such as for an ADHOC run).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportRunResponseWrapper"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample Response",
+                    "value": {
+                      "data": {
+                        "active": true,
+                        "created_at": "2022-06-03T17:28:24.554Z",
+                        "created_by": "f65716f4-0d44-4c50-8cca-05d1306fbf77",
+                        "cron_expression_detail": {
+                          "frequency": "ONCE"
+                        },
+                        "id": "749b30e0-6e75-4d58-ba90-3e175e2b8b8e",
+                        "modified_at": "2022-06-03T17:28:24.554Z",
+                        "modified_by": "f65716f4-0d44-4c50-8cca-05d1306fbf77",
+                        "name": "Single run report request 5f5abb88-ea63-43bf-8738-ed0c6a7b345a",
+                        "report_id": "20602124-f68b-4dd5-949a-0e45b3d265b0",
+                        "schedule_type": "ADHOC",
+                        "start": "2022-06-03T17:28:24.553Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "description": "Once a report has been created, there are 2 facilities available for running the report. You may run the report any time by calling the \"run report\" API. You may also schedule the report to execute periodically.\n\nNote that the report identifier obtained via the \"create report API\" is used in this API call to run the report."
+      }
+    },
+    "/v2/reports/schedules": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Schedule Reports API",
+        "operationId": "postReportSchedules",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReportScheduleRequest"
+              },
+              "examples": {
+                "sample": {
+                  "summary": "Sample Request",
+                  "value": {
+                    "cron_expression_detail": {
+                      "frequency": "HOURLY",
+                      "hourly": {
+                        "interval": 4
+                      }
+                    },
+                    "name": "Schedule Test Hourly",
+                    "report_id": "20602124-f68b-4dd5-949a-0e45b3d265b0",
+                    "schedule_type": "CRON",
+                    "start": "2022-06-03T19:00:00.000Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Schedule created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportScheduleWrapper"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample Response",
+                    "value": {
+                      "data": {
+                        "active": true,
+                        "created_at": "2022-06-03T18:24:56.199Z",
+                        "created_by": "f65716f4-0d44-4c50-8cca-05d1306fbf77",
+                        "cron_expression_detail": {
+                          "frequency": "HOURLY",
+                          "hourly": {
+                            "interval": 4
+                          }
+                        },
+                        "id": "5a384bd7-9ac4-46bb-a810-59e0b498d99f",
+                        "modified_at": "2022-06-03T18:24:56.199Z",
+                        "modified_by": "f65716f4-0d44-4c50-8cca-05d1306fbf77",
+                        "name": "Schedule Test Hourly",
+                        "report_id": "20602124-f68b-4dd5-949a-0e45b3d265b0",
+                        "schedule_type": "CRON",
+                        "start": "2022-06-03T19:00:00.000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "description": "Report Schedule creation requires the following information get encoded in a JSON request body:"
+      }
+    },
+    "/v2/reports/{id}/downloads/search": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Available downloads API",
+        "description": "When data from your report execution is available, it displays as an available download in the available downloads API.\n\nThe JSON body can be unspecified ({}). This defaults the paging parameters to page_size: 100 and offset:0. The value of these parameters are reflected back in the JSON response below.\n\nThe JSON body provides \"report tracking\" identifiers for 2 different data sets that are available for download (both have a status \"COMPLETED\"):\n\"id\": \"416c1890-70d5-4261-a440-d2dc402e52cf\"\n\"id\": \"397e00fb-5c32-439d-b4fc-a657458c9f6d\"\nThese identifiers can now be used to download the contents of this run of the report, now or at any other point in the future.",
+        "operationId": "postReportDownloadsSearch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "5f2c2fa1-e9ec-4c55-9649-b3fbabf4d116",
+            "description": "Report identifier."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PagingOnlyBody"
+              },
+              "examples": {
+                "default": {
+                  "summary": "Sample Request",
+                  "value": {
+                    "offset": 0,
+                    "page_size": 100
+                  }
+                },
+                "empty": {
+                  "summary": "The JSON body can be unspecified ({}).",
+                  "value": {}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lists download records including report tracking identifiers that can be used with the Download Report API.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportDownloadsSearchWrapper"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample Response",
+                    "value": {
+                      "data": {
+                        "offset": 0,
+                        "page_size": 100,
+                        "total_count": 2,
+                        "results": [
+                          {
+                            "created_at": "2022-06-03T17:28:47.146Z",
+                            "created_by": "f65716f4-0d44-4c50-8cca-05d1306fbf77",
+                            "id": "416c1890-70d5-4261-a440-d2dc402e52cf",
+                            "location": "reports/538f619e-2db4-4f07-974b-efb3e5326116/5f2c2fa1-e9ec-4c55-9649-b3fbabf4d116/BK---API-Test1---Enrolled-Devices-2019-06-03-17-28-UTC.csv",
+                            "modified_at": "2022-06-03T17:29:01.873Z",
+                            "modified_by": "11223344-5500-0000-0000-000000000000",
+                            "processing_time_millis": 12660,
+                            "report_id": "5f2c2fa1-e9ec-4c55-9649-b3fbabf4d116",
+                            "report_schedule_id": "749b30e0-6e75-4d58-ba90-3e175e2b8b8e",
+                            "start_time": "2022-06-03T17:28:47.740Z",
+                            "status": "COMPLETED"
+                          },
+                          {
+                            "created_at": "2022-06-03T17:13:15.545Z",
+                            "created_by": "f65716f4-0d44-4c50-8cca-05d1306fbf77",
+                            "id": "397e00fb-5c32-439d-b4fc-a657458c9f6d",
+                            "location": "reports/538f619e-2db4-4f07-974b-efb3e5326116/5f2c2fa1-e9ec-4c55-9649-b3fbabf4d116/BK---API-Test1---Enrolled-Devices-2019-06-03-17-13-UTC.csv",
+                            "modified_at": "2022-06-03T17:13:33.616Z",
+                            "modified_by": "11223344-5500-0000-0000-000000000000",
+                            "processing_time_millis": 13967,
+                            "report_id": "20602124-f68b-4dd5-949a-0e45b3d265b0",
+                            "report_schedule_id": "600300be-7958-4158-a550-dcca31186fd4",
+                            "start_time": "2022-06-03T17:13:17.546Z",
+                            "status": "COMPLETED"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/v2/reports/tracking/{tracking_id}/download": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Download Report API — get the location of the report output",
+        "description": "Using the report tracking identifiers from the previous step, get a URL to the actual location of the report output.\n\nThis is a two step process.\n\nStep 1: Call the Download Report API (`GET /v2/reports/tracking/{tracking_id}/download`) using a report tracking identifier from the Available downloads API. The response is an HTTP 302 redirect with a `Location` header pointing to a secure URL where the report contents can be downloaded.\n\nStep 2: Follow the redirect to the secure URL returned in the `Location` header. That request returns the report contents.",
+        "operationId": "getReportTrackingDownload",
+        "parameters": [
+          {
+            "name": "tracking_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "416c1890-70d5-4261-a440-d2dc402e52cf",
+            "description": "Report tracking identifier from the Available downloads API results (\"id\" field)."
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Step 1 response. HTTP 302 Found redirect to signed storage URL for the report artifact. Following the redirect URL is step 2 and returns the report contents.",
+            "headers": {
+              "Location": {
+                "description": "Secure URL returned in step 1. Requesting this URL is step 2 and downloads the report contents.",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "example": "https://storage.{environment}/reports/...csv?..."
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/v2/reports/{id}/preview": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Report preview API",
+        "operationId": "postReportPreview",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "5f2c2fa1-e9ec-4c55-9649-b3fbabf4d116",
+            "description": "Report identifier."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PagingOnlyBody"
+              },
+              "examples": {
+                "sample": {
+                  "summary": "Sample Request",
+                  "value": {
+                    "page_size": 25,
+                    "offset": 0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Paged preview rows.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportPreviewWrapper"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample Response",
+                    "value": {
+                      "data": {
+                        "page_size": 25,
+                        "offset": 0,
+                        "total_count": 6385,
+                        "results": [
+                          {
+                            "airwatch.device.device_enrollment_user_name": "ws1intel.bda44ae7-66eb-42c2-899a-d2af3685d8e2",
+                            "airwatch.device.device_friendly_name": "KENYATTA's HP Elite x3",
+                            "airwatch.windowspatch.winpatch_revision_id": 228923,
+                            "airwatch.windowspatch.winpatch_update_id": "8c196037-dbb0-4eaa-9e0f-254bf83bebe2",
+                            "airwatch.windowspatch.winpatch_kb_number": 2124261,
+                            "airwatch.windowspatch.winpatch_update_status": "Unknown",
+                            "airwatch.windowspatch.winpatch_approval_status": "approved",
+                            "airwatch.windowspatch.winpatch_assignment_status": "assigned",
+                            "airwatch.windowspatch.winpatch_update_classification": "CriticalUpdates",
+                            "airwatch.windowspatch.winpatch_approved_date": 1606984113000,
+                            "airwatch.windowspatch.winpatch_publish_date": 1623955447000,
+                            "airwatch.device.device_enrollment_date": 1472357078000,
+                            "airwatch.device.device_enrollment_status": "EnrollmentInProgress",
+                            "airwatch.device.device_last_seen": 1651512997000,
+                            "airwatch.device.device_enrollment_user_email": "9ddfe9b1-b623-46b1-9bfc-a0081d1e4311@ws1.intelligent.staging.dpa0.org",
+                            "airwatch.device.device_os_version": "9.0.4",
+                            "airwatch.device.device_model": "HP Elite x3"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "description": "Report preview API — POST with JSON request body for paging (for example page_size and offset)."
+      },
+      "description": "Preview report output rows with paging in the JSON request body."
+    },
+    "/v2/reports/search": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Report search API",
+        "operationId": "postReportsSearch",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportsSearchBody"
+              },
+              "examples": {
+                "sample": {
+                  "summary": "Sample Request",
+                  "value": {
+                    "offset": 0,
+                    "page_size": 10,
+                    "sort_ons": [
+                      {
+                        "field": "modified_at",
+                        "order": "DESC"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Paged reports.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportsSearchWrapper"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample Response",
+                    "value": {
+                      "data": {
+                        "page_size": 10,
+                        "offset": 0,
+                        "total_count": 130,
+                        "results": [
+                          {
+                            "id": "31118250-7d6a-4bb2-befb-72f50e47d3b9",
+                            "name": "Windows Antivirus Updates",
+                            "description": "Devices with good antivirus status",
+                            "integration": "airwatch",
+                            "entity": "windowspatch",
+                            "filter": " airwatch.device._device_antivirus_status IN ( 'Pass' ) AND airwatch.windowspatch._device_os_version = '10.0.1' ",
+                            "report_type": "SNAPSHOT",
+                            "report_format": "CSV",
+                            "created_at": "2022-06-09T07:14:29.441Z",
+                            "created_by": "26f5d3cb-7f76-4c5e-aa20-57264ac17280",
+                            "modified_at": "2022-06-09T07:14:29.441Z",
+                            "entity_label": "Windows OS Updates",
+                            "column_names": [
+                              "airwatch.device.device_enrollment_user_name",
+                              "airwatch.device.device_friendly_name",
+                              "airwatch.windowspatch.winpatch_revision_id",
+                              "airwatch.windowspatch.winpatch_update_id",
+                              "airwatch.windowspatch.winpatch_update_status",
+                              "airwatch.windowspatch.winpatch_approval_status",
+                              "airwatch.windowspatch.winpatch_assignment_status",
+                              "airwatch.device.device_enrollment_date",
+                              "airwatch.device.device_enrollment_status",
+                              "airwatch.device.device_last_seen",
+                              "airwatch.device.device_enrollment_user_email",
+                              "airwatch.device.device_model",
+                              "airwatch.windowspatch.winpatch_kb_subject",
+                              "airwatch.windowspatch.winpatch_update_type"
+                            ],
+                            "total_schedules": 1,
+                            "total_downloads": 1,
+                            "total_recipients": 1,
+                            "shared_report": false,
+                            "share_count": 0,
+                            "account_access_level": "FULL",
+                            "owner": true,
+                            "orphaned": false,
+                            "filter_condition": {
+                              "parenthesized": false,
+                              "nested_attribute": false,
+                              "custom_attribute": false,
+                              "operand_collection_present": false,
+                              "logical_operator": "AND",
+                              "lhs": {
+                                "parenthesized": false,
+                                "nested_attribute": false,
+                                "custom_attribute": false,
+                                "attribute": "airwatch.device._device_antivirus_status",
+                                "operator": "IN",
+                                "operands": [
+                                  {
+                                    "operand_type": "BasicOperand",
+                                    "data_type": "STRING",
+                                    "value": "Pass"
+                                  }
+                                ],
+                                "operand_collection_present": true
+                              },
+                              "rhs": {
+                                "parenthesized": false,
+                                "nested_attribute": false,
+                                "custom_attribute": false,
+                                "attribute": "airwatch.windowspatch._device_os_version",
+                                "operator": "=",
+                                "operands": [
+                                  {
+                                    "operand_type": "BasicOperand",
+                                    "data_type": "STRING",
+                                    "value": "10.0.1"
+                                  }
+                                ],
+                                "operand_collection_present": false
+                              }
+                            },
+                            "filter_condition_nested_rules": {
+                              "type": "RuleSet",
+                              "logical_operator": "AND",
+                              "rules": [
+                                {
+                                  "type": "Rule",
+                                  "nested_attribute": false,
+                                  "custom_attribute": false,
+                                  "attribute": "airwatch.device._device_antivirus_status",
+                                  "operator": "IN",
+                                  "operands": [
+                                    {
+                                      "operand_type": "BasicOperand",
+                                      "data_type": "STRING",
+                                      "value": "Pass"
+                                    }
+                                  ],
+                                  "operand_collection_present": true
+                                },
+                                {
+                                  "type": "Rule",
+                                  "nested_attribute": false,
+                                  "custom_attribute": false,
+                                  "attribute": "airwatch.windowspatch._device_os_version",
+                                  "operator": "=",
+                                  "operands": [
+                                    {
+                                      "operand_type": "BasicOperand",
+                                      "data_type": "STRING",
+                                      "value": "10.0.1"
+                                    }
+                                  ],
+                                  "operand_collection_present": false
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "description": "Report search API — POST with JSON request body including paging and sort parameters."
+      }
+    },
+    "/v2/reports/{id}/recipients": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Set Report recipients API",
+        "operationId": "postReportRecipients",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "5f2c2fa1-e9ec-4c55-9649-b3fbabf4d116",
+            "description": "Report identifier."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportRecipientsBody"
+              },
+              "examples": {
+                "sample": {
+                  "summary": "Sample Request",
+                  "value": {
+                    "recipients": [
+                      {
+                        "email": "margaret.thatcher@omnissa.com"
+                      },
+                      {
+                        "email": "paul.revere@omnissa.com"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Recipients associated with the report after update.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportRecipientsWrapper"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample Response",
+                    "value": {
+                      "data": {
+                        "report_id": "5f2c2fa1-e9ec-4c55-9649-b3fbabf4d116",
+                        "recipients": [
+                          {
+                            "created_at": "2022-06-03T18:10:51.752Z",
+                            "created_by": "f65716f4-0d44-4c50-8cca-05d1306fbf77",
+                            "email": "margaret.thatcher@omnissa.com"
+                          },
+                          {
+                            "created_at": "2022-06-03T18:10:51.752Z",
+                            "created_by": "f65716f4-0d44-4c50-8cca-05d1306fbf77",
+                            "email": "paul.revere@omnissa.com"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "description": "This API allows you to specify the recipients of a report. This functionality is identical to specifying recipients when the report is created."
+      },
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Get Report recipients API",
+        "operationId": "getReportRecipients",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "5f2c2fa1-e9ec-4c55-9649-b3fbabf4d116",
+            "description": "Report identifier."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipients for the report.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportRecipientsWrapper"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample Response",
+                    "value": {
+                      "data": {
+                        "report_id": "5f2c2fa1-e9ec-4c55-9649-b3fbabf4d116",
+                        "recipients": [
+                          {
+                            "created_at": "2019-06-03T18:16:31.262Z",
+                            "created_by": "f65716f4-0d44-4c50-8cca-05d1306fbf77",
+                            "email": "margaret.thatcher@omnissa.com"
+                          },
+                          {
+                            "created_at": "2019-06-03T18:16:31.262Z",
+                            "created_by": "f65716f4-0d44-4c50-8cca-05d1306fbf77",
+                            "email": "paul.revere@omnissa.com"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "description": "To determine which recipients are associated with a report, use the GET report recipients API."
+      }
+    },
+    "/v2/metrics/entity": {
+      "post": {
+        "tags": [
+          "Metrics"
+        ],
+        "summary": "Entity Metrics API",
+        "description": "Metrics API returns a metric values for each of the metric names provided in the request body.\n\nCurrently we only support a single metric name in the request body.\n\nMetrics API does not support pagination and a maximum of 1k metrics will be returned per request. Request will timeout after 20 seconds.",
+        "operationId": "postMetricsEntity",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntityMetricsRequest"
+              },
+              "examples": {
+                "sample": {
+                  "summary": "Sample Request",
+                  "value": {
+                    "entity": "apteligent.net_event",
+                    "time_window": {
+                      "timespan": {
+                        "duration": 10,
+                        "unit": "DAYS"
+                      }
+                    },
+                    "date_attribute_name": "apteligent.net_event.adp_modified_at",
+                    "metrics": [
+                      {
+                        "name": "apteligent.net_event.bytes_sent",
+                        "function": "AVG"
+                      }
+                    ],
+                    "filter": "app_id = 'e7f33c1d0df740a1a436f64ed5d43f7600555305'",
+                    "bucketing_attributes": [
+                      "apteligent.net_event._url_host",
+                      "apteligent.net_event.http_status_code"
+                    ],
+                    "num_results_per_bucketing_attribute": 40
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sample Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsResultEnvelope"
+                },
+                "examples": {
+                  "sampleResponse": {
+                    "summary": "Sample Response",
+                    "value": {
+                      "data": {
+                        "entity": "apteligent.net_event",
+                        "result_type": "SIMPLE_TIMERANGE",
+                        "metadata": {
+                          "date_attribute_name": "apteligent.net_event.adp_modified_at",
+                          "attributes": {
+                            "apteligent.net_event.http_status_code": {
+                              "label": "HTTP Status Code",
+                              "data_type": "INTEGER"
+                            },
+                            "apteligent.net_event._url_host": {
+                              "label": "URL",
+                              "data_type": "STRING"
+                            },
+                            "apteligent.net_event.bytes_sent": {
+                              "label": "Data Out",
+                              "data_type": "LONG"
+                            }
+                          }
+                        },
+                        "is_complete_dataset": false,
+                        "result": [
+                          {
+                            "start_time": "2020-08-23T00:00:00Z",
+                            "end_time": "2020-09-02T18:43:02.25Z",
+                            "bucketing_attributes": {
+                              "apteligent.net_event.http_status_code": 505,
+                              "apteligent.net_event._url_host": "api.event.gov"
+                            },
+                            "metrics_values": [
+                              {
+                                "name": "apteligent.net_event.bytes_sent",
+                                "function": "AVG",
+                                "value": 498.22222222222223
+                              }
+                            ]
+                          },
+                          {
+                            "start_time": "2020-08-23T00:00:00Z",
+                            "end_time": "2020-09-02T18:43:02.25Z",
+                            "bucketing_attributes": {
+                              "apteligent.net_event.http_status_code": 413,
+                              "apteligent.net_event._url_host": "api.event.gov"
+                            },
+                            "metrics_values": [
+                              {
+                                "name": "apteligent.net_event.bytes_sent",
+                                "function": "AVG",
+                                "value": 506.64814814814815
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "API calls to Omnissa Intelligence are always authenticated using a JSON Web Token (JWT). JWT tokens are submitted as Bearer tokens in an HTTP Authorization header. On the REST APIs page, you can fetch a token with the service account panel above Swagger UI or paste an existing JWT here directly."
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Input errors always generate an HTTP BAD Request (status 400) along with a JSON body that provides further details about the error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "examples": {
+              "sample": {
+                "summary": "Sample error body",
+                "value": {
+                  "errors": [
+                    {
+                      "code": "FIELD-VALIDATION",
+                      "message": "Invalid value [DES]. Must be one of [asc, desc].",
+                      "violated_property": "sort_ons[0].order"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "If access tokens are expired or invalid, the API invoked returns an HTTP status 401 (Unauthorized).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "The resource you attempted to access does not exist.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "ErrorItem": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "The error code indicating the type of error."
+          },
+          "message": {
+            "type": "string",
+            "description": "More information about the specific error."
+          },
+          "violated_property": {
+            "type": "string",
+            "description": "A specific property name (if applicable)."
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ErrorItem"
+            },
+            "description": "Errors is an array with code, message, and violated_property fields."
+          }
+        }
+      },
+      "TokenResponse": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "Access token returned by the token endpoint. On the REST APIs page, the token panel uses this value to populate Bearer auth automatically for subsequent Intelligence API calls."
+          },
+          "expires_in": {
+            "type": "integer",
+            "description": "Number of seconds until the token expires."
+          },
+          "iss": {
+            "type": "string",
+            "description": "Issuer."
+          },
+          "jti": {
+            "type": "string",
+            "description": "Token identifier."
+          },
+          "nbf": {
+            "type": "integer",
+            "description": "Not valid before time."
+          },
+          "scope": {
+            "type": "string",
+            "description": "Scopes granted to the token."
+          },
+          "token_type": {
+            "type": "string",
+            "description": "Token type."
+          },
+          "dpa.org_id": {
+            "type": "string",
+            "description": "Organization identifier."
+          }
+        },
+        "additionalProperties": true
+      },
+      "SortOn": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "description": "The field to sort on."
+          },
+          "order": {
+            "type": "string",
+            "enum": [
+              "ASC",
+              "DESC"
+            ],
+            "description": "The sort order (ASC or DESC)."
+          }
+        }
+      },
+      "SearchTerm": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "String value used for searching."
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional Array of fields to search the value."
+          },
+          "operator": {
+            "type": "string",
+            "enum": [
+              "START_WITH",
+              "CONTAINS",
+              "ENDS_WITH"
+            ],
+            "default": "CONTAINS",
+            "description": "Optional Search operator specified as a String. This can accept one of the three values : \"START_WITH\", \"CONTAINS\", \"ENDS_WITH\". Default \"CONTAINS\"."
+          }
+        }
+      },
+      "PagingOnlyBody": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Offset across the entire data set at which the current page starts."
+          },
+          "page_size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "description": "The number of records to return. Min and max values are listed in [Paging](#/components/schemas/PagingOnlyBody)."
+          }
+        },
+        "additionalProperties": true
+      },
+      "EntitiesQueryRequest": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 0,
+            "description": "Offset across the entire data set at which the current page starts."
+          },
+          "page_size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "default": 100,
+            "description": "Min and max values are listed in [Paging](#/components/schemas/PagingOnlyBody)."
+          },
+          "sort_ons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SortOn"
+            },
+            "description": "Optional: An ordered array ascending order of fields to sort on."
+          },
+          "search_terms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchTerm"
+            },
+            "description": "Optional: An array of [SearchTerm](#/components/schemas/SearchTerm) and the corresponding fields which should be inspected."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Request information requires following fields in a JSON body."
+      },
+      "AttributesQueryRequest": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Offset across the entire data set at which the current page starts."
+          },
+          "page_size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "description": "Min and max values are listed in [Paging](#/components/schemas/PagingOnlyBody)."
+          },
+          "sort_ons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SortOn"
+            },
+            "description": "Optional: An ordered array ascending order of fields to sort on."
+          },
+          "search_terms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchTerm"
+            },
+            "description": "Optional: An array of [SearchTerm](#/components/schemas/SearchTerm) and the corresponding fields which should be inspected."
+          },
+          "ignore_case": {
+            "type": "boolean"
+          },
+          "entities_by_integration": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "join_entities_by_integration": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true,
+        "description": "Request requires following information in a JSON request body."
+      },
+      "EntitySummary": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of entity."
+          },
+          "label": {
+            "type": "string",
+            "description": "User friendly/well known name of entity."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of that entity."
+          }
+        },
+        "additionalProperties": true
+      },
+      "PagedEntityResultsWrapper": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "offset": {
+                "type": "integer",
+                "description": "Offset across the entire data set at which the current page starts."
+              },
+              "page_size": {
+                "type": "integer",
+                "description": "Min and max values are listed in [Paging](#/components/schemas/PagingOnlyBody)."
+              },
+              "total_count": {
+                "type": "integer",
+                "description": "Total count of result set."
+              },
+              "results": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntitySummary"
+                },
+                "description": "An array of entities. Details are provided in the following table."
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "AttributeSummary": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the attribute."
+          },
+          "label": {
+            "type": "string",
+            "description": "Label gives better understanding of attribute name."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the attribute."
+          },
+          "data_type": {
+            "type": "string",
+            "description": "Attribute data type."
+          },
+          "bucketing_allowed": {
+            "type": "boolean",
+            "description": "Bucketing / Filtering for Metrics API will be allowed only when the value is true for the attribute."
+          }
+        },
+        "additionalProperties": true
+      },
+      "PagedAttributeResultsWrapper": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "entity": {
+                "type": "string",
+                "description": "Entity from request."
+              },
+              "offset": {
+                "type": "integer",
+                "description": "Offset across the entire data set at which the current page starts."
+              },
+              "page_size": {
+                "type": "integer",
+                "description": "Min and max values are listed in [Paging](#/components/schemas/PagingOnlyBody)."
+              },
+              "total_count": {
+                "type": "integer",
+                "description": "Total count of result set."
+              },
+              "results": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AttributeSummary"
+                },
+                "description": "Array of attributes for the requested entity. The description and fields for each attribute in the list is mentioned in the following table."
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "Timespan": {
+        "type": "object",
+        "properties": {
+          "duration": {
+            "type": "integer",
+            "description": "duration of the request."
+          },
+          "unit": {
+            "type": "string",
+            "description": "time unit. Valid Time Units : Seconds, Minutes, Hours, Days, Weeks, Months, Years.",
+            "example": "DAYS"
+          }
+        },
+        "description": "timespan { \"duration\" : duration of the request, \"unit\" : time unit }. Mentions the span of time to calculate metrics. Accepted time units and sample are provided in the following table. Valid Time Units : Seconds, Minutes, Hours, Days, Weeks, Months, Years."
+      },
+      "TimeWindow": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "rolling_window",
+            "description": "Optional; used for rolling window requests (for example type \"rolling_window\")."
+          },
+          "timespan": {
+            "$ref": "#/components/schemas/Timespan",
+            "description": "Mentions the span of time to calculate metrics. Accepted time units and sample are provided in the following table. Optional, either this or start_time are mandatory in the request."
+          },
+          "start_time": {
+            "type": "string",
+            "description": "Date in the format \"yyyy-mm ddTHH:MM:SSz\". Optional. Either this or timespan should be present. Otherwise results in validation error."
+          },
+          "end_time": {
+            "type": "string",
+            "description": "Date in the format \"yyyy-mm ddTHH:MM:SSz\". Optional, if not provided considered as current time."
+          }
+        },
+        "additionalProperties": true
+      },
+      "MetricDefinition": {
+        "type": "object",
+        "required": [
+          "name",
+          "function"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Fully qualified attribute name known from the Attributes Metadata API. Required with \"function\"."
+          },
+          "function": {
+            "type": "string",
+            "enum": [
+              "AVG",
+              "SUM",
+              "MIN",
+              "MAX",
+              "COUNT",
+              "COUNT_DISTINCT"
+            ],
+            "description": "Aggregation function per Supported Metrics (AVG, SUM, MIN, MAX, COUNT, COUNT_DISTINCT). Should be one of the aggregation listed functions."
+          }
+        },
+        "description": "Specifies metric name and aggregation function. If metrics are requested with unsupported metric type or on attributes with datatypes that are not supported, HTTP 400 error response will be returned with appropriate error message."
+      },
+      "EntityMetricsRequest": {
+        "type": "object",
+        "required": [
+          "entity",
+          "time_window",
+          "metrics"
+        ],
+        "properties": {
+          "entity": {
+            "type": "string",
+            "description": "Entity name and this is a required field. This can be known from Entities API."
+          },
+          "time_window": {
+            "$ref": "#/components/schemas/TimeWindow",
+            "description": "This object takes time range in one of the time span or date range with start and end time or just start time. This is required and if none are provided in the request it results in validation error. Validation of date values or time span: 1) The timewindow cannot exceed 90 days. 2) Either start_time or Timespan should be present in the request but not both. 3) Only end_time is not valid."
+          },
+          "date_attribute_name": {
+            "type": "string",
+            "description": "Optional date field to be used for computing metrics and the data type of the attribute should be date."
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricDefinition"
+            },
+            "maxItems": 5,
+            "description": "Specifies an array of the metric function to be applied on the attribute. The attributes can be known from the Attributes Metadata API. This is a required object and takes \"name\" and \"function\" required fields. Upto 5 metrics are allowed in each request. At this point only one Metric is supported."
+          },
+          "filter": {
+            "type": "string",
+            "description": "String of filter attributes that follows ANTLR grammar. Optional. Only attributes that have set bucketing/filtering to true from Attributes API are allowed."
+          },
+          "bucketing_attributes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "description": "Array of grouping attributes known from Attributes Metadata API. Metrics will be returned within the time range for each bucket. Optional. Maximum of 10 bucketing attributes per request are allowed but the more the number of bucketing attributes, number of buckets per data point will be less. Currently this field is not supported for Rolling window type requests. If provided in the request, it will be ignored."
+          },
+          "num_results_per_bucketing_attribute": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 20,
+            "description": "An optional field that defines number of buckets per data point. A data point corresponds to sampling interval size. \"simple_timerange\" will have one data point and \"histogram\" or \"rolling window\" number of data points is based on number of sampling intervals. Default value is set to 20 and maximum value is set 500."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Payload for any entity metrics end point have the following common parameters."
+      },
+      "SamplingInterval": {
+        "type": "object",
+        "properties": {
+          "duration": {
+            "type": "integer",
+            "description": "Duration for the sampling interval."
+          },
+          "unit": {
+            "type": "string",
+            "example": "DAYS",
+            "description": "Accepted time units are \"HOURS\" and \"DAYS\"."
+          }
+        },
+        "description": "Similar to timespan. Accepted time units are \"HOURS\" and \"DAYS\". The interval size should be within the requested time range otherwise results in validation error."
+      },
+      "HistogramMetricsPayload": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EntityMetricsRequest"
+          },
+          {
+            "type": "object",
+            "required": [
+              "sampling_interval"
+            ],
+            "properties": {
+              "sampling_interval": {
+                "$ref": "#/components/schemas/SamplingInterval",
+                "description": "Similar to timespan. Accepted time units are \"HOURS\" and \"DAYS\". The interval size should be within the requested time range otherwise results in validation error."
+              }
+            }
+          }
+        ]
+      },
+      "HistogramMetricsRequestWrapper": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/HistogramMetricsPayload",
+            "description": "Histogram metrics request fields including sampling_interval."
+          }
+        },
+        "additionalProperties": true,
+        "description": "JSON body uses a data object wrapping the histogram metrics payload (Histogram Requests)."
+      },
+      "RollingWindowMetricsRequestWrapper": {
+        "type": "object",
+        "required": [
+          "entity",
+          "time_window",
+          "metrics",
+          "sampling_interval",
+          "window_size"
+        ],
+        "properties": {
+          "entity": {
+            "type": "string",
+            "description": "Entity name and this is a required field. This can be known from Entities API."
+          },
+          "time_window": {
+            "$ref": "#/components/schemas/TimeWindow",
+            "description": "This object takes time range in one of the time span or date range with start and end time or just start time. This is required and if none are provided in the request it results in validation error. Validation of date values or time span: 1) The timewindow cannot exceed 90 days. 2) Either start_time or Timespan should be present in the request but not both. 3) Only end_time is not valid."
+          },
+          "date_attribute_name": {
+            "type": "string",
+            "description": "Optional date field to be used for computing metrics and the data type of the attribute should be date."
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricDefinition"
+            },
+            "maxItems": 5,
+            "description": "Specifies an array of the metric function to be applied on the attribute. The attributes can be known from the Attributes Metadata API. This is a required object and takes \"name\" and \"function\" required fields. Upto 5 metrics are allowed in each request. At this point only one Metric is supported."
+          },
+          "filter": {
+            "type": "string",
+            "description": "String of filter attributes that follows ANTLR grammar. Optional. Only attributes that have set bucketing/filtering to true from Attributes API are allowed."
+          },
+          "sampling_interval": {
+            "$ref": "#/components/schemas/SamplingInterval",
+            "description": "Similar to timespan. Accepted time units are \"HOURS\" and \"DAYS\". The interval size should be within the requested time range otherwise results in validation error."
+          },
+          "window_size": {
+            "$ref": "#/components/schemas/Timespan",
+            "description": "Required. This also takes duration for window size and time unit similar to sampling interval. Accepted time units are \"HOURS\" and \"DAYS\"."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Rolling window request fields."
+      },
+      "SimpleTimerangeMetricsRequestWrapper": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/EntityMetricsRequest",
+            "description": "Entity metrics fields as defined for Entity Metrics API (wrapped in data)."
+          }
+        },
+        "additionalProperties": true
+      },
+      "MetricsResultMetricValue": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Metric name returned in the response."
+          },
+          "function": {
+            "type": "string",
+            "description": "Aggregation function returned in the response."
+          },
+          "value": {
+            "description": "Value for the metric."
+          }
+        },
+        "additionalProperties": true
+      },
+      "MetricsMetadata": {
+        "type": "object",
+        "properties": {
+          "date_attribute_name": {
+            "type": "string",
+            "description": "Date attribute name used for computing metrics."
+          },
+          "attributes": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "This contains metadata for all the aggregation and bucketing attributes and date_attribute_name."
+          }
+        },
+        "additionalProperties": true
+      },
+      "MetricsResultItem": {
+        "type": "object",
+        "properties": {
+          "start_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start time for the metric."
+          },
+          "end_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "End time for the metric."
+          },
+          "bucketing_attributes": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "This is returned only if request has bucketing attributes. This has key, value pairs for each bucketing attribute in the request."
+          },
+          "metrics_values": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsResultMetricValue"
+            },
+            "description": "Array of objects that contain metric details from request and value."
+          }
+        },
+        "additionalProperties": true
+      },
+      "RollingWindowMetricsResultItem": {
+        "type": "object",
+        "properties": {
+          "start_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start time for the metric."
+          },
+          "end_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "End time for the metric."
+          },
+          "bucketing_attributes": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "This is returned only if request has bucketing attributes. This has key, value pairs for each bucketing attribute in the request."
+          },
+          "metrics_values": {
+            "$ref": "#/components/schemas/MetricsResultMetricValue",
+            "description": "Object that contains metric details from request and value."
+          }
+        },
+        "additionalProperties": true
+      },
+      "MetricsResultData": {
+        "type": "object",
+        "properties": {
+          "entity": {
+            "type": "string",
+            "description": "entity received in request."
+          },
+          "result_type": {
+            "type": "string",
+            "example": "SIMPLE_TIMERANGE",
+            "description": "Result type is the request end point type sent back in response."
+          },
+          "is_complete_dataset": {
+            "type": "boolean",
+            "description": "If this field is present it indicates that entire dataset is not returned in response and to retrieve additional data, request should be adjusted (time window or sampling interval size or cardinality) and re tried."
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/MetricsMetadata"
+          },
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsResultItem"
+            },
+            "description": "Array of response objects as shown in the API documentation."
+          }
+        },
+        "additionalProperties": true
+      },
+      "RollingWindowMetricsResultData": {
+        "type": "object",
+        "properties": {
+          "entity": {
+            "type": "string",
+            "description": "entity received in request."
+          },
+          "result_type": {
+            "type": "string",
+            "example": "ROLLING_WINDOW",
+            "description": "Result type is the request end point type sent back in response."
+          },
+          "is_complete_dataset": {
+            "type": "boolean",
+            "description": "If this field is present it indicates that entire dataset is not returned in response and to retrieve additional data, request should be adjusted (time window or sampling interval size or cardinality) and re tried."
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/MetricsMetadata"
+          },
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RollingWindowMetricsResultItem"
+            },
+            "description": "Array of response objects as shown in the API documentation."
+          }
+        },
+        "additionalProperties": true
+      },
+      "MetricsResultEnvelope": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/MetricsResultData"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Response has the following fields."
+      },
+      "RollingWindowMetricsResultEnvelope": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RollingWindowMetricsResultData"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Response has the following fields."
+      },
+      "ReportAttributeMetadataResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "description": "Array of attribute metadata entries as described in Report Metadata API sample responses."
+          }
+        },
+        "additionalProperties": true,
+        "description": "A meta-data API response listing attributes available for a particular integration and entity."
+      },
+      "ReportRecipient": {
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Recipient email address."
+          }
+        },
+        "additionalProperties": true
+      },
+      "ReportDateRange": {
+        "type": "object",
+        "required": [
+          "time_span"
+        ],
+        "properties": {
+          "time_span": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "duration",
+                  "unit"
+                ],
+                "properties": {
+                  "duration": {
+                    "type": "integer",
+                    "enum": [
+                      12
+                    ],
+                    "description": "Duration for Last 12 hours."
+                  },
+                  "unit": {
+                    "type": "string",
+                    "enum": [
+                      "HOURS"
+                    ],
+                    "description": "Time unit for Last 12 hours."
+                  }
+                },
+                "additionalProperties": true
+              },
+              {
+                "type": "object",
+                "required": [
+                  "duration",
+                  "unit"
+                ],
+                "properties": {
+                  "duration": {
+                    "type": "integer",
+                    "enum": [
+                      7
+                    ],
+                    "description": "Duration for Last 7 days."
+                  },
+                  "unit": {
+                    "type": "string",
+                    "enum": [
+                      "DAYS"
+                    ],
+                    "description": "Time unit for Last 7 days."
+                  }
+                },
+                "additionalProperties": true
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "examples": {
+          "last12Hours": {
+            "summary": "Last 12 hours",
+            "value": {
+              "time_span": {
+                "duration": 12,
+                "unit": "HOURS"
+              }
+            }
+          },
+          "last7Days": {
+            "summary": "Last 7 days",
+            "value": {
+              "time_span": {
+                "duration": 7,
+                "unit": "DAYS"
+              }
+            }
+          }
+        },
+        "description": "Date range JSON format for relative ranges such as Last 12 hours and Last 7 days."
+      },
+      "ReportDateRangeCustom": {
+        "type": "object",
+        "required": [
+          "start_date_millis",
+          "end_date_millis"
+        ],
+        "properties": {
+          "start_date_millis": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Start date in milliseconds."
+          },
+          "end_date_millis": {
+            "type": "integer",
+            "format": "int64",
+            "description": "End date in milliseconds."
+          }
+        },
+        "additionalProperties": true,
+        "example": {
+          "start_date_millis": 1627756241000,
+          "end_date_millis": 1628274581000
+        },
+        "description": "Date range JSON format for Custom. The custom time period can be maximum 28 days."
+      },
+      "DateRange": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/ReportDateRange"
+          },
+          {
+            "$ref": "#/components/schemas/ReportDateRangeCustom"
+          }
+        ],
+        "description": "Request body can have date range in one of the following formats for time-series reports: Last 12 hours, Last 7 days, or Custom. The custom time period can be maximum 28 days."
+      },
+      "CreateReportRequest": {
+        "type": "object",
+        "required": [
+          "name",
+          "integration",
+          "entity",
+          "column_names",
+          "report_format"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Free-form text string naming the report. It must be unique within the context of a customer."
+          },
+          "description": {
+            "type": "string",
+            "description": "Free-form text string describing the report."
+          },
+          "integration": {
+            "type": "string",
+            "example": "airwatch",
+            "description": "Identifies the integration from which the data will be sourced."
+          },
+          "entity": {
+            "type": "string",
+            "example": "application",
+            "description": "Identifies the entity from which the data will be sourced."
+          },
+          "column_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "An array of column names. Indicates the attributes of corresponding integration and entity that will appear in the report. Format of attributes has to be: <integration-name>.<entity-name>.<attribute-name>. For example: airwatch.application.app_name."
+          },
+          "filter": {
+            "type": "string",
+            "description": "A filter expression. Filters the data based on the expression, so the data matching the criteria appears in the report. Note: column names in the filter conditions should also match the format <integration-name>.<entity-name>.<column-name>. For example: airwatch.application.app_dynamic_size_bytes > 5000000."
+          },
+          "report_type": {
+            "type": "string",
+            "enum": [
+              "HISTORICAL",
+              "SNAPSHOT"
+            ],
+            "default": "SNAPSHOT",
+            "description": "Report type. Possible values are HISTORICAL and SNAPSHOT. If not specified, the default is SNAPSHOT."
+          },
+          "report_format": {
+            "type": "string",
+            "enum": [
+              "CSV",
+              "JSONL"
+            ],
+            "description": "Report format. Supported formats are CSV and JSONL. Indicates the output format of the report being created."
+          },
+          "date_range": {
+            "$ref": "#/components/schemas/DateRange",
+            "description": "Date range for HISTORICAL report type."
+          },
+          "join_entities_by_integration": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "description": "Mapping of integration to corresponding entity list. Enables creating reports requiring multi entity joins. Optional, computed based on entities involved."
+          },
+          "recipients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReportRecipient"
+            },
+            "description": "An array of email address objects. Indicates who should receive the output of the report."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Report creation requires the following information get encoded in a JSON request body."
+      },
+      "ReportDetail": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Report identifier returned in the create report response (`$.data.id`). This report identifier is used in subsequent API calls to setup schedules, run the report, and download the results."
+          },
+          "name": {
+            "type": "string",
+            "description": "Free-form text string naming the report."
+          },
+          "description": {
+            "type": "string",
+            "description": "Free-form text string describing the report."
+          },
+          "integration": {
+            "type": "string",
+            "description": "Identifies the integration from which the data will be sourced."
+          },
+          "entity": {
+            "type": "string",
+            "description": "Identifies the entity from which the data will be sourced."
+          },
+          "filter": {
+            "type": "string",
+            "description": "Filter expression applied to the report. Column names in the filter conditions should match the format <integration-name>.<entity-name>.<column-name>. For example: airwatch.application.app_dynamic_size_bytes > 5000000."
+          },
+          "report_type": {
+            "type": "string",
+            "description": "Report type (HISTORICAL or SNAPSHOT)."
+          },
+          "report_format": {
+            "type": "string",
+            "description": "Report format (CSV or JSONL)."
+          },
+          "column_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Attributes included in the report. Format of attributes has to be: <integration-name>.<entity-name>.<attribute-name>. For example: airwatch.application.app_name."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Created timestamp."
+          },
+          "modified_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Modified timestamp."
+          },
+          "total_schedules": {
+            "type": "integer",
+            "description": "Total schedules associated with the report."
+          },
+          "total_downloads": {
+            "type": "integer",
+            "description": "Total downloads associated with the report."
+          },
+          "total_recipients": {
+            "type": "integer",
+            "description": "Total recipients associated with the report."
+          }
+        },
+        "additionalProperties": true
+      },
+      "ReportDetailWrapper": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ReportDetail"
+          }
+        },
+        "additionalProperties": true,
+        "description": "Standard wrapper with data containing report details."
+      },
+      "ReportRunResponseWrapper": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true,
+        "description": "Run report API response body including schedule-related fields for an ADHOC or scheduled run."
+      },
+      "CreateReportScheduleRequest": {
+        "type": "object",
+        "required": [
+          "name",
+          "report_id",
+          "schedule_type",
+          "start",
+          "cron_expression_detail"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The schedule name."
+          },
+          "report_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The report ID returned by the Create Report API."
+          },
+          "schedule_type": {
+            "type": "string",
+            "enum": [
+              "CRON",
+              "ADHOC"
+            ],
+            "description": "Schedule type: CRON (meaning scheduled) or ADHOC per API Documentation."
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The time at which the schedule takes effect (maybe be in the future)."
+          },
+          "cron_expression_detail": {
+            "$ref": "#/components/schemas/CronExpressionDetail",
+            "description": "Cron expression detail specifying frequency (ONCE, HOURLY, DAILY, WEEKLY, MONTHLY, YEARLY)."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Report Schedule creation requires the following information get encoded in a JSON request body."
+      },
+      "CronExpressionOnce": {
+        "type": "object",
+        "required": [
+          "frequency"
+        ],
+        "properties": {
+          "frequency": {
+            "type": "string",
+            "enum": [
+              "ONCE"
+            ],
+            "description": "Only once."
+          }
+        },
+        "additionalProperties": true,
+        "example": {
+          "frequency": "ONCE"
+        }
+      },
+      "CronExpressionHourly": {
+        "type": "object",
+        "required": [
+          "frequency",
+          "hourly"
+        ],
+        "properties": {
+          "frequency": {
+            "type": "string",
+            "enum": [
+              "HOURLY"
+            ],
+            "description": "Each hour."
+          },
+          "hourly": {
+            "type": "object",
+            "required": [
+              "interval"
+            ],
+            "properties": {
+              "interval": {
+                "type": "integer",
+                "description": "Hourly interval."
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true,
+        "example": {
+          "frequency": "HOURLY",
+          "hourly": {
+            "interval": 4
+          }
+        }
+      },
+      "CronExpressionDaily": {
+        "type": "object",
+        "required": [
+          "frequency",
+          "hour",
+          "minute"
+        ],
+        "properties": {
+          "frequency": {
+            "type": "string",
+            "enum": [
+              "DAILY"
+            ],
+            "description": "Each day."
+          },
+          "hour": {
+            "type": "integer",
+            "description": "Hour of day."
+          },
+          "minute": {
+            "type": "integer",
+            "description": "Minute of hour."
+          }
+        },
+        "additionalProperties": true,
+        "example": {
+          "frequency": "DAILY",
+          "hour": 17,
+          "minute": 15
+        }
+      },
+      "CronExpressionWeekly": {
+        "type": "object",
+        "required": [
+          "frequency",
+          "hour",
+          "minute",
+          "weekly"
+        ],
+        "properties": {
+          "frequency": {
+            "type": "string",
+            "enum": [
+              "WEEKLY"
+            ],
+            "description": "Each week."
+          },
+          "hour": {
+            "type": "integer",
+            "description": "Hour of day."
+          },
+          "minute": {
+            "type": "integer",
+            "description": "Minute of hour."
+          },
+          "weekly": {
+            "type": "object",
+            "required": [
+              "days_of_week"
+            ],
+            "properties": {
+              "days_of_week": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "SUN",
+                    "MON",
+                    "TUE",
+                    "WED",
+                    "THU",
+                    "FRI",
+                    "SAT"
+                  ]
+                },
+                "description": "Days of week."
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true,
+        "example": {
+          "frequency": "WEEKLY",
+          "hour": 17,
+          "minute": 15,
+          "weekly": {
+            "days_of_week": [
+              "SUN",
+              "WED"
+            ]
+          }
+        }
+      },
+      "CronExpressionMonthly": {
+        "type": "object",
+        "required": [
+          "frequency",
+          "hour",
+          "minute",
+          "monthly"
+        ],
+        "properties": {
+          "frequency": {
+            "type": "string",
+            "enum": [
+              "MONTHLY"
+            ],
+            "description": "Each month."
+          },
+          "hour": {
+            "type": "integer",
+            "description": "Hour of day."
+          },
+          "minute": {
+            "type": "integer",
+            "description": "Minute of hour."
+          },
+          "monthly": {
+            "type": "object",
+            "required": [
+              "day_of_month"
+            ],
+            "properties": {
+              "day_of_month": {
+                "type": "integer",
+                "description": "Day of month."
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true,
+        "example": {
+          "frequency": "MONTHLY",
+          "hour": 17,
+          "minute": 15,
+          "monthly": {
+            "day_of_month": 5
+          }
+        }
+      },
+      "CronExpressionYearly": {
+        "type": "object",
+        "required": [
+          "frequency",
+          "hour",
+          "minute",
+          "yearly"
+        ],
+        "properties": {
+          "frequency": {
+            "type": "string",
+            "enum": [
+              "YEARLY"
+            ],
+            "description": "Each year."
+          },
+          "hour": {
+            "type": "integer",
+            "description": "Hour of day."
+          },
+          "minute": {
+            "type": "integer",
+            "description": "Minute of hour."
+          },
+          "yearly": {
+            "type": "object",
+            "required": [
+              "day_of_month",
+              "month"
+            ],
+            "properties": {
+              "day_of_month": {
+                "type": "integer",
+                "description": "Day of month."
+              },
+              "month": {
+                "type": "string",
+                "enum": [
+                  "JANUARY",
+                  "FEBRUARY",
+                  "MARCH",
+                  "APRIL",
+                  "MAY",
+                  "JUNE",
+                  "JULY",
+                  "AUGUST",
+                  "SEPTEMBER",
+                  "OCTOBER",
+                  "NOVEMBER",
+                  "DECEMBER"
+                ],
+                "description": "Month of year."
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true,
+        "example": {
+          "frequency": "YEARLY",
+          "hour": 17,
+          "minute": 15,
+          "yearly": {
+            "day_of_month": 5,
+            "month": "JANUARY"
+          }
+        }
+      },
+      "CronExpressionDetail": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/CronExpressionOnce"
+          },
+          {
+            "$ref": "#/components/schemas/CronExpressionHourly"
+          },
+          {
+            "$ref": "#/components/schemas/CronExpressionDaily"
+          },
+          {
+            "$ref": "#/components/schemas/CronExpressionWeekly"
+          },
+          {
+            "$ref": "#/components/schemas/CronExpressionMonthly"
+          },
+          {
+            "$ref": "#/components/schemas/CronExpressionYearly"
+          }
+        ],
+        "description": "Additional Scheduling Options. Supported cron_expression_detail formats are ONCE, HOURLY, DAILY, WEEKLY, MONTHLY, and YEARLY."
+      },
+      "ReportScheduleWrapper": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true,
+        "description": "Response includes schedule fields such as id (internal report schedule ID), active, created_at, cron_expression_detail, report_id, schedule_type, start."
+      },
+      "ReportDownloadRecord": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Report tracking identifier used with GET /v2/reports/tracking/{tracking_id}/download."
+          },
+          "report_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Associated report id."
+          },
+          "status": {
+            "type": "string",
+            "description": "Processing status (for example \"COMPLETED\")."
+          },
+          "location": {
+            "type": "string",
+            "description": "Storage location path for the report output."
+          },
+          "start_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start time for the report processing run."
+          },
+          "processing_time_millis": {
+            "type": "integer",
+            "description": "Processing duration in milliseconds."
+          }
+        },
+        "additionalProperties": true
+      },
+      "ReportDownloadsSearchWrapper": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "offset": {
+                "type": "integer",
+                "description": "Offset reflected from request paging parameters."
+              },
+              "page_size": {
+                "type": "integer",
+                "description": "Page size reflected from request paging parameters."
+              },
+              "total_count": {
+                "type": "integer",
+                "description": "Total count of download records."
+              },
+              "results": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ReportDownloadRecord"
+                },
+                "description": "Download records whose identifiers can be used to download report contents now or at any other point in the future."
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true,
+        "description": "Lists downloads with paging; JSON body provides \"report tracking\" identifiers for completed runs available for download."
+      },
+      "ReportPreviewWrapper": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "page_size": {
+                "type": "integer",
+                "description": "Page size for preview results."
+              },
+              "offset": {
+                "type": "integer",
+                "description": "Offset for preview results."
+              },
+              "total_count": {
+                "type": "integer",
+                "description": "Total rows available for preview."
+              },
+              "results": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "description": "Array of row objects with fully qualified column keys."
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true,
+        "description": "Paged preview rows for a report (Report preview API)."
+      },
+      "ReportsSearchBody": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "description": "Offset across the entire data set at which the current page starts."
+          },
+          "page_size": {
+            "type": "integer",
+            "description": "The number of records to return per Paging rules."
+          },
+          "sort_ons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SortOn"
+            },
+            "description": "Optional sort specifications (field and ASC/DESC order)."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Report search API JSON request body with paging and optional sort_ons."
+      },
+      "ReportsSearchWrapper": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "page_size": {
+                "type": "integer",
+                "description": "Page size in the response."
+              },
+              "offset": {
+                "type": "integer",
+                "description": "Offset in the response."
+              },
+              "total_count": {
+                "type": "integer",
+                "description": "Total reports matching the query."
+              },
+              "results": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ReportDetail"
+                },
+                "description": "Array of report detail objects."
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true,
+        "description": "Paged list of reports matching the search request."
+      },
+      "ReportRecipientsBody": {
+        "type": "object",
+        "required": [
+          "recipients"
+        ],
+        "properties": {
+          "recipients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReportRecipient"
+            },
+            "description": "Recipients who should receive report output (email objects)."
+          }
+        },
+        "additionalProperties": true,
+        "description": "Set Report recipients API — specify recipients for a report."
+      },
+      "ReportRecipientsWrapper": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "report_id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Report identifier."
+              },
+              "recipients": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "description": "Recipient email address."
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "Created timestamp."
+                    },
+                    "created_by": {
+                      "type": "string",
+                      "description": "Created by user identifier."
+                    }
+                  }
+                },
+                "description": "Recipients associated with the report."
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true,
+        "description": "Get Report recipients API response listing recipients for a report."
+      }
+    }
+  }
+}
