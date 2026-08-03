@@ -1,0 +1,352 @@
+{
+	"injectedConfig": {
+		"DEX": true,
+		"wifi_info": true
+	},
+	"permissions": {
+		"locationAuthorization": "notDetermined"
+	},
+	"sdkInitialized": true,
+	"sdkVersion": "0.33.0",
+	"telemetryModuleReport": {
+		"attributeReport": {
+			"DigitalEmployeeExperience": {
+				"attributes": {
+					"app_usage_metrics": {
+						"app_name": {
+							"isAttributeEnabled": true
+						},
+						"app_usage_date_time": {
+							"isAttributeEnabled": true
+						},
+						"app_version": {
+							"isAttributeEnabled": true
+						},
+						"average_time_in_foreground": {
+							"isAttributeEnabled": true
+						},
+						"battery_drain": {
+							"isAttributeEnabled": true
+						},
+						"count_of_foreground_events": {
+							"isAttributeEnabled": true
+						},
+						"data_usage": {
+							"isAttributeEnabled": true
+						},
+						"longest_app_session": {
+							"isAttributeEnabled": true
+						},
+						"shortest_app_session": {
+							"isAttributeEnabled": true
+						},
+						"total_time_in_foreground": {
+							"isAttributeEnabled": true
+						}
+					},
+					"battery": {
+						"battery_average_current": {
+							"isAttributeEnabled": true
+						},
+						"battery_capacity": {
+							"isAttributeEnabled": true
+						},
+						"battery_charging_rate": {
+							"isAttributeEnabled": true
+						},
+						"battery_charging_status": {
+							"isAttributeEnabled": true
+						},
+						"battery_electrical_current": {
+							"isAttributeEnabled": true
+						},
+						"battery_electrical_current_rate": {
+							"isAttributeEnabled": true
+						},
+						"battery_level": {
+							"isAttributeEnabled": true
+						},
+						"battery_remaining_charge": {
+							"isAttributeEnabled": true
+						},
+						"battery_status": {
+							"isAttributeEnabled": true
+						},
+						"battery_temperature": {
+							"isAttributeEnabled": true
+						},
+						"battery_time_since_charging": {
+							"isAttributeEnabled": true
+						},
+						"battery_time_since_unplugged": {
+							"isAttributeEnabled": true
+						},
+						"battery_type": {
+							"isAttributeEnabled": true
+						},
+						"battery_voltage": {
+							"isAttributeEnabled": true
+						},
+						"charge_cycle_count": {
+							"isAttributeEnabled": true
+						},
+						"plugged_type": {
+							"isAttributeEnabled": true
+						},
+						"power_saver_enabled": {
+							"isAttributeEnabled": true
+						}
+					},
+					"device": {
+						"cpu_cores_logical": {
+							"isAttributeEnabled": true
+						},
+						"cpu_cores_physical": {
+							"isAttributeEnabled": true
+						},
+						"cpu_utilization": {
+							"isAttributeEnabled": true
+						},
+						"device_language": {
+							"isAttributeEnabled": false
+						},
+						"device_region": {
+							"isAttributeEnabled": false
+						},
+						"disk_space_free_bytes": {
+							"isAttributeEnabled": true
+						},
+						"disk_space_total_bytes": {
+							"isAttributeEnabled": true
+						},
+						"is_screen_interactive": {
+							"isAttributeEnabled": true
+						},
+						"is_sdcard_portable": {
+							"isAttributeEnabled": true
+						},
+						"last_boot_time": {
+							"isAttributeEnabled": true
+						},
+						"location_service_enabled_state": {
+							"isAttributeEnabled": true
+						},
+						"memory_allocated_per_app_bytes": {
+							"isAttributeEnabled": true
+						},
+						"memory_total_bytes": {
+							"isAttributeEnabled": true
+						},
+						"percent_asleep": {
+							"isAttributeEnabled": true
+						},
+						"percent_awake": {
+							"isAttributeEnabled": true
+						},
+						"process_cpu_time": {
+							"isAttributeEnabled": true
+						},
+						"reference_time_elapsed": {
+							"isAttributeEnabled": true
+						},
+						"screen_brightness": {
+							"isAttributeEnabled": true
+						},
+						"sdcard_space_free_bytes": {
+							"isAttributeEnabled": true
+						},
+						"sdcard_space_total_bytes": {
+							"isAttributeEnabled": true
+						},
+						"sleep_duration": {
+							"isAttributeEnabled": true
+						},
+						"wake_duration": {
+							"isAttributeEnabled": true
+						}
+					},
+					"network": {
+						"bluetooth_connected": {
+							"isAttributeEnabled": true
+						},
+						"bssid": {
+							"isAttributeEnabled": true
+						},
+						"carrier": {
+							"isAttributeEnabled": true
+						},
+						"current_rx_link_speed_mbps": {
+							"isAttributeEnabled": true
+						},
+						"current_tx_link_speed_mbps": {
+							"isAttributeEnabled": true
+						},
+						"internet_available": {
+							"isAttributeEnabled": true
+						},
+						"ip_address": {
+							"isAttributeEnabled": true
+						},
+						"is_multicast": {
+							"isAttributeEnabled": true
+						},
+						"is_roaming": {
+							"isAttributeEnabled": true
+						},
+						"jitter": {
+							"isAttributeEnabled": true
+						},
+						"latency": {
+							"isAttributeEnabled": true
+						},
+						"max_rx_link_speed_mbps": {
+							"isAttributeEnabled": true
+						},
+						"max_tx_link_speed_mbps": {
+							"isAttributeEnabled": true
+						},
+						"mobile_network_type": {
+							"isAttributeEnabled": true
+						},
+						"mobile_radio_active": {
+							"isAttributeEnabled": true
+						},
+						"mobile_signal_strength": {
+							"isAttributeEnabled": true
+						},
+						"network_connectivity_type": {
+							"isAttributeEnabled": true
+						},
+						"network_download_speed_mbps": {
+							"isAttributeEnabled": true
+						},
+						"network_upload_speed_mbps": {
+							"isAttributeEnabled": true
+						},
+						"rssi": {
+							"isAttributeEnabled": true
+						},
+						"rx_efficiency_pct": {
+							"isAttributeEnabled": true
+						},
+						"ssid": {
+							"isAttributeEnabled": true
+						},
+						"tx_efficiency_pct": {
+							"isAttributeEnabled": true
+						},
+						"vpn_connected": {
+							"isAttributeEnabled": true
+						},
+						"wifi_channel_width": {
+							"isAttributeEnabled": true
+						},
+						"wifi_configuration_status": {
+							"isAttributeEnabled": true
+						},
+						"wifi_frequency": {
+							"isAttributeEnabled": true
+						},
+						"wifi_on": {
+							"isAttributeEnabled": true
+						},
+						"wifi_scan_available": {
+							"isAttributeEnabled": true
+						},
+						"wifi_signal_strength": {
+							"isAttributeEnabled": true
+						}
+					}
+				},
+				"entities": {
+					"app_usage_metrics": {
+						"isEntityEnabled": true
+					},
+					"battery": {
+						"isEntityEnabled": true
+					},
+					"device": {
+						"isEntityEnabled": true
+					},
+					"network": {
+						"isEntityEnabled": true
+					},
+					"synthetic_url_monitoring": {
+						"isEntityEnabled": true
+					},
+					"tunnel_network_monitoring": {
+						"isEntityEnabled": true
+					}
+				},
+				"events": {
+					"charging_state_change": {
+						"isEventEnabled": true,
+						"isEventLimited": false
+					},
+					"critical_battery_level": {
+						"isEventEnabled": true,
+						"isEventLimited": false
+					},
+					"critical_cell_strength": {
+						"isEventEnabled": true,
+						"isEventLimited": false
+					},
+					"device_reboot": {
+						"isEventEnabled": true,
+						"isEventLimited": false
+					},
+					"max_data_reached": {
+						"isEventEnabled": true,
+						"isEventLimited": false
+					},
+					"network_change": {
+						"isEventEnabled": true,
+						"isEventLimited": false
+					},
+					"SIM_state_change_inserted": {
+						"isEventEnabled": true,
+						"isEventLimited": false
+					},
+					"SIM_state_change_removed": {
+						"isEventEnabled": true,
+						"isEventLimited": false
+					},
+					"tunnel_flow": {
+						"isEventEnabled": true,
+						"isEventLimited": false
+					}
+				}
+			}
+		},
+		"config": {
+			"envConfig": {
+				"features": [
+					{
+						"DEX": "d3XSdK_unknown"
+					}
+				],
+				"url": "https://api.staging.region.data.workspaceone.com/api/v1/sdk/compliance/rules"
+			},
+			"intelligenceHost": "api.staging.region.data.workspaceone.com",
+			"privacyConfig_DigitalEmployeeExperience": {
+				"DeviceData": {
+					"AttributesToDisable": [
+						"device_language",
+						"device_region"
+					],
+					"EventsToDisable": []
+				},
+				"Version": 1
+			}
+		},
+		"features": [
+			"DigitalEmployeeExperience"
+		],
+		"reporters": {
+			"DigitalEmployeeExperience": {
+				"maxEventSendThresholdSize": 5000000,
+				"totalBytesSent": 6243
+			}
+		}
+	}
+}
