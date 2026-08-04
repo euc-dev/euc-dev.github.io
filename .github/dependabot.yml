@@ -1,0 +1,43 @@
+version: 2
+updates:
+  - package-ecosystem: docker
+    directory: /.devcontainer
+    schedule:
+      interval: daily
+    groups:
+      all:
+          applies-to: version-updates
+          patterns:
+              - '*'
+    cooldown:
+      default-days: 5
+      include:
+          - '*'
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      all:
+          applies-to: version-updates
+          patterns:
+              - '*'
+    cooldown:
+      default-days: 5
+      include:
+          - '*'
+
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      all:
+          applies-to: version-updates
+          patterns:
+              - '*'
+    cooldown:
+      default-days: 5
+      include:
+          - '*'
