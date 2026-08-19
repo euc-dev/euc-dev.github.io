@@ -1,0 +1,102 @@
+$dokka.format:gfm-v1
+$dokka.linkExtension:md
+$dokka.location:com.airwatch.gateway.auth////PointingToDeclaration/ws1-network/com.airwatch.gateway.auth/index.md
+$dokka.location:com.airwatch.gateway.auth/ApacheNTLMSchemeFactory///PointingToDeclaration/ws1-network/com.airwatch.gateway.auth/-apache-n-t-l-m-scheme-factory/index.md
+$dokka.location:com.airwatch.gateway.auth/ApacheNTLMSchemeFactory/newInstance/#HttpParams/PointingToDeclaration/ws1-network/com.airwatch.gateway.auth/-apache-n-t-l-m-scheme-factory/new-instance.md
+$dokka.location:com.airwatch.gateway.clients////PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/index.md
+$dokka.location:com.airwatch.gateway.clients/AWAuthInterceptor///PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-auth-interceptor/index.md
+$dokka.location:com.airwatch.gateway.clients/AWAuthInterceptor/AWAuthInterceptor/#boolean/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-auth-interceptor/-a-w-auth-interceptor.md
+$dokka.location:com.airwatch.gateway.clients/AWCertAuthUtil///PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-cert-auth-util/index.md
+$dokka.location:com.airwatch.gateway.clients/AWCertAuthUtil/getCertAuthKeyManagers/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-cert-auth-util/get-cert-auth-key-managers.md
+$dokka.location:com.airwatch.gateway.clients/AWCertAuthUtil/getCertAuthKeyStore/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-cert-auth-util/get-cert-auth-key-store.md
+$dokka.location:com.airwatch.gateway.clients/AWHttpClient///PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-http-client/index.md
+$dokka.location:com.airwatch.gateway.clients/AWHttpClient/AWHttpClient/#Context#boolean/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-http-client/-a-w-http-client.md
+$dokka.location:com.airwatch.gateway.clients/AWHttpClient/AWHttpClient/#Context/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-http-client/-a-w-http-client.md
+$dokka.location:com.airwatch.gateway.clients/AWHttpClient/executeRequest/#HttpHost#HttpRequest#HttpContext/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-http-client/execute-request.md
+$dokka.location:com.airwatch.gateway.clients/AWHttpClient/executeRequest/#HttpHost#HttpRequest#ResponseHandler<? extends T>#HttpContext/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-http-client/execute-request.md
+$dokka.location:com.airwatch.gateway.clients/AWHttpClient/executeRequest/#HttpHost#HttpRequest#ResponseHandler<? extends T>/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-http-client/execute-request.md
+$dokka.location:com.airwatch.gateway.clients/AWHttpClient/executeRequest/#HttpHost#HttpRequest/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-http-client/execute-request.md
+$dokka.location:com.airwatch.gateway.clients/AWHttpClient/executeRequest/#HttpUriRequest#HttpContext/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-http-client/execute-request.md
+$dokka.location:com.airwatch.gateway.clients/AWHttpClient/executeRequest/#HttpUriRequest#ResponseHandler<? extends T>#HttpContext/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-http-client/execute-request.md
+$dokka.location:com.airwatch.gateway.clients/AWHttpClient/executeRequest/#HttpUriRequest#ResponseHandler<? extends T>/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-http-client/execute-request.md
+$dokka.location:com.airwatch.gateway.clients/AWHttpClient/executeRequest/#HttpUriRequest/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-http-client/execute-request.md
+$dokka.location:com.airwatch.gateway.clients/AWOkHttpAuthenticator///PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-ok-http-authenticator/index.md
+$dokka.location:com.airwatch.gateway.clients/AWOkHttpAuthenticator/authenticate/#Route#Response/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-ok-http-authenticator/authenticate.md
+$dokka.location:com.airwatch.gateway.clients/AWOkHttpClient///PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-ok-http-client/index.md
+$dokka.location:com.airwatch.gateway.clients/AWOkHttpClient/copyWithDefaults/#Context#OkHttpClient/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-ok-http-client/copy-with-defaults.md
+$dokka.location:com.airwatch.gateway.clients/AWOkHttpClient/copyWithDefaults/#OkHttpClient#javax.net.ssl.X509TrustManager/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-ok-http-client/copy-with-defaults.md
+$dokka.location:com.airwatch.gateway.clients/AWOkHttpClient/copyWithDefaults/#OkHttpClient/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-ok-http-client/copy-with-defaults.md
+$dokka.location:com.airwatch.gateway.clients/AWOkHttpClient/getProxy/#java.net.Proxy/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-ok-http-client/get-proxy.md
+$dokka.location:com.airwatch.gateway.clients/AWOkHttpClient/newCall/#OkHttpClient#Request/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-ok-http-client/new-call.md
+$dokka.location:com.airwatch.gateway.clients/AWUrlConnection///PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-url-connection/index.md
+$dokka.location:com.airwatch.gateway.clients/AWUrlConnection/openConnection/#java.net.URL/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-url-connection/open-connection.md
+$dokka.location:com.airwatch.gateway.clients/AWUrlConnection/openStream/#java.net.URL/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-url-connection/open-stream.md
+$dokka.location:com.airwatch.gateway.clients/AWWebView///PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-web-view/index.md
+$dokka.location:com.airwatch.gateway.clients/AWWebView/cleanUp/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-web-view/clean-up.md
+$dokka.location:com.airwatch.gateway.clients/AWWebView/loadUrl/#java.lang.String/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-web-view/load-url.md
+$dokka.location:com.airwatch.gateway.clients/AWWebView/reload/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-web-view/reload.md
+$dokka.location:com.airwatch.gateway.clients/AWWebViewClient///PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-a-w-web-view-client/index.md
+$dokka.location:com.airwatch.gateway.clients/NtlmHttpURLConnection///PointingToDeclaration/ws1-network/com.airwatch.gateway.clients/-ntlm-http-u-r-l-connection/index.md
+$dokka.location:com.airwatch.gateway.config////PointingToDeclaration/ws1-network/com.airwatch.gateway.config/index.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager///PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/index.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/getAppTunnelType/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/get-app-tunnel-type.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/getContext/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/get-context.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/getDeviceServicesUrl/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/get-device-services-url.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/getDeviceUid/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/get-device-uid.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/getInstance/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/get-instance.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/getLocalProxyPort/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/get-local-proxy-port.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/getPacV2RoutingMode/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/get-pac-v2-routing-mode.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/getPackageName/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/get-package-name.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/getProxyConfig/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/get-proxy-config.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/getString/#int/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/get-string.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/getUseLegacySettings/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/get-use-legacy-settings.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/getWebView/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/get-web-view.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/hasValidConfig/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/has-valid-config.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/init/#Context/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/init.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/isAppTunnelEnabled/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/is-app-tunnel-enabled.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/isConfigChanged/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/is-config-changed.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/isPacV2Enabled/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/is-pac-v2-enabled.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/isStdEnabled/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/is-std-enabled.md
+$dokka.location:com.airwatch.gateway.config/GatewayConfigManager/isTunnelSdkEnabled/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.config/-gateway-config-manager/is-tunnel-sdk-enabled.md
+$dokka.location:com.airwatch.gateway.ui////PointingToDeclaration/ws1-network/com.airwatch.gateway.ui/index.md
+$dokka.location:com.airwatch.gateway.ui/GatewayBaseActivity///PointingToDeclaration/ws1-network/com.airwatch.gateway.ui/-gateway-base-activity/index.md
+$dokka.location:com.airwatch.gateway.ui/GatewayBaseActivity/isTunnelingEnabled/#/PointingToDeclaration/ws1-network/com.airwatch.gateway.ui/-gateway-base-activity/is-tunneling-enabled.md
+$dokka.location:com.airwatch.gateway.ui/GatewayBaseActivity/proxyStatusUpdated/#int/PointingToDeclaration/ws1-network/com.airwatch.gateway.ui/-gateway-base-activity/proxy-status-updated.md
+$dokka.location:com.airwatch.gateway////PointingToDeclaration/ws1-network/com.airwatch.gateway/index.md
+$dokka.location:com.airwatch.gateway/GatewayManager///PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-manager/index.md
+$dokka.location:com.airwatch.gateway/GatewayManager/autoConfigureProxy/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-manager/auto-configure-proxy.md
+$dokka.location:com.airwatch.gateway/GatewayManager/getContext/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-manager/get-context.md
+$dokka.location:com.airwatch.gateway/GatewayManager/getInstance/#Context/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-manager/get-instance.md
+$dokka.location:com.airwatch.gateway/GatewayManager/getSdkException/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-manager/get-sdk-exception.md
+$dokka.location:com.airwatch.gateway/GatewayManager/isRunning/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-manager/is-running.md
+$dokka.location:com.airwatch.gateway/GatewayManager/loadConfiguration/#BaseGatewayConfig/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-manager/load-configuration.md
+$dokka.location:com.airwatch.gateway/GatewayManager/registerGatewayStatusListener/#IGatewayStatusListener/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-manager/register-gateway-status-listener.md
+$dokka.location:com.airwatch.gateway/GatewayManager/start/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-manager/start.md
+$dokka.location:com.airwatch.gateway/GatewayManager/startTunnel/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-manager/start-tunnel.md
+$dokka.location:com.airwatch.gateway/GatewayManager/stop/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-manager/stop.md
+$dokka.location:com.airwatch.gateway/GatewayManager/stopTunnel/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-manager/stop-tunnel.md
+$dokka.location:com.airwatch.gateway/GatewayManager/unregisterGatewayStatusListener/#IGatewayStatusListener/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-manager/unregister-gateway-status-listener.md
+$dokka.location:com.airwatch.gateway/GatewayStatusCodes///PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-status-codes/index.md
+$dokka.location:com.airwatch.gateway/GatewayStatusCodes/LOCAL_PORT_UNAVAILABLE/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-status-codes/-l-o-c-a-l_-p-o-r-t_-u-n-a-v-a-i-l-a-b-l-e.md
+$dokka.location:com.airwatch.gateway/GatewayStatusCodes/START_PROXY_ERROR_END/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-status-codes/-s-t-a-r-t_-p-r-o-x-y_-e-r-r-o-r_-e-n-d.md
+$dokka.location:com.airwatch.gateway/GatewayStatusCodes/START_PROXY_ERROR_START/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-status-codes/-s-t-a-r-t_-p-r-o-x-y_-e-r-r-o-r_-s-t-a-r-t.md
+$dokka.location:com.airwatch.gateway/GatewayStatusCodes/START_TUNNEL_SERVER_ERROR/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-status-codes/-s-t-a-r-t_-t-u-n-n-e-l_-s-e-r-v-e-r_-e-r-r-o-r.md
+$dokka.location:com.airwatch.gateway/GatewayStatusCodes/STATE_CONFIGURING/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-status-codes/-s-t-a-t-e_-c-o-n-f-i-g-u-r-i-n-g.md
+$dokka.location:com.airwatch.gateway/GatewayStatusCodes/STATE_ESTABLISHING_CONNECTION/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-status-codes/-s-t-a-t-e_-e-s-t-a-b-l-i-s-h-i-n-g_-c-o-n-n-e-c-t-i-o-n.md
+$dokka.location:com.airwatch.gateway/GatewayStatusCodes/STATE_STARTED/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-status-codes/-s-t-a-t-e_-s-t-a-r-t-e-d.md
+$dokka.location:com.airwatch.gateway/GatewayStatusCodes/STATE_STOPPED/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-status-codes/-s-t-a-t-e_-s-t-o-p-p-e-d.md
+$dokka.location:com.airwatch.gateway/GatewayStatusCodes/TUNNEL_DISCONNECTED/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-status-codes/-t-u-n-n-e-l_-d-i-s-c-o-n-n-e-c-t-e-d.md
+$dokka.location:com.airwatch.gateway/GatewayStatusCodes/UNABLE_TO_START_LOCAL_PROXY_SERVICE/#/PointingToDeclaration/ws1-network/com.airwatch.gateway/-gateway-status-codes/-u-n-a-b-l-e_-t-o_-s-t-a-r-t_-l-o-c-a-l_-p-r-o-x-y_-s-e-r-v-i-c-e.md
+$dokka.location:com.airwatch.gateway/IGatewayStatusListener///PointingToDeclaration/ws1-network/com.airwatch.gateway/-i-gateway-status-listener/index.md
+$dokka.location:com.airwatch.gateway/IGatewayStatusListener/onError/#int/PointingToDeclaration/ws1-network/com.airwatch.gateway/-i-gateway-status-listener/on-error.md
+$dokka.location:com.airwatch.gateway/IGatewayStatusListener/onStatusChange/#int/PointingToDeclaration/ws1-network/com.airwatch.gateway/-i-gateway-status-listener/on-status-change.md
+$dokka.location:com.airwatch.login////PointingToDeclaration/ws1-network/com.airwatch.login/index.md
+$dokka.location:com.airwatch.login/SDKGatewayActivityDelegate///PointingToDeclaration/ws1-network/com.airwatch.login/-s-d-k-gateway-activity-delegate/index.md
+$dokka.location:com.airwatch.login/SDKGatewayActivityDelegate/isTunnelingEnabled/#/PointingToDeclaration/ws1-network/com.airwatch.login/-s-d-k-gateway-activity-delegate/is-tunneling-enabled.md
+com.airwatch.gateway
+com.airwatch.gateway.auth
+com.airwatch.gateway.clients
+com.airwatch.gateway.config
+com.airwatch.gateway.ui
+com.airwatch.login
+
