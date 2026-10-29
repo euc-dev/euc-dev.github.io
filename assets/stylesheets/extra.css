@@ -1,0 +1,122 @@
+
+.green {
+  color: green;
+}
+.red {
+  color: red;
+}
+
+.banner {
+  height: 40px;       /* Height of the banner */
+  position: sticky;   /* Follows as you scroll */
+  top: 0;             /* Absolute top of page */
+  left: 0;
+  width: 100%;
+  z-index: 1;         /* Tells the renderer "this is important", otherwise Admonition and Code Blocks will render into it */
+  text-align: center;
+  background-color: rgb(33, 33, 33);
+}
+
+.md-header {
+  top: 10px;          /* This setting prevents the Material header from imposing into the space of the banner! */
+  font-weight: bold;
+}
+
+/* .md-typeset__table {
+  width: 50%;
+}
+
+.md-typeset__table table:not([class]) {
+  display: table
+} */
+
+.md-typeset a {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+th, td {
+  border: 1px solid var(--md-typeset-table-color);
+  border-spacing: 0;
+  border-bottom: none;
+  border-left: none;
+  border-top: none;
+}
+
+.md-typeset__table {
+  line-height: 1;
+  /* width: 50%; */
+}
+
+.md-typeset__table table:not([class]) {
+  font-size: .74rem;
+  border-right: none;
+  display: table;
+}
+
+.md-typeset__table table:not([class]) td {
+  background-color: white;
+}
+.md-typeset__table table:not([class]) th {
+  padding: 9px;
+  background-color: #8f96ba;
+}
+
+/* light mode alternating table bg colors */
+.md-typeset__table tr:nth-child(2n) {
+  background-color: whitesmoke;
+}
+
+/* dark mode alternating table bg colors */
+[data-md-color-scheme="slate"] .md-typeset__table tr:nth-child(2n) {
+  background-color: hsla(var(--md-hue),25%,25%,1)
+}
+
+[data-md-color-scheme="omnissa"] {
+  /* Primary colours */
+  --md-primary-fg-color:        #333958;
+  --md-primary-fg-color--light: #333958;
+  --md-primary-fg-color--dark:  #333958;
+  --md-primary-bg-color:               hsla(0, 0%, 100%, 1);
+  --md-primary-bg-color--light:        hsla(0, 0%, 100%, 0.7);
+
+  /* Accent color shades */
+  --md-accent-fg-color:                hsla(#{hex2hsl($clr-indigo-a200)}, 1);
+  --md-accent-fg-color--transparent:   hsla(#{hex2hsl($clr-indigo-a200)}, 0.1);
+  --md-accent-bg-color:                hsla(0, 0%, 100%, 1);
+  --md-accent-bg-color--light:         hsla(0, 0%, 100%, 0.7);
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:        #333958;
+  --md-primary-fg-color--light: #333958;
+  --md-primary-fg-color--dark:  #333958;
+  --md-primary-bg-color:               rgb(254, 254, 254);
+  --md-primary-bg-color--light:        hsla(255, 0%, 100%, 0.7);
+  --md-hue: 210; 
+}
+
+:root {
+  --new-navy: #001e60;
+  --cool-grey: #c8c7e2;
+  --light-cool-grey: #f6f5fb;
+  --white: #ffffff;
+  --indigo: #4a12f0;
+  --magenta: #d00aff;
+  --neon: #c9ff27;
+  --indigo-blue: #311eaa;
+  --midnight: #28334a;
+  --black: #000000;
+  --magic-carpet: #9587c1;
+  --vista-white: #dfdced;
+  --royal-blue: #4a12f0;
+  --purple-light: #9587c1;
+  --lively-lilac: #8f96ba;
+  --dark-byzantine-blue: #242a48;
+  --dark-shade-blue: #333958;
+  --east-bay: #4a5174;
+  --eyebrow: #616899;
+  --web-wraning: #d9005c;
+  --electric-purple: #b704e2;
+  --alice-blue: #e6eeff
+}
