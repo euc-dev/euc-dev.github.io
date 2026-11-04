@@ -1,0 +1,27 @@
+/* Vertical dividers for content tables (API reference and docs).
+   Material for MkDocs renders Markdown tables with horizontal row borders only;
+   this adds a divider between columns so each table reads as a grid. */
+.md-typeset table:not([class]) th:not(:last-child),
+.md-typeset table:not([class]) td:not(:last-child) {
+  border-right: .05rem solid var(--md-typeset-table-color);
+}
+
+/* API signature type links.
+   enhance-gfm.py emits the signature's type references in this hidden block so
+   mkdocs resolves their URLs; api-signature-links.js moves them onto the
+   matching tokens in the highlighted signature above. Keep the block out of the
+   page, and make the injected links keep their Pygments token colour (so the
+   highlighting still reads normally) with a subtle underline to signal a link. */
+.md-typeset .api-sig-types {
+  display: none;
+}
+.md-typeset .highlight a.api-type-link {
+  color: inherit;
+  text-decoration: none;
+}
+.md-typeset .highlight a.api-type-link:hover {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: .2em;
+}
+

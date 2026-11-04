@@ -1,0 +1,3551 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2203",
+    "title": "App Volumes API"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "Sessions",
+      "description": "Manage authorized API sessions"
+    },
+    {
+      "name": "Applications",
+      "description": "Perform various operations on Applications"
+    },
+    {
+      "name": "Packages",
+      "description": "Perform various operations on Packages"
+    },
+    {
+      "name": "Writable Volumes",
+      "description": "Perform various operations on Writable Volumes"
+    },
+    {
+      "name": "System Activity",
+      "description": "Retrieve the activity logs to view system activity"
+    },
+    {
+      "name": "Version",
+      "description": "Retrieve version of App Volumes Manager"
+    }
+  ],
+  "definitions": {
+    "ServerError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "description": "Server Error.",
+          "example": "Server Error"
+        },
+        "detail": {
+          "type": "string",
+          "description": "Details of error. Exact error format subject to change depending on type of error.",
+          "example": "Unexpected server error."
+        }
+      }
+    },
+    "UnauthorizedError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "description": "Session expired. Create a session using and make the request with the _session_id cookie.",
+          "example": "Session expired. Please login again."
+        }
+      }
+    },
+    "ApplicationAssignmentBadRequestError": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "The error message."
+              },
+              "meta": {
+                "type": "object",
+                "properties": {
+                  "manager": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "description": "The error message."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "example": [
+            {
+              "title": "Unable to create assignment. Package must be enabled",
+              "meta": {
+                "manager": {
+                  "title": "Unable to create assignment. Package must be enabled"
+                }
+              }
+            },
+            {
+              "title": "Unable to save assignment",
+              "meta": {
+                "manager": {
+                  "title": "Unable to save assignment"
+                }
+              }
+            },
+            {
+              "title": "Unable to create duplicate assignment with entity SNAPVOLUMES\\test-user to the same application",
+              "meta": {
+                "manager": {
+                  "title": "Unable to create duplicate assignment with entity SNAPVOLUMES\\test-user to the same application"
+                }
+              }
+            },
+            {
+              "title": "Invalid delivery mode 'custom_mode' passed, it must belong to: [\"default\", \"on_trigger\"]",
+              "meta": {
+                "manager": {
+                  "title": "Invalid delivery mode 'custom_mode' passed, it must belong to: [\"default\", \"on_trigger\"]"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ApplicationUnassignmentBadRequestError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "description": "When parameter ids is missing.",
+          "example": "Missing required ids parameter"
+        }
+      }
+    },
+    "GetAppAssignmentBadRequest": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "The title of error.",
+                "example": "Invaid page value"
+              },
+              "detail": {
+                "type": "string",
+                "description": "The detail about error.",
+                "example": "0 is not a valid value for number page parameter."
+              },
+              "code": {
+                "type": "integer",
+                "example": 118
+              },
+              "status": {
+                "type": "integer",
+                "example": 400
+              }
+            }
+          }
+        }
+      }
+    },
+    "GetApplicationNotFoundError": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "The error message.",
+                "example": "Application \"0\" was not found"
+              },
+              "meta": {
+                "type": "object",
+                "properties": {
+                  "manager": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "description": "The error message.",
+                        "example": "Application \"0\" was not found"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "GetPackageNotFoundError": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "The error message.",
+                "example": "Incorrect Package id 0 passed"
+              },
+              "meta": {
+                "type": "object",
+                "properties": {
+                  "manager": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "description": "The error message.",
+                        "example": "Incorrect Package id 0 passed"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ActivityRecord": {
+      "type": "object",
+      "properties": {
+        "source_id": {
+          "type": "integer",
+          "description": "The source record ID."
+        },
+        "source_type": {
+          "type": "string",
+          "description": "Type of the source record.",
+          "example": "User"
+        },
+        "source_name": {
+          "type": "string",
+          "description": "Intended as human readable name for the source record.",
+          "example": "Administrator"
+        },
+        "source_url": {
+          "type": "string",
+          "description": "When available, URL to the source record in App Volumes Manager UI.",
+          "example": "/directory#/Users/1"
+        },
+        "target_id": {
+          "type": "integer",
+          "description": "The target record ID."
+        },
+        "target_type": {
+          "type": "string",
+          "description": "Type of the target record.",
+          "example": "Snapvol"
+        },
+        "target_name": {
+          "type": "string",
+          "description": "Intended as human readable name for the target record.",
+          "example": "Administrator"
+        },
+        "target_description": {
+          "type": "string",
+          "description": "Descriptive text for the target record.",
+          "example": "Administrator"
+        },
+        "target_url": {
+          "type": "string",
+          "description": "When available, URL to the target record in App Volumes Manager UI.",
+          "example": "/directory#/Users/1"
+        },
+        "action": {
+          "type": "string",
+          "description": "Description of the event.",
+          "example": "Assign"
+        },
+        "log": {
+          "type": "string",
+          "description": "Event result.",
+          "example": "Success"
+        },
+        "event_time": {
+          "type": "string",
+          "description": "When did the event happened.",
+          "example": "2022-01-01 12:00:00 -0700"
+        },
+        "event_time_human": {
+          "type": "string",
+          "description": "Event timestamp human readable format.",
+          "example": "January 1, 2022 12:00PM"
+        },
+        "admin_user_upn": {
+          "type": "string",
+          "description": "Down-level login name of the admin user.",
+          "example": "DOMAIN\\Administrator"
+        },
+        "admin_user_name": {
+          "type": "string",
+          "description": "Name the admin user.",
+          "example": "Administrator"
+        },
+        "admin_user_url": {
+          "type": "string",
+          "description": "When available, URL to the admin user record in App Volumes Manager UI.",
+          "example": "/directory#/Users/2"
+        },
+        "id": {
+          "type": "integer",
+          "description": "The Activity log record id.",
+          "example": 1
+        }
+      }
+    },
+    "ActivityRecords": {
+      "description": "A collection of audit records.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ActivityRecord"
+      }
+    },
+    "AppUnassignmentRequestBody": {
+      "properties": {
+        "ids": {
+          "$ref": "#/definitions/AppAssignmentIDArray"
+        }
+      }
+    },
+    "AppAssignmentRequestBody": {
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/AppAssignmentBodyArray"
+        }
+      }
+    },
+    "AppAssignmentBodyArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/AppAssignmentIndex"
+      }
+    },
+    "AppAssignmentIndex": {
+      "type": "object",
+      "required": [
+        "app_product_id",
+        "entities",
+        "app_package_id",
+        "app_marker_id"
+      ],
+      "properties": {
+        "app_product_id": {
+          "type": "integer",
+          "description": "The ID of the Application to assign or unassign.",
+          "example": 1
+        },
+        "entities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AssignmentsArray"
+          }
+        },
+        "app_package_id": {
+          "type": "integer",
+          "description": "The ID of the Package if this is a Package Assignment.",
+          "example": null
+        },
+        "app_marker_id": {
+          "type": "integer",
+          "description": "The ID of the Marker if this is a Marker Assignment.",
+          "example": 1
+        },
+        "delivery": {
+          "type": "string",
+          "enum": [
+            "default",
+            "on_trigger"
+          ],
+          "description": "The delivery mode set for App Assignment.",
+          "example": "default"
+        },
+        "filters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ComputerPrefixFilterIndex"
+          }
+        }
+      }
+    },
+    "AssignmentsArray": {
+      "type": "object",
+      "properties": {
+        "entity_type": {
+          "type": "string",
+          "enum": [
+            "OrgUnit",
+            "Group",
+            "User",
+            "Computer"
+          ],
+          "description": "Type of the entity can be either organizational unit, group, user or computer.",
+          "example": "Group"
+        },
+        "path": {
+          "type": "string",
+          "description": "Active Directory path of the entity.",
+          "example": "CN=test1,CN=Users,DC=test,DC=local"
+        }
+      }
+    },
+    "ComputerPrefixFilterIndex": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of Prefix filter.",
+          "example": "ComputerPrefixFilter"
+        },
+        "value": {
+          "type": "string",
+          "description": "Value of Prefix filter.",
+          "example": "COMP"
+        }
+      }
+    },
+    "ComputerPrefixFilterWithIDIndex": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "ID of ComputerPrefixFilter.",
+          "example": 3
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of Prefix filter.",
+          "example": "ComputerPrefixFilter"
+        },
+        "value": {
+          "type": "string",
+          "description": "Value of Prefix filter.",
+          "example": "COMP"
+        }
+      }
+    },
+    "GetApplicationAssignmentSuccess": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/ApplicationsAssignments"
+        }
+      }
+    },
+    "ApplicationsAssignments": {
+      "description": "A collection of assignments for an Application.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ApplicationsAssignment"
+      }
+    },
+    "ApplicationsAssignment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The Application Assignment ID.",
+          "example": 1
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of Application.",
+          "example": "This application is best suitable for text files."
+        },
+        "app_product_id": {
+          "type": "integer",
+          "description": "The Application ID.",
+          "example": 1
+        },
+        "app_product_name": {
+          "type": "string",
+          "description": "The Application name.",
+          "example": "Notepad++"
+        },
+        "app_package_id": {
+          "type": "integer",
+          "description": "The Package ID.",
+          "example": null
+        },
+        "app_package_name": {
+          "type": "string",
+          "description": "The Package name.",
+          "example": null
+        },
+        "app_marker_id": {
+          "type": "integer",
+          "description": "The Marker ID.",
+          "example": 1
+        },
+        "app_marker_name": {
+          "type": "string",
+          "description": "The Marker name.",
+          "example": "CURRENT"
+        },
+        "priority": {
+          "type": "integer",
+          "description": "Priority of Application assignment."
+        },
+        "mount_prefix": {
+          "type": "string",
+          "description": "Mount prefix for the assignment.",
+          "example": ""
+        },
+        "created_at": {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        "created_at_human": {
+          "$ref": "#/definitions/CreatedAtHuman"
+        },
+        "updated_at": {
+          "$ref": "#/definitions/UpdatedAt"
+        },
+        "updated_at_human": {
+          "$ref": "#/definitions/UpdatedAtHuman"
+        },
+        "entities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Entity"
+          }
+        },
+        "filters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ComputerPrefixFilterWithIDIndex"
+          }
+        }
+      }
+    },
+    "Entity": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "ID of entity.",
+          "example": 1
+        },
+        "entity_type": {
+          "type": "string",
+          "description": "The type of entity (i.e. User, Computer, Group, OU).",
+          "example": "User"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of entity.",
+          "example": "testuser-1"
+        },
+        "account_name": {
+          "type": "string",
+          "description": "The account-name of entity.",
+          "example": "testuser-1"
+        },
+        "upn": {
+          "type": "string",
+          "description": "The upn for entity.",
+          "example": "SNAPVOLUMES\\testuser-1"
+        },
+        "distinguished_name": {
+          "type": "string",
+          "description": "The full dn for entity in AD.",
+          "example": "CN=testuser-1,OU=Domain Users,DC=Snapvolumes,DC=com"
+        }
+      }
+    },
+    "AppUnassignmentSuccess": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/AppAssignmentDeletionResult"
+        }
+      }
+    },
+    "AppAssignmentDeletionResult": {
+      "type": "object",
+      "description": "deleted/not_deleted array shows AppAssignment IDs which are deleted/not_deleted respectively.",
+      "properties": {
+        "deleted": {
+          "$ref": "#/definitions/AppAssignmentIDObjectArray"
+        },
+        "not_deleted": {
+          "$ref": "#/definitions/AppAssignmentIDObjectArray"
+        }
+      }
+    },
+    "GetPackageAssignment": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/PackageAssignments"
+        }
+      }
+    },
+    "PackageAssignments": {
+      "description": "A collection of Package Assignments.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/PackageAssignment"
+      }
+    },
+    "PackageAssignment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The Package Assignment ID."
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of Package.",
+          "example": "This package is on its latest version 7.0.1"
+        },
+        "app_product_id": {
+          "type": "integer",
+          "description": "The Application ID to which Package belongs."
+        },
+        "app_product_name": {
+          "type": "string",
+          "description": "The Application name to which Package belongs.",
+          "example": "Notepad++"
+        },
+        "app_package_id": {
+          "type": "integer",
+          "description": "The Package ID."
+        },
+        "app_package_name": {
+          "type": "string",
+          "description": "The Package name.",
+          "example": "Notepad-7.0.1"
+        },
+        "app_marker_id": {
+          "type": "integer",
+          "description": "The Marker ID."
+        },
+        "app_marker_name": {
+          "type": "string",
+          "description": "The Marker name.",
+          "example": "CURRENT"
+        },
+        "priority": {
+          "type": "integer",
+          "description": "Priority of Application assignment."
+        },
+        "mount_prefix": {
+          "type": "string",
+          "description": "Mount prefix for the assignment.",
+          "example": ""
+        },
+        "created_at": {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        "created_at_human": {
+          "$ref": "#/definitions/CreatedAtHuman"
+        },
+        "updated_at": {
+          "$ref": "#/definitions/UpdatedAt"
+        },
+        "updated_at_human": {
+          "$ref": "#/definitions/UpdatedAtHuman"
+        },
+        "entities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Entity"
+          }
+        },
+        "filters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ComputerPrefixFilterWithIDIndex"
+          }
+        }
+      }
+    },
+    "GetAppAssignmentPagination": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/PaginatedAppAssignments"
+        },
+        "included": {
+          "$ref": "#/definitions/IncludedRelationShips"
+        },
+        "meta": {
+          "$ref": "#/definitions/AppAssignmentMeta"
+        },
+        "links": {
+          "$ref": "#/definitions/AppAssignmentLinks"
+        }
+      }
+    },
+    "PaginatedAppAssignments": {
+      "description": "A collection of app-assignments.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/PaginatedAppAssignment"
+      }
+    },
+    "PaginatedAppAssignment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The Application Assignment ID.",
+          "example": 1
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of assignment.",
+          "example": "app_assignments"
+        },
+        "links": {
+          "type": "object",
+          "properties": {
+            "self": {
+              "type": "string",
+              "description": "The link for app-assignment.",
+              "example": "http://localhost:3000/app_volumes/app_assignments/1"
+            }
+          }
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "app_marker_id": {
+              "type": "integer",
+              "description": "The Marker ID."
+            },
+            "app_product_id": {
+              "type": "integer",
+              "description": "The Application ID."
+            },
+            "app_package_id": {
+              "type": "integer",
+              "description": "The Package ID."
+            },
+            "created_at": {
+              "$ref": "#/definitions/CreatedAt"
+            },
+            "created_at_human": {
+              "$ref": "#/definitions/CreatedAtHuman"
+            },
+            "updated_at": {
+              "$ref": "#/definitions/UpdatedAt"
+            },
+            "updated_at_human": {
+              "$ref": "#/definitions/UpdatedAtHuman"
+            },
+            "delivery": {
+              "type": "string",
+              "enum": [
+                "default",
+                "on_trigger"
+              ],
+              "description": "The delivery mode set for App Assignment.",
+              "example": "default"
+            }
+          }
+        },
+        "relationships": {
+          "type": "object",
+          "properties": {
+            "app_product": {
+              "$ref": "#/definitions/AppProductRelationShip"
+            },
+            "app_marker": {
+              "$ref": "#/definitions/AppMarkerRelationShip"
+            },
+            "app_package": {
+              "$ref": "#/definitions/AppPackageRelationShip"
+            },
+            "app_assignment_entities": {
+              "$ref": "#/definitions/AppAssignmentEntitiesRelationShip"
+            },
+            "assignment_filters": {
+              "$ref": "#/definitions/AssignmentFiltersRelationShip"
+            }
+          }
+        }
+      }
+    },
+    "AppProductRelationShip": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "The type of relationship.",
+              "example": "app_products"
+            },
+            "id": {
+              "type": "integer",
+              "description": "ID of relationship.",
+              "example": 1
+            }
+          }
+        }
+      }
+    },
+    "AppMarkerRelationShip": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "The type of relationship.",
+              "example": "app_markers"
+            },
+            "id": {
+              "type": "integer",
+              "description": "ID of relationship.",
+              "example": 1
+            }
+          }
+        }
+      }
+    },
+    "AppPackageRelationShip": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "The type of relationship.",
+              "example": "app_packages"
+            },
+            "id": {
+              "type": "integer",
+              "description": "ID of relationship.",
+              "example": 1
+            }
+          }
+        }
+      }
+    },
+    "AppAssignmentEntitiesRelationShip": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The type of relationship.",
+                "example": "app_assignment_entities"
+              },
+              "id": {
+                "type": "integer",
+                "description": "ID of relationship.",
+                "example": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "AssignmentFiltersRelationShip": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The type of relationship.",
+                "example": "assignment_filters"
+              },
+              "id": {
+                "type": "integer",
+                "description": "ID of relationship.",
+                "example": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "AppAssignmentLinks": {
+      "type": "object",
+      "properties": {
+        "first": {
+          "type": "string",
+          "description": "The link for first page.",
+          "example": "http://localhost:3000/app_volumes/app_assignments?include=app_assignment_entities%2Cassignment_filters%2Capp_marker%2Capp_package%2Capp_marker.app_package%2Capp_product%2Capp_assignment_entities.target&page%5Bnumber%5D=1&page%5Bsize%5D=3"
+        },
+        "next": {
+          "type": "string",
+          "description": "The link for next available page.",
+          "example": "http://localhost:3000/app_volumes/app_assignments?include=app_assignment_entities%2Cassignment_filters%2Capp_marker%2Capp_package%2Capp_marker.app_package%2Capp_product%2Capp_assignment_entities.target&page%5Bnumber%5D=2&page%5Bsize%5D=3"
+        },
+        "last": {
+          "type": "string",
+          "description": "The link for last page.",
+          "example": "http://localhost:3000/app_volumes/app_assignments?include=app_assignment_entities%2Cassignment_filters%2Capp_marker%2Capp_package%2Capp_marker.app_package%2Capp_product%2Capp_assignment_entities.target&page%5Bnumber%5D=6&page%5Bsize%5D=3"
+        }
+      }
+    },
+    "AppAssignmentMeta": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "description": "The number of total records before filtering (i.e. the total number of records in the database).",
+          "example": 18
+        },
+        "filtered": {
+          "type": "integer",
+          "description": "The number of total records after filtering (i.e. the total number of records after filtering has been applied, not just the number of records being returned for this page of data).",
+          "example": 18
+        },
+        "page_count": {
+          "type": "integer",
+          "description": "The number of pages available for app assignments.",
+          "example": 6
+        }
+      }
+    },
+    "IncludedRelationShips": {
+      "description": "Detailed definition of relationships included in app-assignments.",
+      "type": "array",
+      "decription": "The collection of multiple relationships mentioned in AppAssignments -> relationships.",
+      "items": {
+        "$ref": "#/definitions/IncludedRelationShip"
+      }
+    },
+    "IncludedRelationShip": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "ID of relationship included.",
+          "example": 1
+        },
+        "type": {
+          "type": "string",
+          "description": "The name of relationship included.",
+          "example": "app_packages"
+        },
+        "attributes": {
+          "type": "object",
+          "description": "The attributes present in relationship object.",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Notepad++ 7.2.0"
+            },
+            "guid": {
+              "type": "string",
+              "example": "b9421adb-d6cb-47f0-81ba-10718d3a8611"
+            },
+            "app_product_id": {
+              "type": "integer",
+              "example": 1
+            },
+            "state": {
+              "type": "string",
+              "example": "Package"
+            },
+            "version": {
+              "type": "string",
+              "example": "7.2.0"
+            },
+            "programs_count": {
+              "type": "integer",
+              "example": 1
+            },
+            "operating_systems_count": {
+              "type": "integer",
+              "example": 1
+            },
+            "description": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "AppAssignmentSuccess": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/AppAssignments"
+        }
+      }
+    },
+    "AppAssignments": {
+      "description": "A collection of app-assignments.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/AppAssignment"
+      }
+    },
+    "AppAssignment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The Application Assignment ID."
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of Application.",
+          "example": "This application is best suitable for text files."
+        },
+        "app_product_id": {
+          "type": "integer",
+          "description": "The Application ID."
+        },
+        "app_product_name": {
+          "type": "string",
+          "description": "The Application name.",
+          "example": "Notepad++"
+        },
+        "app_package_id": {
+          "type": "integer",
+          "description": "The Package ID."
+        },
+        "app_package_name": {
+          "type": "string",
+          "description": "The Package name.",
+          "example": "Notepad-7.0.1"
+        },
+        "app_marker_id": {
+          "type": "integer",
+          "description": "The Marker ID."
+        },
+        "app_marker_name": {
+          "type": "string",
+          "description": "The Marker name.",
+          "example": "CURRENT"
+        },
+        "priority": {
+          "type": "integer",
+          "description": "Priority of Application assignment."
+        },
+        "mount_prefix": {
+          "type": "string",
+          "description": "Mount prefix for the assignment.",
+          "example": ""
+        },
+        "delivery": {
+          "type": "string",
+          "enum": [
+            "default",
+            "on_trigger"
+          ],
+          "description": "The delivery mode set for App Assignment.",
+          "example": "default"
+        },
+        "created_at": {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        "created_at_human": {
+          "$ref": "#/definitions/CreatedAtHuman"
+        },
+        "updated_at": {
+          "$ref": "#/definitions/UpdatedAt"
+        },
+        "updated_at_human": {
+          "$ref": "#/definitions/UpdatedAtHuman"
+        },
+        "filters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ComputerPrefixFilterWithIDIndex"
+          }
+        }
+      }
+    },
+    "GetApplicationsSuccess": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Applications"
+        }
+      }
+    },
+    "Applications": {
+      "description": "A collection of Applications.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ApplicationForIndex"
+      }
+    },
+    "GetApplicationSuccess": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/ApplicationForIndex"
+        }
+      }
+    },
+    "ApplicationForIndex": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The Application ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The Application name.",
+          "example": "Notepad++"
+        },
+        "guid": {
+          "type": "string",
+          "description": "The Application guid.",
+          "example": "1b38f44f-cb39-46fa-bcac-d72af508ddee"
+        },
+        "icon": {
+          "type": "string",
+          "description": "The Application icon.",
+          "example": null
+        },
+        "assignment_count": {
+          "type": "integer",
+          "description": "The assignment count for Application.",
+          "example": 1
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of Application.",
+          "example": "This application is best suitable for text files."
+        },
+        "app_packages_count": {
+          "type": "integer",
+          "description": "The app_package count for Application."
+        },
+        "app_packages": {
+          "$ref": "#/definitions/Packages"
+        },
+        "owner_guid": {
+          "type": "string",
+          "description": "The Application owner_guid.",
+          "example": "5F02DE3B-BAB1-4FDB-8065-ABB8711013EF"
+        },
+        "status": {
+          "type": "string",
+          "description": "The Application status.",
+          "example": "active"
+        },
+        "delete_status": {
+          "type": "string",
+          "description": "The Application delete_status.",
+          "example": "deleting"
+        },
+        "sync_status": {
+          "type": "string",
+          "description": "The Application sync_status.",
+          "example": null
+        },
+        "sync_message": {
+          "type": "string",
+          "description": "The Application sync_message.",
+          "example": null
+        },
+        "synced_at": {
+          "$ref": "#/definitions/ApplicationSyncedAt"
+        },
+        "synced_at_human": {
+          "$ref": "#/definitions/ApplicationSyncedAtHuman"
+        },
+        "deleted_at": {
+          "$ref": "#/definitions/DeletedAt"
+        },
+        "deleted_at_human": {
+          "$ref": "#/definitions/DeletedAtHuman"
+        },
+        "created_at": {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        "created_at_human": {
+          "$ref": "#/definitions/CreatedAtHuman"
+        },
+        "updated_at": {
+          "$ref": "#/definitions/UpdatedAt"
+        },
+        "updated_at_human": {
+          "$ref": "#/definitions/UpdatedAtHuman"
+        },
+        "metadata_sync_at": {
+          "$ref": "#/definitions/ApplicationMetadataSyncedAt"
+        },
+        "metadata_sync_at_human": {
+          "$ref": "#/definitions/ApplicationMetadataSyncedAtHuman"
+        },
+        "metadata_properties_updated_at": {
+          "$ref": "#/definitions/ApplicationMetadataPropertiesUpdatedAt"
+        },
+        "metadata_properties_updated_at_human": {
+          "$ref": "#/definitions/ApplicationMetadataPropertiesUpdatedAtHuman"
+        },
+        "metadata_version": {
+          "type": "string",
+          "description": "The Application metadata_version.",
+          "example": null
+        }
+      }
+    },
+    "GetPackagesSuccess": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Packages"
+        }
+      }
+    },
+    "GetPackageSuccess": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/PackageForIndex"
+        }
+      }
+    },
+    "Packages": {
+      "description": "A collection of Packages.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/PackageForIndex"
+      }
+    },
+    "PackageForIndex": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The Package ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The Package name.",
+          "example": "Notepad-7.0.1"
+        },
+        "guid": {
+          "type": "string",
+          "description": "The Package guid.",
+          "example": "14848eb3-169b-4e8a-bcb7-556f1811c08c"
+        },
+        "app_product_id": {
+          "type": "integer",
+          "description": "The Application ID to which Package belongs.",
+          "example": 3
+        },
+        "lifecycle_stage_id": {
+          "type": "integer",
+          "description": "The lifecycle_stage_id of Package.",
+          "example": 1
+        },
+        "state": {
+          "type": "string",
+          "description": "The current state of Package.",
+          "example": "Package"
+        },
+        "version": {
+          "type": "string",
+          "description": "The version of Package.",
+          "example": "7.0.1"
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of Package.",
+          "example": "This package is on its latest version 7.0.1"
+        },
+        "note": {
+          "type": "string",
+          "description": "The note for Package",
+          "example": "The Package is best suited for development and HR dept."
+        },
+        "display_delivery": {
+          "type": "string",
+          "description": "The delivery mode visible to end-user which is selected for Package.",
+          "example": "Classic"
+        },
+        "delivery": {
+          "type": "string",
+          "description": "The delivery mode selected for Package.",
+          "example": "classic"
+        },
+        "capable_of_on_demand": {
+          "type": "boolean",
+          "description": "The capability status of delivery mode selected for Package.",
+          "example": true
+        },
+        "status": {
+          "type": "string",
+          "description": "The status for Package.",
+          "example": "enabled"
+        },
+        "programs_count": {
+          "type": "integer",
+          "description": "The number of Programs inside a Package.",
+          "example": 2
+        },
+        "icon": {
+          "type": "string",
+          "description": "The Package icon path.",
+          "example": "/snapvols/9/Notepad++.7.0.1.png"
+        },
+        "operating_systems_count": {
+          "type": "integer",
+          "description": "The number of operating systems for Package."
+        },
+        "delete_status": {
+          "type": "string",
+          "description": "The delete status of Package.",
+          "example": "deleting"
+        },
+        "deleted_at": {
+          "$ref": "#/definitions/DeletedAt"
+        },
+        "deleted_at_human": {
+          "$ref": "#/definitions/DeletedAtHuman"
+        },
+        "created_at": {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        "created_at_human": {
+          "$ref": "#/definitions/CreatedAtHuman"
+        },
+        "updated_at": {
+          "$ref": "#/definitions/UpdatedAt"
+        },
+        "updated_at_human": {
+          "$ref": "#/definitions/UpdatedAtHuman"
+        },
+        "added_at": {
+          "$ref": "#/definitions/AddedAt"
+        },
+        "added_at_human": {
+          "$ref": "#/definitions/AddedAtHuman"
+        },
+        "attachment_count": {
+          "type": "integer",
+          "description": "The attachment count for Package.",
+          "example": 2
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of Package.",
+          "example": "AppPackage"
+        },
+        "format": {
+          "type": "string",
+          "description": "Format of Package.",
+          "example": "AV"
+        },
+        "path": {
+          "type": "string",
+          "description": "The path at which Package volume resides in datastore.",
+          "example": "appvolumes/packages"
+        },
+        "filename": {
+          "type": "string",
+          "description": "The filename for Package.",
+          "example": "Notepad++.vmdk"
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Package volume is enabled or not.",
+          "example": true
+        },
+        "writable": {
+          "type": "boolean",
+          "description": "Package volume is a writable or not.",
+          "example": false
+        },
+        "datastore_name": {
+          "type": "string",
+          "description": "The datastore name where Package volume resides.",
+          "example": "datastore1"
+        },
+        "files_count": {
+          "type": "integer",
+          "description": "The number of files present for Package.",
+          "example": 2
+        },
+        "total_use_count": {
+          "type": "integer",
+          "description": "The number of times Package was used.",
+          "example": 5
+        },
+        "provision_uuid": {
+          "type": "string",
+          "description": "The Package provision_uuid."
+        },
+        "provisioning": {
+          "type": "boolean",
+          "description": "Package is provisioning or not.",
+          "example": false
+        },
+        "provision_completed_at": {
+          "$ref": "#/definitions/ProvisionCompletedAt"
+        },
+        "provision_started_at": {
+          "$ref": "#/definitions/ProvisionStartedAt"
+        },
+        "size_mb": {
+          "type": "integer",
+          "description": "size in mb used by Package volume.",
+          "example": 73
+        },
+        "size_human": {
+          "type": "string",
+          "description": "human readable format of size used by Package volume in mb.",
+          "example": "83.00 MB"
+        },
+        "assignment_count": {
+          "type": "integer",
+          "description": "The number of assignments made to Package.",
+          "example": 1
+        },
+        "volume_guid": {
+          "type": "string",
+          "description": "The guid of Package Volume.",
+          "example": "{4f949610-35c1-4e52-9f71-89d899150007}"
+        },
+        "snapvol_version_id": {
+          "type": "integer",
+          "description": "The snapvol_version_id for Package Volume."
+        },
+        "mount_prefix": {
+          "type": "string",
+          "description": "Mount prefix for the assignment.",
+          "example": ""
+        },
+        "mounted_at": {
+          "$ref": "#/definitions/PackageMountedAt"
+        },
+        "template_file_name": {
+          "type": "string",
+          "description": "The template file name of the Package.",
+          "example": "[data.1] appvolumes/packages_templates/template.vmdk"
+        },
+        "template_version": {
+          "type": "string",
+          "description": "The Package template version.",
+          "example": "2.10.0.709"
+        },
+        "missing": {
+          "type": "boolean",
+          "description": "Package Volume is available in datastore or not.",
+          "example": false
+        },
+        "protected": {
+          "type": "boolean",
+          "description": "Package volume is protected or not.",
+          "example": true
+        },
+        "agent_version": {
+          "type": "string",
+          "description": "The agent version used for Packaging of Package.",
+          "example": "4.5.0.922D"
+        },
+        "capture_version": {
+          "type": "string",
+          "description": "The capture version used for Packaging of Package.",
+          "example": "4.0"
+        },
+        "free_mb": {
+          "type": "integer",
+          "description": "Actual free space on the Package Volume.",
+          "example": 0
+        },
+        "total_mb": {
+          "type": "integer",
+          "description": "Actual total space on the Package Volume - can differ from size_mb due to datastore file formatting and growth operations.",
+          "example": 0
+        },
+        "attachment_limit": {
+          "type": "integer",
+          "description": "The maximum attachment limit for Package.",
+          "example": 2
+        },
+        "reachable": {
+          "type": "boolean",
+          "description": "Package volume is reachable or not.",
+          "example": true
+        },
+        "provision_duration": {
+          "type": "string",
+          "description": "The time taken by provisioning of Package.",
+          "examplpe": "2 minutes"
+        },
+        "primordial_os_id": {
+          "type": "integer",
+          "description": "ID of the base operating system.",
+          "example": 2
+        },
+        "primordial_os_name": {
+          "type": "string",
+          "description": "Name of the base operating system.",
+          "example": "Windows 10 (x64)"
+        }
+      }
+    },
+    "GetPackagePrograms": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/PackagePrograms"
+        }
+      }
+    },
+    "PackagePrograms": {
+      "description": "A collection of Package Programs.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/PackageProgram"
+      }
+    },
+    "PackageProgram": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The Program ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "The Program name.",
+          "example": "Office 16"
+        },
+        "publisher": {
+          "type": "string",
+          "description": "The Pubisher name of the Program.",
+          "example": "Microsoft Corporation"
+        },
+        "install_location": {
+          "type": "string",
+          "description": "The install location of the Program."
+        },
+        "version": {
+          "type": "string",
+          "description": "The version of the Program.",
+          "example": "16.0.10358.20061"
+        },
+        "icon": {
+          "type": "string",
+          "description": "The location at which icon picture resides.",
+          "example": "/snapvols/19/Office_16.png"
+        },
+        "created_at": {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        "created_at_human": {
+          "$ref": "#/definitions/CreatedAtHuman"
+        },
+        "updated_at": {
+          "$ref": "#/definitions/UpdatedAt"
+        },
+        "updated_at_human": {
+          "$ref": "#/definitions/UpdatedAtHuman"
+        },
+        "app_package_id": {
+          "type": "integer",
+          "description": "The Package ID."
+        }
+      }
+    },
+    "GetWritableVolume": {
+      "type": "object",
+      "properties": {
+        "writable": {
+          "$ref": "#/definitions/WritableVolume"
+        }
+      }
+    },
+    "WritableVolume": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "name_html",
+        "title",
+        "title_html",
+        "owner",
+        "link",
+        "owner_name",
+        "owner_type",
+        "owner_upn",
+        "owner_upn_html",
+        "owner_object_guid",
+        "description",
+        "created_at",
+        "created_at_human",
+        "updated_at",
+        "updated_at_human",
+        "mounted_at",
+        "mounted_at_human",
+        "mounted_on",
+        "mount_count",
+        "attached",
+        "status",
+        "version_count",
+        "version_tag",
+        "error_action",
+        "block_login",
+        "enable_version",
+        "mount_prefix",
+        "defer_create",
+        "size_mb",
+        "template_version",
+        "busy",
+        "state",
+        "volume_guid",
+        "datastore_name",
+        "machine_manager_host",
+        "machine_manager_type",
+        "path",
+        "filename",
+        "file_location",
+        "type",
+        "display_type",
+        "files_count",
+        "template_file_name",
+        "protected",
+        "free_mb",
+        "total_mb",
+        "percent_available",
+        "can_expand",
+        "datastore_host",
+        "primordial_os_id",
+        "primordial_os_name",
+        "oses"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the Writable Volume.",
+          "example": "SNAPVOLUMES\test_user"
+        },
+        "name_html": {
+          "type": "string",
+          "description": "HTML escaped name of the Writable Volume.",
+          "example": "SNAPVOLUMES\test_user"
+        },
+        "title": {
+          "type": "string",
+          "description": "Alternative name derived from entity that owns the Writable Volume.",
+          "example": "SNAPVOLUMES\test_user"
+        },
+        "title_html": {
+          "type": "string",
+          "description": "HTML escaped alternative name of the Writable Volume.",
+          "example": "SNAPVOLUMES\test_user"
+        },
+        "owner": {
+          "type": "string",
+          "description": "HTML hyperlink to owner entity in.",
+          "example": "<a href=\\\"/directory#/Users/2\\\" title=\\\"test_user\\\">TESTDOMAIN\\\\test_user</a>"
+        },
+        "link": {
+          "type": "string",
+          "description": "URL to owner entity HTML resource.",
+          "example": "/directory#/Users/2"
+        },
+        "owner_id": {
+          "type": "integer",
+          "description": "Owner ID of Writable Volume.",
+          "example": 3
+        },
+        "owner_name": {
+          "type": "string",
+          "example": "TestUser",
+          "description": "Owner name of the Writable Volume."
+        },
+        "owner_type": {
+          "type": "string",
+          "example": "User",
+          "description": "Entity type of the owner of the Writable Volume."
+        },
+        "owner_upn": {
+          "type": "string",
+          "description": "Down-level login name of owner of the Writable Volume.",
+          "example": "SNAPVOLUMES\test_user"
+        },
+        "owner_upn_html": {
+          "type": "string",
+          "description": "HTML escaped down-level login name of owner of the Writable Volume.",
+          "example": "SNAPVOLUMES\test_user"
+        },
+        "owner_object_guid": {
+          "type": "string",
+          "example": "8da04bfa-bbbe-45c3-9cbf-2d3d03897b84",
+          "description": "Object-Guid of the Writable Volume owner."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description text for the Writable Volume.",
+          "example": "My writable volume"
+        },
+        "created_at": {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        "created_at_human": {
+          "$ref": "#/definitions/CreatedAtHuman"
+        },
+        "updated_at": {
+          "$ref": "#/definitions/UpdatedAt"
+        },
+        "updated_at_human": {
+          "$ref": "#/definitions/UpdatedAtHuman"
+        },
+        "mounted_at": {
+          "$ref": "#/definitions/WritableMountedAt"
+        },
+        "mounted_at_human": {
+          "$ref": "#/definitions/WritableMountedAtHuman"
+        },
+        "mounted_on": {
+          "type": "string",
+          "description": "Machine that the Writable Volume is currently mounted to.",
+          "example": "Machine <DESKTOP-VM123> (#{1234567812345678})"
+        },
+        "mount_count": {
+          "$ref": "#/definitions/WritableMountCount"
+        },
+        "attached": {
+          "type": "string",
+          "enum": [
+            "Attached",
+            "Detached"
+          ],
+          "description": "Whether the Writable Volume is currently attached."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "missing",
+            "unprovisioned",
+            "provisioning",
+            "reserved",
+            "orphaned",
+            "legacy",
+            "limit_reached",
+            "enabled",
+            "failed",
+            "creating",
+            "canceled",
+            "disabled",
+            "unreachable"
+          ],
+          "description": "Status of the Writable Volume.",
+          "example": "enabled"
+        },
+        "version_count": {
+          "type": "integer",
+          "description": "Number of times Writable Volume has been updated.",
+          "examples": 0
+        },
+        "version_tag": {
+          "type": "string",
+          "description": "Version tag for Writable Volume.",
+          "example": "0"
+        },
+        "error_action": {
+          "type": "string",
+          "enum": [
+            "",
+            "continue_silently",
+            "continue_alert",
+            "disable_and_alert",
+            "disable_and_alert_on_error"
+          ],
+          "description": "Whether failures related to the Writable Volume will prevent application related attachments and whether they alert the user. Must be blank if block_login=1."
+        },
+        "block_login": {
+          "type": "boolean",
+          "description": "Whether failures related to the Writable Volume will prevent User login.",
+          "example": true
+        },
+        "enable_version": {
+          "type": "boolean",
+          "description": "Versioning status of Writable Volume.",
+          "example": false
+        },
+        "mount_prefix": {
+          "type": "string",
+          "description": "The Writable Volume will mount only on computers whose name begins with the mount prefix.",
+          "example": "DESKTOP"
+        },
+        "defer_create": {
+          "type": "boolean",
+          "description": "Whether the Writable Volume was created with it's associated disk being created immediately or with background job.",
+          "example": true
+        },
+        "size_mb": {
+          "type": "integer",
+          "description": "Specified size of the Writable Volume."
+        },
+        "template_version": {
+          "type": "string",
+          "description": "Version of Writable Template used to create the Writable Volume.",
+          "example": "4.0.0"
+        },
+        "busy": {
+          "$ref": "#/definitions/WritableBusy"
+        },
+        "state": {
+          "$ref": "#/definitions/WritableState"
+        },
+        "volume_guid": {
+          "type": "string",
+          "example": "volumeguid-8-volumeguid",
+          "description": "GUID assigned to the Writable Volume on the datastore."
+        },
+        "datastore_name": {
+          "type": "string",
+          "description": "Datastore the Writable Volume resides on.",
+          "example": "SSD Disk Array RAID8"
+        },
+        "machine_manager_host": {
+          "type": "string",
+          "description": "Hypervisor host associated with the Writable Volume.",
+          "example": "0.0.0.0"
+        },
+        "machine_manager_type": {
+          "type": "string",
+          "description": "Type of hypervisor associated with the Writable Volume.",
+          "example": "Machine Manager"
+        },
+        "path": {
+          "type": "string",
+          "description": "Path to the Writable Volume file.",
+          "example": "appvolumes/writable"
+        },
+        "filename": {
+          "type": "string",
+          "description": "Filename of the Writable Volume.",
+          "example": "snapvolumes_test_user_15.vmdk"
+        },
+        "file_location": {
+          "type": "string",
+          "description": "Formatted display of the Writable Volume's location.",
+          "example": "[SSD Disk Array RAID8] appvolumes/writable/snapvolumes_test_user_15.vmdk"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of Writable Volume.",
+          "example": "DataDisk"
+        },
+        "display_type": {
+          "type": "string",
+          "description": "Display value of Writable Volume.",
+          "example": "Writable Volume"
+        },
+        "files_count": {
+          "type": "integer",
+          "description": "Number of Snapvol files present for Writable Volume.",
+          "example": 1
+        },
+        "template_file_name": {
+          "type": "string",
+          "description": "File used to generate the Writable Volume.",
+          "example": "[SSD Disk Array RAID8] appvolumes/writable_templates/template_uia_only_persistent.vmdk"
+        },
+        "protected": {
+          "type": "boolean",
+          "description": "Whether the Writable Volume is has delete protection set on datastore.",
+          "example": true
+        },
+        "free_mb": {
+          "type": "integer",
+          "description": "Actual free space on the Writable Volume.",
+          "example": 0
+        },
+        "total_mb": {
+          "type": "integer",
+          "description": "Actual total space on the Writable Volume; can differ from size_mb due to datastore file formatting and growth operations.",
+          "example": 0
+        },
+        "percent_available": {
+          "type": "string",
+          "description": "Percent of available space on Writable Volume.",
+          "example": "Unknown"
+        },
+        "can_expand": {
+          "type": "boolean",
+          "description": "Whether the Writable Volume is eligible for growth operations.",
+          "example": true
+        },
+        "datastore_host": {
+          "type": "string",
+          "description": "Datastore host that the Writable Volume resides on.",
+          "example": "null"
+        },
+        "primordial_os_id": {
+          "type": "integer",
+          "description": "ID of the base operating system.",
+          "example": 15
+        },
+        "primordial_os_name": {
+          "type": "string",
+          "description": "Name of the base operating system.",
+          "example": "Windows 8.1 (x64)"
+        },
+        "oses": {
+          "title": "WritableOperatingSystems",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OperatingSystem"
+          },
+          "description": "List of operating systems compatible with the Writable Volume.",
+          "minItems": 1
+        }
+      }
+    },
+    "GetWritableVolumes": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WritableVolumeForIndex"
+          }
+        },
+        "counts": {
+          "type": "object",
+          "properties": {
+            "total": {
+              "type": "integer",
+              "description": "Number of Writable Volumes in response.",
+              "example": 1
+            },
+            "warning": {
+              "type": "integer",
+              "example": 0,
+              "description": "Number of Writable Volumes with capacity warning."
+            },
+            "critical": {
+              "type": "integer",
+              "example": 0,
+              "description": "Number of Writable Volumes at critical capacity."
+            }
+          }
+        }
+      }
+    },
+    "WritableVolumeForIndex": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the Writable Volume.",
+          "example": "SNAPVOLUMES\test_user"
+        },
+        "title": {
+          "type": "string",
+          "example": "SNAPVOLUMES\test_user",
+          "description": "Alternative name derived from entity that owns the Writable Volume."
+        },
+        "owner_id": {
+          "type": "integer",
+          "description": "Owner ID of Writable Volume.",
+          "example": 2
+        },
+        "owner_name": {
+          "type": "string",
+          "example": "TestUser",
+          "description": "Owner of Writable Volume."
+        },
+        "owner_type": {
+          "type": "string",
+          "example": "User",
+          "description": "Entity type of the Writable Volume owner."
+        },
+        "owner_upn": {
+          "type": "string",
+          "example": "SNAPVOLUMES\test_user",
+          "description": "Down-level login name of the Writable Volume owner."
+        },
+        "owner_object_guid": {
+          "type": "string",
+          "example": "8da04bfa-bbbe-45c3-9cbf-2d3d03897b84",
+          "description": "Object-Guid of the Writable Volume owner."
+        },
+        "created_at": {
+          "$ref": "#/definitions/CreatedAt"
+        },
+        "created_at_human": {
+          "$ref": "#/definitions/CreatedAtHuman"
+        },
+        "updated_at": {
+          "$ref": "#/definitions/UpdatedAt"
+        },
+        "updated_at_human": {
+          "$ref": "#/definitions/UpdatedAtHuman"
+        },
+        "mounted_at": {
+          "$ref": "#/definitions/WritableMountedAt"
+        },
+        "mounted_at_human": {
+          "$ref": "#/definitions/WritableMountedAtHuman"
+        },
+        "attached": {
+          "type": "string",
+          "enum": [
+            "Attached",
+            "Detached"
+          ],
+          "description": "Whether the Writable Volume is currently attached."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "missing",
+            "unprovisioned",
+            "provisioning",
+            "reserved",
+            "orphaned",
+            "legacy",
+            "limit_reached",
+            "enabled",
+            "failed",
+            "creating",
+            "canceled",
+            "disabled",
+            "unreachable"
+          ],
+          "description": "Status of the Writable Volume."
+        },
+        "size_mb": {
+          "type": "integer",
+          "description": "Specified size of the Writable Volume.",
+          "example": 312
+        },
+        "mount_count": {
+          "$ref": "#/definitions/WritableMountCount"
+        },
+        "free_mb": {
+          "type": "integer",
+          "example": 0,
+          "description": "Actual free space on the Writable Volume."
+        },
+        "total_mb": {
+          "type": "integer",
+          "example": 0,
+          "description": "Actual total space on the Writable Volume - can differ from size_mb due to datastore file formatting and growth operations."
+        },
+        "percent_available": {
+          "type": "string",
+          "description": "Percent of available space on the Writable Volume.",
+          "example": "Unknown"
+        },
+        "template_version": {
+          "type": "string",
+          "description": "Version of Writable Template used to create the Writable Volume.",
+          "example": "4.0.0"
+        },
+        "version_count": {
+          "type": "integer",
+          "description": "Number of times Writable Volume has been updated.",
+          "examples": 0
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of Writable Volume.",
+          "example": "DataDisk"
+        },
+        "display_type": {
+          "type": "string",
+          "description": "Display value of Writable Volume.",
+          "example": "Writable Volume"
+        },
+        "error_action": {
+          "type": "string",
+          "description": "Whether failures related to the Writable Volume will prevent application related attachments and whether they alert the user."
+        },
+        "busy": {
+          "$ref": "#/definitions/WritableBusy"
+        },
+        "state": {
+          "$ref": "#/definitions/WritableState"
+        },
+        "filename": {
+          "type": "string",
+          "example": "snapvolumes_test_user.vmdk",
+          "description": "Filename of the Writable Volume."
+        },
+        "path": {
+          "type": "string",
+          "example": "appvolumes/writable",
+          "description": "Path to the Writable Volume file."
+        },
+        "datastore_name": {
+          "type": "string",
+          "example": "SSD Disk Array RAID8",
+          "description": "Datastore the Writable Volume resides on."
+        },
+        "volume_guid": {
+          "type": "string",
+          "example": "volumeguid-8-volumeguid",
+          "description": "GUID assigned to the Writable Volume on the datastore."
+        },
+        "datastore_host": {
+          "type": "string",
+          "description": "Datastore host that the Writable Volume resides on.",
+          "example": "null"
+        },
+        "can_expand": {
+          "type": "boolean",
+          "description": "Whether the Writable Volume is eligible for growth operations.",
+          "example": true
+        }
+      }
+    },
+    "DeleteWritableVolumeNotFound": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Unable to delete 1 volume because record does not exist.",
+          "description": "Failure details."
+        },
+        "snapvols": {
+          "type": "object",
+          "properties": {
+            "not_found": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "example": 0
+              },
+              "description": "Writable Volumes that were not found."
+            },
+            "success": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "example": [
+
+              ]
+            },
+            "error": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "example": [
+
+              ]
+            },
+            "scheduled": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "example": [
+
+              ]
+            }
+          }
+        }
+      }
+    },
+    "DeleteWritableVolume": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string",
+          "example": "Deleted 1 volume",
+          "description": "Success details."
+        },
+        "error": {
+          "type": "string",
+          "example": "Unable to delete 1 volume",
+          "description": "Failure details."
+        },
+        "snapvols": {
+          "$ref": "#/definitions/WritableVolumeDeleteResults"
+        }
+      }
+    },
+    "WritableVolumeDeleteResults": {
+      "type": "object",
+      "properties": {
+        "not_found": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WritableVolume"
+          },
+          "description": "Writable Volumes that were not found."
+        },
+        "success": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WritableVolume"
+          },
+          "description": "Writable Volumes that were deleted."
+        },
+        "error": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WritableVolume"
+          },
+          "description": "Writable Volumes with errors during deletion attempt."
+        },
+        "scheduled": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WritableVolume"
+          },
+          "description": "Writable Volumes that were scheduled for deletion in background."
+        }
+      }
+    },
+    "UpdateWritableRequestBody": {
+      "type": "object",
+      "required": [
+        "description",
+        "block_login",
+        "mount_prefix",
+        "error_action"
+      ],
+      "properties": {
+        "description": {
+          "in": "query",
+          "type": "string",
+          "description": "Description for the Writable Volume.",
+          "example": "Writable Volume for Administrator"
+        },
+        "error_action": {
+          "in": "query",
+          "type": "string",
+          "enum": [
+            "",
+            "continue_silently",
+            "continue_alert",
+            "disable_and_alert",
+            "disable_and_alert_on_error"
+          ],
+          "description": "Whether failures related to the Writable Volume will prevent application related attachments. Setting \"continue_silently\" will skip attachments and not alert the user. Setting \"continue_alert\" will alert the end user that the writable was not attached. Setting \"disable_and_alert\" will disable all virtualization and display an alert. Setting \"disable_and_alert_on_error\" will disable all virtualization and display an alert only for error cases (conflicts due to multiple logins are not considered an error). Must set as \"\" if a) owner_type is \"Computer\" or b) block_login parameter is set to \"1\"."
+        },
+        "block_login": {
+          "in": "query",
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Whether failures related to the Writable Volume will prevent User login."
+        },
+        "mount_prefix": {
+          "in": "query",
+          "type": "string",
+          "description": "Prefix used to determine whether the Writable Volume should mount to a particular Computer.",
+          "example": "DESKTOP"
+        },
+        "oses": {
+          "in": "query",
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "description": "IDs of operating systems the Writable Volume is allowed to mount to."
+        }
+      }
+    },
+    "GrowWritableRequestBody": {
+      "type": "object",
+      "properties": {
+        "size_mb": {
+          "type": "integer",
+          "description": "Target size in MB."
+        },
+        "volumes": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1,
+          "description": "IDs of Writable Volumes to increase size for."
+        }
+      }
+    },
+    "OperatingSystem": {
+      "description": "Operating system record.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "ID of the operating system."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the operating system.",
+          "example": "Windows 8.1 (x64)"
+        }
+      }
+    },
+    "VersionRecord": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "The full product version of App Volumes Manager.",
+          "example": "App Volumes 4, version 2203"
+        },
+        "internal": {
+          "type": "string",
+          "description": "version",
+          "example": "4.6.0"
+        },
+        "copyright": {
+          "type": "string",
+          "description": "Product copyright year.",
+          "example": "Copyright 2011-2022"
+        },
+        "configured": {
+          "type": "boolean",
+          "description": "Tells if App Volumes Manager is configured or not.",
+          "example": true
+        },
+        "time_offset": {
+          "type": "integer",
+          "description": "The offset between the local timezone and UTC",
+          "example": 5
+        },
+        "uptime": {
+          "type": "string",
+          "description": "The time since when App Volumes Manager service is running.",
+          "example": "less than a minute"
+        },
+        "database_uuid": {
+          "type": "string",
+          "description": "The database identifier.",
+          "example": "654723bc-09de-4d9b-806c-9cd1d231a0de"
+        }
+      }
+    },
+    "CreatedAt": {
+      "type": "string",
+      "description": "Creation timestamp.",
+      "example": "2021-12-03 13:10:13 -0800"
+    },
+    "CreatedAtHuman": {
+      "type": "string",
+      "description": "Creation timestamp in human readable format.",
+      "example": "Dec 03 2021"
+    },
+    "UpdatedAt": {
+      "type": "string",
+      "description": "Timestamp of last update.",
+      "example": "2021-12-03 13:10:13 -0800"
+    },
+    "UpdatedAtHuman": {
+      "type": "string",
+      "description": "Timestamp of last update in human readable format.",
+      "example": "Dec 03 2021"
+    },
+    "AddedAt": {
+      "type": "string",
+      "description": "Timestamp of record addition.",
+      "example": "2021-12-03 13:10:13 -0800"
+    },
+    "AddedAtHuman": {
+      "type": "string",
+      "description": "Timestamp of record addition in human readable format.",
+      "example": "Dec 04 2021"
+    },
+    "DeletedAt": {
+      "type": "string",
+      "description": "Deletion timestamp.",
+      "example": "2021-12-04 13:10:13 -0800"
+    },
+    "DeletedAtHuman": {
+      "type": "string",
+      "description": "Deletion timestamp in human readable format.",
+      "example": "Dec 04 2021"
+    },
+    "WritableBusy": {
+      "type": "boolean",
+      "description": "Whether the Writable is busy with a current backup operation.",
+      "example": false
+    },
+    "WritableMountedAt": {
+      "type": "string",
+      "description": "Timestamp of when the Writable Volume was mounted.",
+      "example": "2021-12-03 13:10:13 -0800"
+    },
+    "WritableMountedAtHuman": {
+      "type": "string",
+      "description": "Timestamp of when the Writable Volume was mounted in human readable format.",
+      "example": "Dec 03 2021"
+    },
+    "WritableMountCount": {
+      "type": "integer",
+      "description": "The number of computers where the Writable Volume is currently mounted.",
+      "example": 0
+    },
+    "WritableState": {
+      "type": "string",
+      "description": "The current backup operation state if present.",
+      "enum": [
+        "Moving",
+        "Backing Up",
+        "Restoring"
+      ],
+      "example": "Moving"
+    },
+    "ApplicationSyncedAt": {
+      "type": "string",
+      "description": "Application Sync timestamp.",
+      "example": "2021-12-03 13:10:13 -0800"
+    },
+    "ApplicationSyncedAtHuman": {
+      "type": "string",
+      "description": "Application Sync timestamp in human readable format.",
+      "example": "Dec 03 2021"
+    },
+    "ApplicationMetadataSyncedAt": {
+      "type": "string",
+      "description": "Application Metadata Sync timestamp.",
+      "example": "2021-12-03 15:10:14 -0800"
+    },
+    "ApplicationMetadataSyncedAtHuman": {
+      "type": "string",
+      "description": "Application Metadata Sync timestamp in human readable format.",
+      "example": "Dec 03 2021"
+    },
+    "ApplicationMetadataPropertiesUpdatedAt": {
+      "type": "string",
+      "description": "Application Metadata Properties update timestamp.",
+      "example": "2021-12-03 15:10:14 -0800"
+    },
+    "ApplicationMetadataPropertiesUpdatedAtHuman": {
+      "type": "string",
+      "description": "Application Metadata Properties update timestamp in human readable format.",
+      "example": "Dec 03 2021"
+    },
+    "ProvisionCompletedAt": {
+      "type": "string",
+      "description": "Timestamp provisioning completed at.",
+      "example": "2021-08-17 10:32:32 +0530"
+    },
+    "ProvisionStartedAt": {
+      "type": "string",
+      "description": "Timestamp provisioning started at.",
+      "example": "2021-08-17 10:30:26 +0530"
+    },
+    "PackageMountedAt": {
+      "type": "string",
+      "description": "Timestamp of the most recent Package mount.",
+      "example": "2021-08-17 11:00:32 +0530"
+    },
+    "AppAssignmentID": {
+      "type": "integer",
+      "description": "AppAssignment ID.",
+      "example": 1
+    },
+    "AppAssignmentIDObject": {
+      "type": "object",
+      "description": "AppAssignment ID.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": 1
+        }
+      }
+    },
+    "AppAssignmentIDArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/AppAssignmentID"
+      },
+      "description": "An array of AppAssignment IDs in integer form."
+    },
+    "AppAssignmentIDObjectArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/AppAssignmentIDObject"
+      },
+      "description": "An array of AppAssignment IDs in object form."
+    }
+  },
+  "parameters": {
+    "ApplicationID": {
+      "name": "id",
+      "description": "Application ID.",
+      "in": "path",
+      "type": "integer",
+      "required": true,
+      "format": "int64"
+    },
+    "PackageID": {
+      "name": "id",
+      "description": "Package ID.",
+      "in": "path",
+      "type": "integer",
+      "required": true,
+      "format": "int64"
+    },
+    "RequiredModelsForAppAssignments": {
+      "name": "include",
+      "description": "The extra models in order to fetch entity and filter details.",
+      "in": "query",
+      "type": "string",
+      "required": true,
+      "enum": [
+        "entities",
+        "filters"
+      ]
+    },
+    "ModelsForAppAssignmentsPagination": {
+      "name": "include",
+      "description": "The models available to fetch relationships of app assignments",
+      "in": "query",
+      "type": "string",
+      "enum": [
+        "app_assignment_entities",
+        "assignment_filters",
+        "app_marker",
+        "app_package",
+        "app_product"
+      ]
+    },
+    "PageNumber": {
+      "name": "page[number]",
+      "description": "The Page number for which assignments are required",
+      "in": "query",
+      "type": "integer",
+      "required": true,
+      "default": 1
+    },
+    "PageSize": {
+      "name": "page[size]",
+      "description": "The size of Page (i.e. The number of records we want on one page)",
+      "in": "query",
+      "type": "integer",
+      "required": true,
+      "default": 1
+    },
+    "ApiVersion": {
+      "name": "api_version",
+      "description": "The api_version supported for api",
+      "in": "query",
+      "type": "integer",
+      "required": true,
+      "default": 4040
+    },
+    "WritableVolumeID": {
+      "name": "id",
+      "description": "Writable Volume ID.",
+      "in": "path",
+      "type": "integer",
+      "required": true,
+      "format": "int64"
+    }
+  },
+  "paths": {
+    "/app_volumes/activity_logs": {
+      "get": {
+        "summary": "Get activity logs",
+        "tags": [
+          "System Activity"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "admin_upn",
+            "description": "The down-level login name of the user that performed the activity.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of activity logs.",
+            "schema": {
+              "title": "GetActivitiesSuccess",
+              "type": "object",
+              "properties": {
+                "actlogs": {
+                  "title": "ActivityLog",
+                  "type": "object",
+                  "properties": {
+                    "logs": {
+                      "$ref": "#/definitions/ActivityRecords"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/app_volumes/app_assignments": {
+      "get": {
+        "summary": "Get Application Assignments",
+        "tags": [
+          "Applications"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/PageNumber"
+          },
+          {
+            "$ref": "#/parameters/PageSize"
+          },
+          {
+            "$ref": "#/parameters/ApiVersion"
+          },
+          {
+            "$ref": "#/parameters/ModelsForAppAssignmentsPagination"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Application Assignments.",
+            "schema": {
+              "$ref": "#/definitions/GetAppAssignmentPagination"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/GetAppAssignmentBadRequest"
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Assign Application to target",
+        "tags": [
+          "Applications"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/AppAssignmentRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "1 Entities assigned to the Application Notepad++",
+            "schema": {
+              "$ref": "#/definitions/AppAssignmentSuccess"
+            }
+          },
+          "400": {
+            "description": "Unable to create assignment due to disabled Package, incorrect app_package_id or app_marker_id etc",
+            "schema": {
+              "$ref": "#/definitions/ApplicationAssignmentBadRequestError"
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove Application Assignments",
+        "tags": [
+          "Applications"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Array of AppAssignment IDs",
+            "schema": {
+              "$ref": "#/definitions/AppUnassignmentRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "1 entities successfully unassigned",
+            "schema": {
+              "$ref": "#/definitions/AppUnassignmentSuccess"
+            }
+          },
+          "400": {
+            "description": "Unable to delete assignment due to missing parameter ids",
+            "schema": {
+              "$ref": "#/definitions/ApplicationUnassignmentBadRequestError"
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/app_volumes/app_packages": {
+      "get": {
+        "summary": "Get Packages",
+        "tags": [
+          "Packages"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Packages.",
+            "schema": {
+              "$ref": "#/definitions/GetPackagesSuccess"
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/app_volumes/app_packages/{id}": {
+      "get": {
+        "summary": "Get details of a Package",
+        "tags": [
+          "Packages"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/PackageID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Package details.",
+            "schema": {
+              "$ref": "#/definitions/GetPackageSuccess"
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Package not found.",
+            "schema": {
+              "$ref": "#/definitions/GetPackageNotFoundError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/app_volumes/app_packages/{id}/assignments": {
+      "get": {
+        "summary": "Get Assignments for a Package",
+        "tags": [
+          "Packages"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/PackageID"
+          },
+          {
+            "$ref": "#/parameters/RequiredModelsForAppAssignments"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Package Assignments.",
+            "schema": {
+              "$ref": "#/definitions/GetPackageAssignment"
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Package not found.",
+            "schema": {
+              "$ref": "#/definitions/GetPackageNotFoundError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/app_volumes/app_packages/{id}/programs": {
+      "get": {
+        "summary": "Get Programs for a Package",
+        "tags": [
+          "Packages"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/PackageID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Package Programs.",
+            "schema": {
+              "$ref": "#/definitions/GetPackagePrograms"
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Package not found.",
+            "schema": {
+              "$ref": "#/definitions/GetPackageNotFoundError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/app_volumes/app_products": {
+      "get": {
+        "summary": "Get Applications",
+        "tags": [
+          "Applications"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Applications.",
+            "schema": {
+              "$ref": "#/definitions/GetApplicationsSuccess"
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/app_volumes/app_products/{id}": {
+      "get": {
+        "summary": "Get details of an Application",
+        "tags": [
+          "Applications"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApplicationID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application details.",
+            "schema": {
+              "$ref": "#/definitions/GetApplicationSuccess"
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Application not found.",
+            "schema": {
+              "$ref": "#/definitions/GetApplicationNotFoundError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/app_volumes/app_products/{id}/assignments": {
+      "get": {
+        "summary": "Get Assignments for an Application",
+        "tags": [
+          "Applications"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/ApplicationID"
+          },
+          {
+            "$ref": "#/parameters/RequiredModelsForAppAssignments"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Application and assignment details.",
+            "schema": {
+              "$ref": "#/definitions/GetApplicationAssignmentSuccess"
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Application not found.",
+            "schema": {
+              "$ref": "#/definitions/GetApplicationNotFoundError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/app_volumes/sessions": {
+      "post": {
+        "summary": "Creates an authorized API session",
+        "tags": [
+          "Sessions"
+        ],
+        "description": "Creates an authorized API session. Returns session cookie in the response header.",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "credentials",
+            "description": "Username and password for session to create.",
+            "schema": {
+              "title": "CreateSessionRequestBody",
+              "type": "object",
+              "required": [
+                "username",
+                "password"
+              ],
+              "properties": {
+                "username": {
+                  "description": "Username in down-level login name format of user that is member of configured admin group.",
+                  "type": "string",
+                  "example": "username"
+                },
+                "password": {
+                  "description": "Password corresponding to the username parameter.",
+                  "type": "string",
+                  "example": "goodcomplexpassword"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Session was created.",
+            "headers": {
+              "Set-Cookie": {
+                "type": "string",
+                "description": "Session cookie."
+              }
+            },
+            "schema": {
+              "title": "CreateSessionSuccess",
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "string",
+                  "example": "Ok",
+                  "description": "Result."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad session parameters.",
+            "schema": {
+              "title": "CreateSessionBadRequestError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "User name is required"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes an authorized API session",
+        "tags": [
+          "Sessions"
+        ],
+        "responses": {
+          "200": {
+            "description": "Session was destroyed or does not exist.",
+            "headers": {
+              "Set-Cookie": {
+                "type": "string",
+                "description": "Session cookie."
+              }
+            },
+            "schema": {
+              "title": "DeleteSessionSuccess",
+              "type": "object",
+              "example": {
+                "success": "Destroying session for \"USERNAME\""
+              },
+              "properties": {
+                "success": {
+                  "type": "string",
+                  "example": "Destroying session for \"USERNAME\"",
+                  "description": "Only present if successfully deleted authorized session."
+                },
+                "warning": {
+                  "type": "string",
+                  "example": "No valid session to remove",
+                  "description": "Only present if no authorized session to delete."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/app_volumes/version": {
+      "get": {
+        "summary": "Get version details of App Volumes Manager",
+        "tags": [
+          "Version"
+        ],
+        "responses": {
+          "200": {
+            "description": "Get version details.",
+            "schema": {
+              "title": "GetVersionSuccess",
+              "type": "object",
+              "properties": {
+                "version": {
+                  "$ref": "#/definitions/VersionRecord"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/app_volumes/writables": {
+      "get": {
+        "summary": "Get Writable Volumes",
+        "tags": [
+          "Writable Volumes"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "volume_guid",
+            "description": "Writable Volume's GUID.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "user_guid",
+            "description": "Writable Volume's owner's Active Directory Object-Guid.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "created_after",
+            "description": "DateTime in ISO 8601 format.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "updated_after",
+            "description": "DateTime in ISO 8601 format.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "min_capacity",
+            "description": "Minimum capacity to filter in MB.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "max_capacity",
+            "description": "Maximum capacity to filter in MB.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "count",
+            "description": "Number of Writable Volumes to limit to in response.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "owner_name",
+            "description": "owner_name of Writable Volume.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "owner_type",
+            "description": "owner_type of Writable Volume.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "domain_name",
+            "description": "domain_name of Writable Volume.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "description": "status of Writable Volume.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "attached",
+            "description": "attachment status of Writable Volume.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "datastore_name",
+            "description": "datastore_name in which Writable Volume exists.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "datacenter_name",
+            "description": "datacenter_name in which Writable Volume exists.",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "migrated",
+            "description": "migration status of Writable Volume.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Writable Volumes.",
+            "schema": {
+              "$ref": "#/definitions/GetWritableVolumes"
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/app_volumes/writables/grow": {
+      "post": {
+        "summary": "Increase size of a given Writable Volume",
+        "tags": [
+          "Writable Volumes"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "plain/text",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Growth settings",
+            "schema": {
+              "$ref": "#/definitions/GrowWritableRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Increase in size successfully requested.",
+            "schema": {
+              "title": "GrowWritableSuccess",
+              "type": "object",
+              "properties": {
+                "successes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": "Successfully expanded Writable Volume XYZ to size 5000MB"
+                  },
+                  "description": "Details for successfully provisioned volumes."
+                },
+                "warnings": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": "Writable Volume XYZ is attached. Make sure you shut down/logoff XYZ."
+                  },
+                  "description": "Details for volumes with warnings."
+                },
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": "Error expanding Writable Volume XYZ"
+                  },
+                  "description": "Details for volumes with errors."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request is missing parameters or App Volumes Manager is not properly configured and licensed."
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Writable Volume was not found."
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/app_volumes/writables/{id}": {
+      "get": {
+        "produces": [
+          "application/json",
+          "text/plain"
+        ],
+        "summary": "Get a Writable Volume by ID",
+        "tags": [
+          "Writable Volumes"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/WritableVolumeID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the Writable Volume.",
+            "schema": {
+              "$ref": "#/definitions/GetWritableVolume"
+            }
+          },
+          "400": {
+            "description": "ID missing from request.",
+            "schema": {
+              "title": "GetWritableBadRequestError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Missing parameters",
+                  "description": "Failure details."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Writable Volume was not found."
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Writable Volume",
+        "tags": [
+          "Writable Volumes"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/WritableVolumeID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted the Writable Volume.",
+            "schema": {
+              "$ref": "#/definitions/DeleteWritableVolume"
+            }
+          },
+          "400": {
+            "description": "ID missing from request.",
+            "schema": {
+              "title": "DeleteWritableBadRequestError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Missing parameters",
+                  "description": "Failure details."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Writable Volume was not found.",
+            "schema": {
+              "$ref": "#/definitions/DeleteWritableVolumeNotFound"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "put": {
+        "produces": [
+          "text/plain"
+        ],
+        "summary": "Update a Writable Volume by ID",
+        "tags": [
+          "Writable Volumes"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/WritableVolumeID"
+          },
+          {
+            "in": "body",
+            "name": "Update properties",
+            "schema": {
+              "$ref": "#/definitions/UpdateWritableRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Saved Writable changes."
+          },
+          "400": {
+            "description": "ID missing from request.",
+            "schema": {
+              "title": "UpdateWritableBadRequestError",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Missing parameters",
+                  "description": "Failure details."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Session expired. Create a session and make the request with the _session_id cookie.",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "Writable Volume was not found."
+          },
+          "500": {
+            "description": "Failed to update the Writable Volume.",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    }
+  }
+}
